@@ -159,3 +159,12 @@ assets/databases/emu_database/taxonomy.tsv: assets/databases/emu_database/taxono
 
 assets/databases/krona/taxonomy/taxonomy.tab: assets/databases/krona/taxonomy/taxonomy.tab.gz
 	zcat $< > $@
+
+precommit:
+	pre-commit run --all-files
+
+lint:
+	nf-core pipelines lint
+
+test:
+	nf-test test

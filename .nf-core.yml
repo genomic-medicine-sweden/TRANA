@@ -1,0 +1,29 @@
+bump_version: null
+lint:
+  files_exist: []
+  files_unchanged: []
+  multiqc_config:
+  - report_comment
+  nextflow_config:
+    - manifest.name
+    - manifest.homePage
+    - validation.help.beforeText
+    - validation.help.afterText
+    - validation.summary.beforeText
+    - validation.summary.afterText
+  actions_ci: False
+nf_core_version: 3.2.0
+org_path: null
+repository_type: pipeline
+template:
+  author: '@fwa93'
+  description: A Nextflow pipeline for 16S typing of bacteria based on the EMU tool
+    from treangenlab.
+  force: true
+  is_nfcore: false
+  name: gms_16S
+  org: genomic-medicine-sweden
+  outdir: .
+  skip_features: null
+  version: v0.1.0
+update: null
