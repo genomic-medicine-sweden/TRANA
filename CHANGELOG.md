@@ -58,6 +58,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - fastqc
 - Adaptation to nextflow
 - All tools are containerised with singularity
-
-
-

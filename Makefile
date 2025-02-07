@@ -168,3 +168,6 @@ lint:
 
 test:
 	nf-test test
+
+schema:
+	nf-core pipelines schema build

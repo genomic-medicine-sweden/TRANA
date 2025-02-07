@@ -115,24 +115,13 @@
         },
         {
             "@id": "main.nf",
-            "@type": [
-                "File",
-                "SoftwareSourceCode",
-                "ComputationalWorkflow"
-            ],
+            "@type": ["File", "SoftwareSourceCode", "ComputationalWorkflow"],
             "dateCreated": "",
             "dateModified": "2025-01-24T13:29:13Z",
             "dct:conformsTo": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE/",
-            "keywords": [
-                "nf-core",
-                "nextflow"
-            ],
-            "license": [
-                "MIT"
-            ],
-            "name": [
-                "genomic-medicine-sweden/gms16s"
-            ],
+            "keywords": ["nf-core", "nextflow"],
+            "license": ["MIT"],
+            "name": ["genomic-medicine-sweden/gms16s"],
             "programmingLanguage": {
                 "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow"
             },
@@ -143,9 +132,7 @@
                 "https://github.com/genomic-medicine-sweden/gms16s",
                 "https://nf-co.re/genomic-medicine-sweden/gms16s/0.1.0/"
             ],
-            "version": [
-                "0.1.0"
-            ]
+            "version": ["0.1.0"]
         },
         {
             "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow",
