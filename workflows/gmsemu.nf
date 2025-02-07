@@ -1,20 +1,13 @@
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    VALIDATE INPUTS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-def summary_params = NfcoreSchema.paramsSummaryMap(workflow, params)
-
-// Validate input parameters
-WorkflowGmsemu.initialise(params, log)
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+include { paramsSummaryMap       } from 'plugin/nf-schema'
+include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline/main.nf'
+include { paramsSummaryMultiqc } from '../subworkflows/nf-core/utils_nfcore_pipeline/main.nf'
+include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_gms16s_pipeline/main.nf'
 include { GENERATE_MASTER_HTML                   } from '../modules/local/generate_master_html/main.nf'
 include { EMU_ABUNDANCE                          } from '../modules/local/emu/abundance/main.nf'
 include { KRONA_KTIMPORTTAXONOMY                 } from '../modules/nf-core/krona/ktimporttaxonomy/main.nf'
@@ -44,6 +37,7 @@ workflow GMSEMU {
 
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
+    summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
 
     //
     // MODULE: Run FastQC
@@ -175,8 +169,8 @@ workflow GMSEMU {
     ch_multiqc_logo             = params.multiqc_logo   ? Channel.fromPath(params.multiqc_logo, checkIfExists: true) : Channel.empty()
     ch_multiqc_custom_methods_description = params.multiqc_methods_description ? file(params.multiqc_methods_description, checkIfExists: true) : file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
 
-    ch_workflow_summary         = Channel.value(WorkflowGmsemu.paramsSummaryMultiqc(workflow, summary_params))
-    ch_methods_description      = Channel.value(WorkflowGmsemu.methodsDescriptionText(workflow, ch_multiqc_custom_methods_description))
+    ch_workflow_summary         = Channel.value(paramsSummaryMultiqc(summary_params))
+    ch_methods_description      = Channel.value(methodsDescriptionText(ch_multiqc_custom_methods_description))
 
     ch_multiqc_files = Channel.empty()
     ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))

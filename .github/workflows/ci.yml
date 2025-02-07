@@ -50,16 +50,13 @@ jobs:
           wget https://github.com/apptainer/singularity/releases/download/v3.8.7/singularity-container_3.8.7_amd64.deb && sudo dpkg -i singularity-container_3.8.7_amd64.deb
 
       - name: Report disk-usage before make install
-        run:
-          df -h
+        run: df -h
 
       - name: Run Make install
-        run:
-          make install
+        run: make install
 
       - name: Report disk-usage after make install
-        run:
-          df -h
+        run: df -h
 
       # The below snippet is kept for now, if for debugging purposes you would
       # want to run a test pipeline without nf-test

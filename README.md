@@ -35,7 +35,7 @@ and update software dependencies.
 
 ![Pipeline overview image](docs/images/gms_16s_20240415.png)
 
- The Nanopore and shortread workflow is available. 
+The Nanopore and shortread workflow is available.
 Minor testing has been done for PacBio and it seems to work.
 MultiQC collects only info from FastQC and some information about software versions and
 pipeline info.
@@ -56,12 +56,12 @@ Krona plot
    to install Nextflow itself and also to manage software within pipelines.
    Please only use it within pipelines as a last resort. See
    [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles)).
-4. Add you samples to an input file e.g., `sample_sheet.csv`. See examples.
-5. gunzip all gzipped files in the database directory
+3. Add you samples to an input file e.g., `sample_sheet.csv`. See examples.
+4. gunzip all gzipped files in the database directory
    (`assets/databases/emu_database`)
-6. gunzip all gzipped files in the krona/taxonomy directory
+5. gunzip all gzipped files in the krona/taxonomy directory
    (`assets/databases/krona/taxonomy`)
-7. Run your command:
+6. Run your command:
 
 ```bash
 nextflow run main.nf \
@@ -113,14 +113,13 @@ nextflow run main.nf \
 
 ## Runs with shortreads
 
-When running gms_16s with short reads, the primer sequences are trimmed using cutadapt by default using the provided primer sequences. 
+When running gms_16s with short reads, the primer sequences are trimmed using cutadapt by default using the provided primer sequences.
 The primer sequences can be provided in the samplesheet or passed as arguments (FW_primer, RV_primer). Primer trimming with cutadapt can be skipped with --skip_cutadapt.
 
 ```bash
 sample,fastq_1,fastq_2,FW_primer,RV_primer
 SAMPLE,/absolute_path/gms_16s/Sample_R1_001.fastq.gz,/absolute_path/gms_16s/Sample_R2_001.fastq.gz,GTGCCAGCMGCCGCGGTAA,GGACTACNVGGGTWTCTAAT
 ```
-
 
 ```bash
 nextflow run main.nf \
@@ -142,8 +141,6 @@ nextflow run main.nf \
   --RV_primer TGCATNCTGA
 ```
 
-
-
 ## Sample sheets
 
 There are two types of sample sheets that can be used: 1) If the fastq files
@@ -158,13 +155,13 @@ SAMPLE_1,/absolute_path/gms_16S/assets/test_assets/medium_Mock_dil_1_2_BC1.fastq
 SAMPLE_2,/absolute_path/gms_16S/assets/test_assets/medium_Mock_dil_1_2_BC3.fastq.gz,
 ```
 
-2) If the fastq files are separated in their respective barcode folder i.e., you
+2. If the fastq files are separated in their respective barcode folder i.e., you
    have several fastq files for each sample and they are organized in barcode
    directories in a fastq_pass dir.
-a) If you do not want to create a sample sheet for the barcodes, then the
+   a) If you do not want to create a sample sheet for the barcodes, then the
    results will be named according to the barcode folders. flag
    `--merge_fastq_pass`
-b) If you want your own sample names on the results, then use
+   b) If you want your own sample names on the results, then use
    `--merge_fastq_pass` in combination with `--barcodes_samplesheet`. This
    requires a barcode sample sheet which is tab separated. Se example file
    `sample_sheet_merge.csv` in `examples` for a demonstration.
@@ -215,15 +212,18 @@ community, reused here under the [MIT license](https://github.com/nf-core/tools/
 ### Software packaging/containerisation tools
 
 - [Anaconda](https://anaconda.com)
+
   > Anaconda Software Distribution. Computer software. Vers. 2-2.4.0. Anaconda,
   > Nov. 2016. Web.
 
 - [Bioconda](https://pubmed.ncbi.nlm.nih.gov/29967506/)
+
   > Grüning B, Dale R, Sjödin A, Chapman BA, Rowe J, Tomkins-Tinch CH, Valieris
   > R, Köster J; Bioconda Team. Bioconda: sustainable and comprehensive
   > software distribution for the life sciences. Nat Methods. 2018>
 
 - [BioContainers](https://pubmed.ncbi.nlm.nih.gov/28379341/)
+
   > da Veiga Leprevost F, Grüning B, Aflitos SA, Röst HL, Uszkoreit J, Barsnes
   > H, Vaudel M, Moreno P, Gatto L, Weber J, Bai M, Jimenez RC, Sachsenberg T,
   > Pfeuffer J, Alvarez RV, Griss J, Nesvizhskii AI, Perez-R>
@@ -231,14 +231,15 @@ community, reused here under the [MIT license](https://github.com/nf-core/tools/
 - [Docker](https://dl.acm.org/doi/10.5555/2600239.2600241)
 
 - [Singularity](https://pubmed.ncbi.nlm.nih.gov/28494014/)
+
   > Kurtzer GM, Sochat V, Bauer MW. Singularity: Scientific containers for
   > mobility of compute. PLoS One. 2017 May 11;12(5):e0177459. doi:
   > 10.1371/journal.pone.0177459. eCollection 2017. PubMed PMID: 28494014; >
 
 - [EMU](https://github.com/treangenlab/emu)
-  >  Kristen D. Curry et al., “Emu: Species-Level Microbial Community Profiling
-  >  of Full-Length 16S RRNA Oxford Nanopore Sequencing Data,” Nature Methods,
-  >  June 30, 2022, 1–9, https://doi.org/10.1038/s41592-022-015>
+  > Kristen D. Curry et al., “Emu: Species-Level Microbial Community Profiling
+  > of Full-Length 16S RRNA Oxford Nanopore Sequencing Data,” Nature Methods,
+  > June 30, 2022, 1–9, https://doi.org/10.1038/s41592-022-015>
 
 ## Citations
 
