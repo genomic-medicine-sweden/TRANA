@@ -211,6 +211,8 @@ workflow GMSEMU {
 
     emit:
     master_html             = GENERATE_MASTER_HTML.out.html      // channel: [ path(master.html) ]
+    nanostats_unprocessed   = NANOPLOT_UNPROCESSED_READS.out.txt // channel: [ path(versions.yml) ]
+    nanostats_processed     = NANOPLOT_PROCESSED_READS.out.txt   // channel: [ path(versions.yml) ]
     versions                = ch_versions                        // channel: [ path(versions.yml) ]
     nanostats_unprocessed   = (params.seqtype == "map-ont") ? NANOPLOT_UNPROCESSED_READS.out.txt : Channel.empty()  // channel: [ path(master.html) ]
     nanostats_processed     = (params.seqtype == "map-ont") ? NANOPLOT_PROCESSED_READS.out.txt   : Channel.empty()  // channel: [ path(master.html) ]
