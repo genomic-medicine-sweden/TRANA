@@ -17,7 +17,7 @@ process MERGE_BARCODES {
     // path('*fastq.gz') , emit : fastq_files_merged
     path('fastq_pass_merged/*fastq.gz') , emit : fastq_files_merged
     path('fastq_pass_merged')           , emit : fastq_dir_merged
-    
+
     script:
     """
     merge_barcodes.sh $fastq_pass fastq_pass_merged
