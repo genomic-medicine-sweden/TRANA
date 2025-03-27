@@ -12,7 +12,7 @@ process GENERATE_INPUT {
         'quay.io/biocontainers/python:3.9' }"
 
     input:
-    path(merged_files) 
+    path(merged_files)
 
     output:
     // publishDir 'fastq_pass_merged', mode: 'move'
