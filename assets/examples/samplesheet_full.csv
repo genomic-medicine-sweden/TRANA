@@ -1,3 +1,3 @@
 sample,fastq_1,fastq_2
-SAMPLE_1,/absolute_path/gms_16S/assets/test_assets/Mock_dil_1_2_BC1.fastq.gz,
-SAMPLE_2,/absolute_path/gms_16S/assets/test_assets/Mock_dil_1_2_BC3.fastq.gz,
+SAMPLE_1,/absolute_path/taco/assets/test_assets/Mock_dil_1_2_BC1.fastq.gz,
+SAMPLE_2,/absolute_path/taco/assets/test_assets/Mock_dil_1_2_BC3.fastq.gz,

@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://github.com/genomic-medicine-sweden/gms_16S/main/assets/schema_input.json",
-    "title": "GMS_16S pipeline - params.input schema",
+    "$id": "https://github.com/genomic-medicine-sweden/taco/main/assets/schema_input.json",
+    "title": "TACO pipeline - params.input schema",
     "description": "Schema for the file provided with params.input",
     "type": "array",
     "items": {

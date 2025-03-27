@@ -23,7 +23,7 @@ jobs:
   test:
     name: Install and run self-test pipeline
     # Only run on push if this is in the main repository
-    if: "${{ github.repository == 'genomic-medicine-sweden/gms_16s' }}"
+    if: "${{ github.repository == 'genomic-medicine-sweden/taco' }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:

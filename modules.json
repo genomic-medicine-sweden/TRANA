@@ -1,6 +1,6 @@
 {
-    "name": "GMS_16S",
-    "homePage": "https://github.com/genomic-medicine-sweden/gms_16S",
+    "name": "TACO",
+    "homePage": "https://github.com/genomic-medicine-sweden/taco",
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {
