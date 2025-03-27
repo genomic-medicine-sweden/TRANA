@@ -1,11 +1,9 @@
 name: "emu_abundance"
-##  Add a description of the module and list keywords
 description: A taxonomic profiler for metagenomic 16S data optimized for error prone long reads.
 keywords:
   - Metagenomics
   - 16S
   - Nanopore
-
 tools:
   - "emu":
       ## TODO nf-core: Add a description and other details for the software below
@@ -15,63 +13,41 @@ tools:
       tool_dev_url: "None"
       doi: "https://doi.org/10.1038/s41592-022-01520-4"
       licence: "['MIT']"
-
-## TODO nf-core: Add a description of all of the variables used as input
 input:
-  # Only when we have meta
   - meta:
       type: map
       description: |
         Groovy Map containing sample information
         e.g. [ id:'test', single_end:false ]
-  #
-  ## TODO nf-core: Delete / customise this example input
   - reads:
       type: file
       description: fastq.gz file containing metagenomic 16S data
       pattern: "*.{fastq.gz}"
-
-## TODO nf-core: Add a description of all of the variables used as output
 output:
-  #Only when we have meta
   - meta:
       type: map
       description: |
         Groovy Map containing sample information
         e.g. [ id:'test', single_end:false ]
-  #
   - versions:
       type: file
       description: File containing software versions
       pattern: "versions.yml"
-  ## TODO nf-core: Delete / customise this example output
   - report:
       type: file
       description: Report (tsv file) over detected species and estimated number of reads and relative abundance
       pattern: "*{.tsv}"
-  //sam files
-  - samfile
+  - samfile:
       type: file
       description: File containing alignment data
-      pattern: "*{.sam}
-  //unclassified and mapped fasta file
-  - unclassified_fa
+      pattern: "*{.sam}"
+  - unclassified_fa:
       type: file
-      description: File containing reads that mapped to the database but was presumed to be not in the sample by EMU´s algorithm. 
-      pattern: "*{.fastq_unclassified_mapped.fasta}
-  //unmapped fasta file
-  - unclassified_unmapped_fa
+      description: File containing reads that mapped to the database but was presumed to be not in the sample by EMU´s algorithm.
+      pattern: "*{.fastq_unclassified_mapped.fasta}"
+  - unclassified_unmapped_fa:
       type: file
-      description: File containing reads that was not mapped to the database. 
-      pattern: "*{.fastq_unmapped.fasta}
-
-
-  # emu log. Put on ice.
- // - emulog
- //     type: file
- //     description: File containing emu stdou & stderror
- //     pattern: "emu_log*{.txt}"
-
-
+      description: File containing reads that was not mapped to the database.
+      pattern: "*{.fastq_unmapped.fasta}"
 authors:
   - "@fwa93"
