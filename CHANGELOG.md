@@ -43,6 +43,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `master_template.html` for nanoplot prefix and output changes
 - Changed `merge_barcodes_samplesheet.py` container to nf-core (temporary)
 - Emit `master.html`
+- Changed project name to TACO (`genomic-medicine-sweden/taco`)
+- Updated nf-core template to version 3.2.0
+- Updated the `ci.yml` config to run test via `nf-test` in addition to the normal test run via cli
+- Updated `README.md` with info about running `make install` to gunzip gzipped
+  assets and useful `make` commands for developers.
 
 ## [v0.1.0]
 

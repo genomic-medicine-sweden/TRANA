@@ -1,4 +1,4 @@
-# gms_16S
+# taco
 
 [![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A522.10.1-23aa62.svg)](https://www.nextflow.io/)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
@@ -9,7 +9,7 @@
 
 <!-- TODO nf-core: Write a 1-2 sentence summary of what data the pipeline is for and what it does -->
 
-**nf-core/gmsemu** is a bioinformatics analysis pipeline for the EMU tool (https://gitlab.com/treangenlab/emu).
+**genomic-medicine-sweden/taco** is a bioinformatics analysis pipeline for the EMU tool (https://gitlab.com/treangenlab/emu).
 
 This Nextflow pipeline utilizes Falco, Porechop_ABI, Longfilt, and EMU for taxonomic profiling of 16S rRNA gene sequences. Built with Nextflow, it ensures portability and reproducibility across different computational infrastructures. Falco performs quality control, Porechop_ABI trims adapters and demultiplexes data, Longfilt filters the fastq-files such that only reads that are close to 1500 bp are used, and EMU assigns taxonomic classifications. The pipeline enables microbial community analysis, offering insights into the diversity in samples.
 
@@ -17,7 +17,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 ## Pipeline summary
 
-![236446648-c93dded5-1d51-4987-afad-5b0eedc01574](https://github.com/genomic-medicine-sweden/gms_16S/assets/115690981/5017bac9-a5a4-4bb2-a5e4-34c15cc37b22)
+![236446648-c93dded5-1d51-4987-afad-5b0eedc01574](https://github.com/genomic-medicine-sweden/taco/assets/115690981/5017bac9-a5a4-4bb2-a5e4-34c15cc37b22)
 
 ## Quick Start
 
@@ -30,12 +30,12 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 5. Run your command
 
 ```bash
-nextflow run main.nf --input assets/samplesheet_medium.csv     --outdir results_emu     --db /aux/db/workdir_fwa010/emu_pipe_project/gms_16S/assets/databases/emu_database/     --seqtype map-ont     -profile singularity,test
+nextflow run main.nf --input assets/samplesheet_medium.csv     --outdir results_emu     --db /aux/db/workdir_fwa010/emu_pipe_project/taco/assets/databases/emu_database/     --seqtype map-ont     -profile singularity,test
 ```
 
 ## Credits
 
-gms16S was originally written by @fwaa93.
+Taco was originally written by @fwaa93.
 
 This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/master/LICENSE).
 
