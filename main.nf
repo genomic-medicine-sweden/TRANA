@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    gms_16S
+    taco
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/genomic-medicine-sweden/gms_16S
+    Github : https://github.com/genomic-medicine-sweden/taco
 
 ----------------------------------------------------------------------------------------
 */
@@ -32,12 +32,12 @@ include { PIPELINE_INITIALISATION } from './subworkflows/local/pipeline_initiali
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { GMSEMU } from './workflows/gmsemu'
+include { TACO } from './workflows/taco.nf'
 
 //
-// WORKFLOW: Run main gms_16S  analysis pipeline
+// WORKFLOW: Run main TACO analysis pipeline
 //
-workflow GMS_EMU {
+workflow GMS_TACO {
     take:
     samplesheet // channel: samplesheet read in from --input
     reads
@@ -46,12 +46,12 @@ workflow GMS_EMU {
     //
     // WORKFLOW: Run pipeline
     //
-    GMSEMU (samplesheet, reads)
+    TACO (samplesheet, reads)
 
     emit:
-    nanostats_unprocessed   = GMSEMU.out.nanostats_unprocessed  // channel: /path/to/nanostats.txt
-    nanostats_processed     = GMSEMU.out.nanostats_processed    // channel: /path/to/nanostats.txt
-    versions                = GMSEMU.out.versions               // channel: /path/to/versions.yaml
+    nanostats_unprocessed   = TACO.out.nanostats_unprocessed  // channel: /path/to/nanostats.txt
+    nanostats_processed     = TACO.out.nanostats_processed    // channel: /path/to/nanostats.txt
+    versions                = TACO.out.versions               // channel: /path/to/versions.yaml
 }
 
 /*
@@ -74,9 +74,9 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    GMS_EMU (PIPELINE_INITIALISATION.out.samplesheet, PIPELINE_INITIALISATION.out.reads)
+    GMS_TACO (PIPELINE_INITIALISATION.out.samplesheet, PIPELINE_INITIALISATION.out.reads)
 
-    ch_versions = PIPELINE_INITIALISATION.out.versions.mix(GMS_EMU.out.versions)
+    ch_versions = PIPELINE_INITIALISATION.out.versions.mix(GMS_TACO.out.versions)
 }
 
 /*
