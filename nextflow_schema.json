@@ -249,6 +249,20 @@
         "trace_timestamp": {
             "type": "string",
             "default": "2025-03-27_15-16-28"
+        },
+        "igenomes_ignore": {
+            "type": "boolean",
+            "default": true
+        },
+        "igenomes_base": {
+            "type": "string"
+        },
+        "genome": {
+            "type": "string"
+        },
+        "genomes": {
+            "type": "string",
+            "default": "[]"
         }
     }
 }
