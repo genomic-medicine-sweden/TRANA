@@ -74,6 +74,13 @@ jobs:
       #      --longread_qc_qualityfilter_maxlength 1800 \
       #      --merge_fastq_pass $(pwd)/assets/test_assets/ci; \
 
+      - name: Make sure that the main workflow is executable at all
+        run: |
+          nextflow  \
+            -log $(pwd)/nextflow.log \
+            run main.nf \
+            --help
+
       - name: Run nf-test
         run: |
           nf-test test tests/main.nf.test
