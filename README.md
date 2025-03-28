@@ -57,11 +57,10 @@ Krona plot
    Please only use it within pipelines as a last resort. See
    [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles)).
 3. Add you samples to an input file e.g., `sample_sheet.csv`. See examples.
-4. gunzip all gzipped files in the database directory
-   (`assets/databases/emu_database`)
-5. gunzip all gzipped files in the krona/taxonomy directory
+4. Run `make install` which will gunzip all gzipped files in the database
+   directory (`assets/databases/emu_database`) and the krona/taxonomy directory
    (`assets/databases/krona/taxonomy`)
-6. Run your command:
+5. Run your command:
 
 ```bash
 nextflow run main.nf \
@@ -176,6 +175,22 @@ APPTAINER_TMPDIR
 NXF_SINGULARITY_CACHEDIR
 APPTAINER_CACHEDIR
 ```
+
+## Useful commands for developers
+
+Note that there is a `Makefile` available with a few useful commands to use
+when developing:
+
+- `make check` to run most checks that are also run on CI:
+  `pre-commit`/`prettier`, `nf-core` lint, and `nf-test test`).
+  - **Note:** It is a good idea to run this command before pushing your changes
+    to a new pull request!
+- `make precommit` to only run pre-commit/prettier.
+- `lint` to run the nf-core lint checks.
+- `test` to run the nf-test tests.
+
+**Tip:** To see which make commands are available, you can always type `make ` and
+then hit `TAB` twice.
 
 ## Credits
 
