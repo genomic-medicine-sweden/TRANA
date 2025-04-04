@@ -4,10 +4,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { paramsSummaryMap       } from 'plugin/nf-schema'
-include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline/main.nf'
-include { paramsSummaryMultiqc } from '../subworkflows/nf-core/utils_nfcore_pipeline/main.nf'
-include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_taco_pipeline/main.nf'
+include { paramsSummaryMap                       } from 'plugin/nf-schema'
+include { softwareVersionsToYAML                 } from '../subworkflows/nf-core/utils_nfcore_pipeline/main.nf'
+include { paramsSummaryMultiqc                   } from '../subworkflows/nf-core/utils_nfcore_pipeline/main.nf'
+include { methodsDescriptionText                 } from '../subworkflows/local/utils_nfcore_taco_pipeline/main.nf'
 include { GENERATE_MASTER_HTML                   } from '../modules/local/generate_master_html/main.nf'
 include { EMU_ABUNDANCE                          } from '../modules/local/emu/abundance/main.nf'
 include { KRONA_KTIMPORTTAXONOMY                 } from '../modules/nf-core/krona/ktimporttaxonomy/main.nf'
