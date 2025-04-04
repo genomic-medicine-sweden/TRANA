@@ -142,18 +142,17 @@ nextflow run main.nf \
 
 ## Sample sheets
 
-There are two types of sample sheets that can be used: 1) If the fastq files
-are already concatenated/merged i.e., the fastq-files in Nanopore barcode
-directories have been concataned already, the `--input` can be used.
-`--input` expects a `.csv` sample sheet with 4 columns (note the header
-names). It looks like this (See also the `examples` directory):
+There are two types of sample sheets that can be used:
 
-```csv
-sample,fastq_1,fastq_2
-SAMPLE_1,/absolute_path/taco/assets/test_assets/medium_Mock_dil_1_2_BC1.fastq.gz,
-SAMPLE_2,/absolute_path/taco/assets/test_assets/medium_Mock_dil_1_2_BC3.fastq.gz,
-```
-
+1. If the fastq files are already concatenated/merged i.e., the fastq-files in
+   Nanopore barcode directories have been concataned already, the `--input` can
+   be used. `--input` expects a `.csv` sample sheet with 3 columns (note the
+   header names). It looks like this (See also the `examples` directory):
+   ```csv
+   sample,fastq_1,fastq_2
+   SAMPLE_1,/absolute_path/taco/assets/test_assets/medium_Mock_dil_1_2_BC1.fastq.gz,
+   SAMPLE_2,/absolute_path/taco/assets/test_assets/medium_Mock_dil_1_2_BC3.fastq.gz,
+   ```
 2. If the fastq files are separated in their respective barcode folder i.e., you
    have several fastq files for each sample and they are organized in barcode
    directories in a fastq_pass dir.
