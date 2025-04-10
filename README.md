@@ -33,7 +33,7 @@ and update software dependencies.
 
 ## Pipeline summary
 
-![Pipeline overview image](docs/images/gms_16s_20240415.png)
+![Pipeline overview image](docs/images/emu_workflow_20250410.png)
 
  The Nanopore and shortread workflow is available. 
 Minor testing has been done for PacBio and it seems to work.
