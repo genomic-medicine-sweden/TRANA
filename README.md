@@ -19,7 +19,7 @@ ensures portability and reproducibility across different computational
 infrastructures. It has been tested on Linux and on mac M1 (not recommended,
 quite slow). For long reads, FastQC and Nanoplot performs quality control, Porechop_ABI
 adapters (optional), Filtlong filters the fastq-files such that only reads
-that are close to 1500 bp are used (optional), EMU assigns taxonomic
+that are close to 1500 bp are used (optional), Seqtk downsamples the reads (optional) EMU assigns taxonomic
 classifications, and Krona visualises the result table from EMU.
 In the workflow for short reads, the reads are first processed with fastqc, Cutadapt and Seqtk
 before the reads are sent to emu and krona.
