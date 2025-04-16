@@ -10,10 +10,7 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": [
-                "input",
-                "outdir"
-            ],
+            "required": ["input", "outdir"],
             "properties": {
                 "input": {
                     "type": "string",
@@ -268,10 +265,10 @@
             "default": "[]"
         },
         "pipelines_testdata_base_path": {
-	     "type": "string",
-             "default": "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/",
-             "description": "Base for test data directory",
-             "hidden": true
+            "type": "string",
+            "default": "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/",
+            "description": "Base for test data directory",
+            "hidden": true
         }
     }
 }
