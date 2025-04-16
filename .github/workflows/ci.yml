@@ -40,9 +40,9 @@ jobs:
           - ${{ github.base_ref == 'main' }}
         # Exclude conda and singularity on dev
         exclude:
-          - isMaster: false
+          - is_master: false
             profile: "conda"
-          - isMaster: false
+          - is_master: false
             profile: "singularity"
     steps:
       - name: Check out pipeline code
