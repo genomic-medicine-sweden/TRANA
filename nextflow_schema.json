@@ -144,7 +144,7 @@
         },
         "krona_taxonomy_tab": {
             "type": "string",
-            "default": "/home/proj/development/microbial/metagenomics/sofia_workspace/gms_16S/assets/databases/krona/taxonomy/taxonomy.tab"
+            "default": "assets/databases/krona/taxonomy/taxonomy.tab"
         },
         "merge_fastq_pass": {
             "type": "string"
@@ -237,7 +237,7 @@
         },
         "master_template": {
             "type": "string",
-            "default": "/home/proj/development/microbial/metagenomics/sofia_workspace/gms_16S/assets/master_template.html"
+            "default": "assets/master_template.html"
         },
         "save_merged_reads": {
             "type": "boolean",
