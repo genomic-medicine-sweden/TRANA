@@ -29,6 +29,21 @@ jobs:
       matrix:
         NXF_VER:
           - "24.10.0"
+          - "latest-everything"
+        profile:
+          - "conda"
+          - "docker"
+          - "singularity"
+        test_name:
+          - "test"
+        isMaster:
+          - ${{ github.base_ref == 'main' }}
+        # Exclude conda and singularity on dev
+        exclude:
+          - isMaster: false
+            profile: "conda"
+          - isMaster: false
+            profile: "singularity"
     steps:
       - name: Check out pipeline code
         uses: actions/checkout@v3
