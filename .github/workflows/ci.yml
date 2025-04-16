@@ -36,7 +36,7 @@ jobs:
           - "singularity"
         test_name:
           - "test"
-        isMaster:
+        is_master:
           - ${{ github.base_ref == 'main' }}
         # Exclude conda and singularity on dev
         exclude:
