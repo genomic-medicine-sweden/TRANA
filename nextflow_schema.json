@@ -269,7 +269,7 @@
         },
         "pipelines_testdata_base_path": {
 	     "type": "string",
-             "default": "https://raw.githubusercontent.com/nf-core/test-datasets/modules",
+             "default": "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/",
              "description": "Base for test data directory",
              "hidden": true
         }
