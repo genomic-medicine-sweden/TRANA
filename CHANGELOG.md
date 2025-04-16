@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `nf-test`
 - Added `pre-commit` checks, which includes the `prettier` tool
 - Added GitHub Actions workflows for `nf-core` linting checks
+- Updated nf-core modules to include nf-tests and added minimal test
 
 ### Fixed
 

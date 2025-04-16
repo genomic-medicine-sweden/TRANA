@@ -1,4 +1,4 @@
-me: cutadapt
+name: cutadapt
 description: Perform adapter/quality trimming on sequencing reads
 keywords:
   - trimming

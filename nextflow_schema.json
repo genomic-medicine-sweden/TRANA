@@ -248,7 +248,7 @@
         },
         "trace_timestamp": {
             "type": "string",
-            "default": "2025-03-27_15-16-28"
+            "default": "2025-04-16_10-58-28"
         },
         "igenomes_ignore": {
             "type": "boolean",
@@ -263,6 +263,12 @@
         "genomes": {
             "type": "string",
             "default": "[]"
+        },
+        "pipelines_testdata_base_path": {
+            "type": "string",
+            "default": "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/",
+            "description": "Base for test data directory",
+            "hidden": true
         }
     }
 }
