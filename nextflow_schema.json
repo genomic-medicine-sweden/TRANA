@@ -10,7 +10,10 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": ["input", "outdir"],
+            "required": [
+                "input",
+                "outdir"
+            ],
             "properties": {
                 "input": {
                     "type": "string",
@@ -144,7 +147,7 @@
         },
         "krona_taxonomy_tab": {
             "type": "string",
-            "default": "assets/databases/krona/taxonomy/taxonomy.tab"
+            "default": "/home/proj/development/microbial/metagenomics/sofia_workspace/gms_16S/assets/databases/krona/taxonomy/taxonomy.tab"
         },
         "merge_fastq_pass": {
             "type": "string"
@@ -237,7 +240,7 @@
         },
         "master_template": {
             "type": "string",
-            "default": "assets/master_template.html"
+            "default": "/home/proj/development/microbial/metagenomics/sofia_workspace/gms_16S/assets/master_template.html"
         },
         "save_merged_reads": {
             "type": "boolean",
@@ -248,7 +251,7 @@
         },
         "trace_timestamp": {
             "type": "string",
-            "default": "2025-03-27_15-16-28"
+            "default": "2025-04-16_10-58-28"
         },
         "igenomes_ignore": {
             "type": "boolean",
@@ -263,6 +266,12 @@
         "genomes": {
             "type": "string",
             "default": "[]"
+        },
+        "pipelines_testdata_base_path": {
+	     "type": "string",
+             "default": "https://raw.githubusercontent.com/nf-core/test-datasets/modules",
+             "description": "Base for test data directory",
+             "hidden": true
         }
     }
 }
