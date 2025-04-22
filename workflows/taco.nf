@@ -20,7 +20,7 @@ include { NANOPLOT as NANOPLOT_PROCESSED_READS   } from '../modules/nf-core/nano
 include { PORECHOP_ABI                           } from '../modules/nf-core/porechop/abi/main.nf'
 include { SEQTK_SAMPLE                           } from '../modules/nf-core/seqtk/sample/main.nf'
 include { FILTLONG                               } from '../modules/nf-core/filtlong/main.nf'
-include { EMU_COMBINE_OUTPUTS         } from '../modules/local/emu/combine_outputs/main.nf'
+include { EMU_COMBINE_OUTPUTS                    } from '../modules/local/emu/combine_outputs/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
