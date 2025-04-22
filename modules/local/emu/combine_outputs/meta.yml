@@ -1,0 +1,55 @@
+name: "emu_combine_outputs"
+##  Add a description of the module and list keywords
+description: A taxonomic profiler for metagenomic 16S data optimized for error prone long reads. This is the tool for combining the result files into one
+keywords:
+  - Metagenomics
+  - 16S
+  - Nanopore
+
+tools:
+  - "emu":
+      ## TODO nf-core: Add a description and other details for the software below
+      description: "Emu is a relative abundance estimator for 16s genomic data."
+      homepage: "https://gitlab.com/treangenlab/emu"
+      documentation: "https://gitlab.com/treangenlab/emu"
+      tool_dev_url: "None"
+      doi: "https://doi.org/10.1038/s41592-022-01520-4"
+      licence: "['MIT']"
+
+## TODO nf-core: Add a description of all of the variables used as input
+input:
+  # Only when we have meta
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  #
+  ## TODO nf-core: Delete / customise this example input
+  - report:
+      type: file
+      description: All .tsv files from emu abundance
+      pattern: "*.{rel-abundance.tsv}"
+
+## TODO nf-core: Add a description of all of the variables used as output
+output:
+  #Only when we have meta
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  #
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+  ## TODO nf-core: Delete / customise this example output
+  - combined_report:
+      type: file
+      description: Report (tsv file) over detected species and estimated number of reads and relative abundance
+      pattern: "{collected_reports_dir/emu-combined-*.tsv}"
+
+
+authors:
+  - "@fwa93"
