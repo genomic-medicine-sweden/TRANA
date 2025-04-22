@@ -266,7 +266,7 @@
         },
         "pipelines_testdata_base_path": {
             "type": "string",
-            "default": "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/",
+            "default": "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/",
             "description": "Base for test data directory",
             "hidden": true
         }
