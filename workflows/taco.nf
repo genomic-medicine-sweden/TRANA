@@ -9,7 +9,7 @@ include { softwareVersionsToYAML                 } from '../subworkflows/nf-core
 include { paramsSummaryMultiqc                   } from '../subworkflows/nf-core/utils_nfcore_pipeline/main.nf'
 include { methodsDescriptionText                 } from '../subworkflows/local/utils_nfcore_taco_pipeline/main.nf'
 include { GENERATE_MASTER_HTML                   } from '../modules/local/generate_master_html/main.nf'
-include { EMU_ABUNDANCE                          } from '../modules/local/emu/abundance/main.nf'
+include { EMU_ABUNDANCE                          } from '../modules/nf-core/emu/abundance/main.nf'
 include { KRONA_KTIMPORTTAXONOMY                 } from '../modules/nf-core/krona/ktimporttaxonomy/main.nf'
 include { CUSTOM_DUMPSOFTWAREVERSIONS            } from '../modules/nf-core/custom/dumpsoftwareversions/main.nf'
 include { MULTIQC                                } from '../modules/nf-core/multiqc/main.nf'
@@ -20,6 +20,7 @@ include { NANOPLOT as NANOPLOT_PROCESSED_READS   } from '../modules/nf-core/nano
 include { PORECHOP_ABI                           } from '../modules/nf-core/porechop/abi/main.nf'
 include { SEQTK_SAMPLE                           } from '../modules/nf-core/seqtk/sample/main.nf'
 include { FILTLONG                               } from '../modules/nf-core/filtlong/main.nf'
+include { UNTAR                                  } from '../modules/nf-core/untar/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -141,7 +142,14 @@ workflow TACO {
     //
     // MODULE: run EMU abundance calculation
     //
-    EMU_ABUNDANCE(ch_processed_sampled_reads)
+    ch_db = Channel.value([
+        [ id: 'emu_db' ],
+        file(params.db)
+    ])
+
+    UNTAR(ch_db)
+    ch_untar_out = UNTAR.out.untar.map { meta, path -> path }
+    EMU_ABUNDANCE(ch_processed_sampled_reads, ch_untar_out)
     ch_versions = ch_versions.mix(EMU_ABUNDANCE.out.versions.first())
 
     if (params.run_krona) {
