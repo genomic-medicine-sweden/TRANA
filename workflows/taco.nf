@@ -162,6 +162,7 @@ workflow TACO {
         .set { collected_files }
     // collected_files.view()
     EMU_COMBINE_OUTPUTS(collected_files)
+    ch_versions = ch_versions.mix(EMU_COMBINE_OUTPUTS.out.versions.first())
 
     // collect tool versions.  
     CUSTOM_DUMPSOFTWAREVERSIONS(ch_versions.unique().collectFile(name: 'collated_versions.yml'))
