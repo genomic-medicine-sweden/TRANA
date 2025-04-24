@@ -47,17 +47,14 @@ jobs:
             profile: "singularity"
     steps:
       - name: Check out pipeline code
-        uses: actions/checkout@v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Nextflow
-        # For running (locally) with ACT, we use a docker image with Nextflow pre-installed
-        if: "${{ ! github.event.act }}"
         uses: nf-core/setup-nextflow@v2
         with:
           version: "${{ matrix.NXF_VER }}"
-
-      - name: Install nf-test
-        uses: nf-core/setup-nf-test@v1
   
       - name: Set up Apptainer
         if: matrix.profile == 'singularity'
@@ -75,6 +72,9 @@ jobs:
           mkdir -p $NXF_SINGULARITY_CACHEDIR
           mkdir -p $NXF_SINGULARITY_LIBRARYDIR
 
+      - name: Install nf-test
+        uses: nf-core/setup-nf-test@v1
+      
       - name: Report disk-usage before make install
         run: df -h
 
