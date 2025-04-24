@@ -4,47 +4,41 @@ description: Collects the estimated counts from all the relative abundance outpu
 keywords:
   - Phyloseq
   - R
-
 tools:
-  - "phyloseq":
-      ## TODO nf-core: Add a description and other details for the software below
-      description: "Phloseq is a package and a data type in R to save taxonomic and phylognetic data."
-      homepage: "https://joey711.github.io/phyloseq/"
-      documentation: "https://joey711.github.io/phyloseq/"
-
+  - phyloseq:
+    ## TODO nf-core: Add a description and other details for the software below
+    description: "Phloseq is a package and a data type in R to save taxonomic and phylognetic data."
+    homepage: "https://joey711.github.io/phyloseq/"
+    documentation: "https://joey711.github.io/phyloseq/"
 ## TODO nf-core: Add a description of all of the variables used as input
 input:
   # Only when we have meta
   - meta:
-      type: map
-      description: |
-        Groovy Map containing sample information
-        e.g. [ id:'test', single_end:false ]
+    type: map
+    description: "Groovy Map containing sample information, e.g. [ id:'test', single_end:false ]"
   # Abundance file
   - report:
-      type: file
-      description: "A tab-delimited file with taxonomy IDs and (optionally) query IDs, magnitudes, and scores>
-      pattern: "*.{tsv}"
+    type: file
+    description: "A tab-delimited file with taxonomy IDs and (optionally) query IDs, magnitudes, and scores"
+    pattern: "*.{tsv}"
   #
   ## TODO nf-core: Delete / customise this example input
   - taxonomy_file:
-      type: file
-      description: Taxonomy file for the database that was used
-      pattern: "*.{tsv}"
-
+    type: file
+    description: Taxonomy file for the database that was used
+    pattern: "*.{tsv}"
 ## TODO nf-core: Add a description of all of the variables used as output
 output:
   #
   - versions:
-      type: file
-      description: File containing software versions
-      pattern: "versions.yml"
+    type: file
+    description: File containing software versions
+    pattern: "versions.yml"
   ## TODO nf-core: Delete / customise this example output
   - phyloseq_output:
-      type: file
-      description: Phyloseq object (called phyloseq_object in R) generated from the output of the pipeline, saved in RData format
-      pattern: "phyloseq_objet.RData"
-
+    type: file
+    description: Phyloseq object (called phyloseq_object in R) generated from the output of the pipeline, saved in RData format
+    pattern: "phyloseq_objet.RData"
 
 authors:
   - "@kdannenberg"
