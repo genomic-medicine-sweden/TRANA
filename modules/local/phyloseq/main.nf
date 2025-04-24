@@ -88,9 +88,13 @@ process PHYLOSEQ_OBJECT {
     phyloseq_object.R  $combined_report $taxonomy_file
     """
 
-    // cat <<-END_VERSIONS > versions.yml
-    // "${task.process}":
-    //     R: \$(R --version 2>&1 | sed -n 1p | sed 's/R version //' | sed 's/ (.*//')
-    // END_VERSIONS
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        r-base: \$(echo \$(R --version 2>&1) | sed 's/^.*R version //; s/ .*\$//')
+        bioconductor-phyloseq: \$(Rscript -e "library(phyloseq); cat(as.character(packageVersion('phyloseq')))")
+        r-tidyr: \$(Rscript -e "library(tidyr); cat(as.character(packageVersion('tidyr')))")
+        r-stringr: \$(Rscript -e "library(stringr); cat(as.character(packageVersion('stringr')))")
+    END_VERSIONS
+    """
 }
 
