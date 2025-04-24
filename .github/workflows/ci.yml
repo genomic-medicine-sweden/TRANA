@@ -3,9 +3,9 @@ name: CI
 # it completes without errors
 on:
   push:
-  branches:
-    - main
-    - dev
+    branches:
+      - main
+      - dev
   pull_request:
     branches:
       - main
@@ -21,16 +21,14 @@ concurrency:
 
 jobs:
   test:
-    name: Test
-    #name: "Run pipeline with test data (${{ matrix.NXF_VER }} | ${{ matrix.test_name }} | ${{ matrix.profile }})"
+    name: Install and run self-test pipeline
     # Only run on push if this is in the main repository
-    if: "${{ github.event_name != 'push' || (github.event_name == 'push' && github.repository == 'genomic-medicine-sweden/gms_16S') }}"
+    if: "${{ github.repository_owner == 'genomic-medicine-sweden' }}"
     runs-on: ubuntu-latest
     strategy:
-      #fail-fast: false
       matrix:
         NXF_VER:
-          - "24.04.2"
+          - "latest-everything"
         profile:
           - "conda"
           - "docker"
@@ -43,37 +41,26 @@ jobs:
         exclude:
           - is_master: false
             profile: "conda"
-    
-     steps:
+    steps:
       - name: Check out pipeline code
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v3
 
-      - name: Set up Nextflow
-        uses: nf-core/setup-nextflow@v2
+      - name: Install Nextflow
+        # For running (locally) with ACT, we use a docker image with Nextflow pre-installed
+        if: "${{ ! github.event.act }}"
+        uses: nf-core/setup-nextflow@v1
         with:
           version: "${{ matrix.NXF_VER }}"
-  
-      - name: Set up Apptainer
-        if: matrix.profile == 'singularity'
-        uses: eWaterCycle/setup-apptainer@main
+
+      - name: Install nf-test
+        uses: nf-core/setup-nf-test@v1
 
       - name: Install Singularity
         # For running (locally) with ACT, we use a docker image with Singularity already installed
         if: "${{ ! github.event.act }}"
         run: |
-          wget https://github.com/apptainer/singularity/releases/download/v3.8.7/singularity-container_3.8.7_amd64.deb && sudo dpkg -i singularity-container_3.8.7_amd64.deb 
- 
-      - name: Set up Singularity
-        if: matrix.profile == 'singularity'
-        run: |
-          mkdir -p $NXF_SINGULARITY_CACHEDIR
-          mkdir -p $NXF_SINGULARITY_LIBRARYDIR
+          wget https://github.com/apptainer/singularity/releases/download/v3.8.7/singularity-container_3.8.7_amd64.deb && sudo dpkg -i singularity-container_3.8.7_amd64.deb
 
-      - name: Install nf-test
-        uses: nf-core/setup-nf-test@v1
-      
       - name: Report disk-usage before make install
         run: df -h
 
@@ -84,28 +71,21 @@ jobs:
         run: df -h
 
       # Make sure we can run a full pipeline from the commandline as well
-      #- name: Run pipeline from the commandline with test data
-      #  run: |
-      #    nextflow  \
-      #      -log $(pwd)/nextflow.log \
-      #      run main.nf \
-      #      -profile singularity,test \
-      #      --outdir results \
-      #      --db $(pwd)/assets/databases/emu_database \
-      #      --seqtype map-ont \
-      #      --quality_filtering \
-      #      --longread_qc_qualityfilter_minlength 1200 \
-      #      --longread_qc_qualityfilter_maxlength 1800 \
-      #      --merge_fastq_pass $(pwd)/assets/test_assets/ci
+      - name: Run pipeline from the commandline with test data
+        run: |
+          nextflow  \
+            -log $(pwd)/nextflow.log \
+            run main.nf \
+            -profile singularity,test \
+            --outdir results \
+            --db $(pwd)/assets/databases/emu_database \
+            --seqtype map-ont \
+            --quality_filtering \
+            --longread_qc_qualityfilter_minlength 1200 \
+            --longread_qc_qualityfilter_maxlength 1800 \
+            --merge_fastq_pass $(pwd)/assets/test_assets/ci
 
       # Run via nf-test for more detailed checking
       - name: Run nf-test
         run: |
-           nf-test test tests/main.nf.test
-
-      - name: Clean up Disk space
-        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.1
-
-      - name: "Run pipeline with test data ${{ matrix.NXF_VER }} | ${{ matrix.test_name }} | ${{ matrix.profile }}"
-        run: |
-          nextflow run ${GITHUB_WORKSPACE} -profile ${{ matrix.test_name }},${{ matrix.profile }} --outdir ./results
+          nf-test test tests/main.nf.test
