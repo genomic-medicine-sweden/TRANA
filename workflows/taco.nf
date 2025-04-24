@@ -20,7 +20,8 @@ include { NANOPLOT as NANOPLOT_PROCESSED_READS   } from '../modules/nf-core/nano
 include { PORECHOP_ABI                           } from '../modules/nf-core/porechop/abi/main.nf'
 include { SEQTK_SAMPLE                           } from '../modules/nf-core/seqtk/sample/main.nf'
 include { FILTLONG                               } from '../modules/nf-core/filtlong/main.nf'
-
+include { COMBINE_REPORTS                        } from '../modules/local/phyloseq/main.nf'
+include { PHYLOSEQ_OBJECT                        } from '../modules/local/phyloseq/main.nf'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -210,6 +211,31 @@ workflow TACO {
     versions                = ch_versions                        // channel: [ path(versions.yml) ]
     nanostats_unprocessed   = (params.seqtype == "map-ont") ? NANOPLOT_UNPROCESSED_READS.out.txt : Channel.empty()  // channel: [ path(master.html) ]
     nanostats_processed     = (params.seqtype == "map-ont") ? NANOPLOT_PROCESSED_READS.out.txt   : Channel.empty()  // channel: [ path(master.html) ]
+
+
+
+    //
+    // PHYLOSEQ
+    //
+
+    ch_tax_file          = Channel.fromPath("$projectDir/assets/databases/emu_database/taxonomy.tsv", checkIfExists: true)
+
+    report_ch = EMU_ABUNDANCE.out.report
+
+    all_reports_ch = report_ch
+        .map{ meta, path -> path}
+        .collect()
+
+    COMBINE_REPORTS (
+        // meta seems to be missing...
+        all_reports_ch
+    )
+
+    PHYLOSEQ_OBJECT (
+        COMBINE_REPORTS.out.combinedreport,
+        ch_tax_file
+    )
+    // ch_versions = ch_versions.mix(PHYLOSEQ.out.versions)
 
 
 }
