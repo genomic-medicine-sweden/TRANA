@@ -148,7 +148,7 @@ workflow TACO {
     ])
 
     ch_db_for_untar = ch_db.branch  {
-    	untar: it[1].name.endsWith( ".tar.gz" )
+    	untar: it[1].name.endsWith(".tar.gz")
         skip: true
     }
 
@@ -156,7 +156,7 @@ workflow TACO {
     UNTAR(ch_db_for_untar.untar)
     ch_untar_out = UNTAR.out.untar.map { meta, path -> path }
 
-    ch_final_db = ch_untar_out.mix(ch_db_for_untar.other.map { it[1] })
+    ch_final_db = ch_untar_out.mix(ch_db_for_untar.skip.map { it[1] })
      
     EMU_ABUNDANCE(ch_processed_sampled_reads, ch_final_db)
     ch_versions = ch_versions.mix(EMU_ABUNDANCE.out.versions.first())
