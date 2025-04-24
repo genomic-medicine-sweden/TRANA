@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Moved nanostats_unprocessed process execution into seqtype SR if statement
 - Conditionally emit nanostats unprocessed/processed to avoid undefined output error when using --seqtype SR
 - Fixed a broken configuration file in `modules/local/emu/abundance/meta.yml`
+- Fixed failing pulls of some singularity containers by settings singularity.cacheDir
 
 ### Changed
 
