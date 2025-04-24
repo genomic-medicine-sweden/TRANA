@@ -65,11 +65,11 @@ jobs:
           mkdir -p $NXF_SINGULARITY_CACHEDIR
           mkdir -p $NXF_SINGULARITY_LIBRARYDIR
 
-#      - name: Install Singularity
-#        # For running (locally) with ACT, we use a docker image with Singularity already installed
-#        if: "${{ ! github.event.act }}"
-#        run: |
-#          wget https://github.com/apptainer/singularity/releases/download/v3.8.7/singularity-container_3.8.7_amd64.deb && sudo dpkg -i singularity-container_3.8.7_amd64.deb
+      - name: Install Singularity
+        # For running (locally) with ACT, we use a docker image with Singularity already installed
+        if: "${{ ! github.event.act }}"
+        run: |
+          wget https://github.com/apptainer/singularity/releases/download/v3.8.7/singularity-container_3.8.7_amd64.deb && sudo dpkg -i singularity-container_3.8.7_amd64.deb
 
       - name: Report disk-usage before make install
         run: df -h
