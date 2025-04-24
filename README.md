@@ -112,8 +112,8 @@ nextflow run main.nf \
 
 ## Runs with shortreads
 
-When running TACO with short reads, the primer sequences are trimmed using cutadapt by default using the provided primer sequences.
-The primer sequences can be provided in the samplesheet or passed as arguments (FW_primer, RV_primer). Primer trimming with cutadapt can be skipped with --skip_cutadapt.
+When running TACO with short reads, the primer sequences are trimmed using Cutadapt by default using the provided primer sequences.
+The primer sequences can be provided in the sample-sheet or passed as arguments (FW_primer, RV_primer). Primer trimming with Cutadapt can be skipped with --skip_cutadapt.
 
 ```bash
 sample,fastq_1,fastq_2,FW_primer,RV_primer
@@ -145,7 +145,7 @@ nextflow run main.nf \
 There are two types of sample sheets that can be used:
 
 1. If the fastq files are already concatenated/merged i.e., the fastq-files in
-   Nanopore barcode directories have been concataned already, the `--input` can
+   Nanopore barcode directories have been concatenated already, the `--input` can
    be used. `--input` expects a `.csv` sample sheet with 3 columns (note the
    header names). It looks like this (See also the `examples` directory):
    ```csv
@@ -155,7 +155,7 @@ There are two types of sample sheets that can be used:
    ```
 2. If the fastq files are separated in their respective barcode folder i.e., you
    have several fastq files for each sample and they are organized in barcode
-   directories in a fastq_pass dir.
+   directories in a fastq_pass directory.
    a) If you do not want to create a sample sheet for the barcodes, then the
    results will be named according to the barcode folders. flag
    `--merge_fastq_pass`

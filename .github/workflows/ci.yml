@@ -35,7 +35,6 @@ jobs:
       fail-fast: false
       matrix:
         NXF_VER:
-          - "24.10.0"
           - "latest-everything"
         profile:
           - "conda"
@@ -49,8 +48,6 @@ jobs:
         exclude:
           - is_master: false
             profile: "conda"
-          - is_master: false
-            profile: "singularity"
     steps:
       - name: Check out pipeline code
         uses: actions/checkout@v3
