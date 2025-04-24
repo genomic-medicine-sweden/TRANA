@@ -85,6 +85,7 @@ jobs:
             run main.nf \
             -profile singularity,test \
             --outdir results \
+            --db $(pwd)/assets/databases/emu_database \
             --seqtype map-ont \
             --quality_filtering \
             --longread_qc_qualityfilter_minlength 1200 \

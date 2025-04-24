@@ -8,7 +8,7 @@ nextflow_pipeline {
         when {
             params {
                 outdir = "$projectDir/results"
-                //db = "$projectDir/assets/databases/emu_database"
+                db = "$projectDir/assets/databases/emu_database"
                 seqtype = "map-ont"
                 quality_filtering = true
                 longread_qc_qualityfilter_minlength = 1200
