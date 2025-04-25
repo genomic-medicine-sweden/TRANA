@@ -50,6 +50,5 @@ output:
       description: Report (tsv file) over detected species and estimated number of reads and relative abundance
       pattern: "{collected_reports_dir/emu-combined-*.tsv}"
 
-
 authors:
   - "@fwa93"
