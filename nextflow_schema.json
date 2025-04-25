@@ -10,7 +10,10 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": ["input", "outdir"],
+            "required": [
+                "input",
+                "outdir"
+            ],
             "properties": {
                 "input": {
                     "type": "string",
@@ -269,6 +272,22 @@
             "default": "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/",
             "description": "Base for test data directory",
             "hidden": true
+        },
+        "combine_levels": {
+            "type": "string",
+            "default": "family",
+            "description": "Taxonomic level which emu combine-output will make results for"
+        },
+        "combine_counts": {
+            "type": "boolean",
+            "description": "Estimated read counts instead of relative abundance"
+        },
+        "combine_split_tables": {
+            "type": "boolean",
+            "description": "Two output tables:abundances and taxonomy lineages"
         }
-    }
+    },
+    "required": [
+        "db"
+    ]
 }
