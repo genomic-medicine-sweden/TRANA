@@ -31,7 +31,7 @@ process EMU_COMBINE_OUTPUTS {
     //  Where applicable please provide/convert compressed files as input/output
     //               e.g. "*.fastq.gz" and NOT "*.fastq", "*.bam" and NOT "*.sam" etc.
     path(collected_files)
-   
+
     output:
     path("collected_reports_dir/emu-combined-*.tsv"), emit: combined_report
     path "versions.yml"           , emit: versions

@@ -155,16 +155,15 @@ workflow TACO {
 
     // MODULE: run emu combine-outputs
     ch_emu_combine_input_files = Channel.empty()
-    // Collect all reports into a single list containing the paths 
+    // Collect all reports into a single list containing the paths
     ch_emu_combine_input_files = EMU_ABUNDANCE.out.report
         .map { it[1] }  // Extract only the file path from the tuple (meta, path)
         .collect()
         .set { collected_files }
-    // collected_files.view()
     EMU_COMBINE_OUTPUTS(collected_files)
     ch_versions = ch_versions.mix(EMU_COMBINE_OUTPUTS.out.versions.first())
 
-    // collect tool versions.  
+    // collect tool versions.
     CUSTOM_DUMPSOFTWAREVERSIONS(ch_versions.unique().collectFile(name: 'collated_versions.yml'))
 
 /*
