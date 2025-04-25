@@ -9,12 +9,12 @@ Content-Type: text/html; charset=utf-8
 $email_html
 
 --nfcoremimeboundary
-Content-Type: image/png;name="nf-core-gmsemu_logo.png"
+Content-Type: image/png;name="genomic-medicine-sweden-taco_logo.png"
 Content-Transfer-Encoding: base64
 Content-ID: <nfcorepipelinelogo>
-Content-Disposition: inline; filename="gms_16s_logo_light.png"
+Content-Disposition: inline; filename="taco_logo_light.png"
 
-<% out << new File("$projectDir/assets/gms_16s_logo_light.png").
+<% out << new File("$projectDir/assets/taco_logo_light.png").
     bytes.
     encodeBase64().
     toString().

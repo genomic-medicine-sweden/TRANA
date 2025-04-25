@@ -1,4 +1,4 @@
-# nf-core/gmsemu: Output
+# genomic-medicine-sweden/taco: Output
 
 ## Introduction
 

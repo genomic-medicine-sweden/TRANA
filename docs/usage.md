@@ -1,6 +1,7 @@
-# gms_16S: Usage
+# TACO: Usage
 
 ## Introduction
+
 This Nextflow pipeline utilizes Falco, Porechop_ABI, Longfilt, and EMU for taxonomic profiling of 16S rRNA gene sequences. Built with Nextflow, it ensures portability and reproducibility across different computational infrastructures. Falco performs quality control, Porechop_ABI trims adapters and demultiplexes data, Longfilt filters the fastq-files such that only reads that are close to 1500 bp are used, and EMU assigns taxonomic classifications. The pipeline enables microbial community analysis, offering insights into the diversity in samples.
 
 ## Samplesheet input
@@ -12,7 +13,6 @@ You will need to create a samplesheet with information about the samples you wou
 ```
 
 ### Input file example
-
 
 ```console
 sample,fastq_1,fastq_2
@@ -51,7 +51,7 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run main.nf --input assets/samplesheet_medium.csv     --outdir results_emu     --db /aux/db/workdir_fwa010/emu_pipe_project/gms_16S/assets/databases/emu_database/     --seqtype map-ont     -profile singularity,test 
+nextflow run main.nf --input assets/samplesheet_medium.csv     --outdir results_emu     --db /aux/db/workdir_fwa010/emu_pipe_project/taco/assets/databases/emu_database/     --seqtype map-ont     -profile singularity,test
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -70,10 +70,8 @@ work                # Directory containing the nextflow working files
 When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you're running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:
 
 ```bash
-nextflow pull gms_16S
+nextflow pull genomic-medicine-sweden/taco
 ```
-
-
 
 ## Core Nextflow arguments
 
@@ -116,30 +114,26 @@ You can also supply a run name to resume a specific run: `-resume [run-name]`. U
 
 ### `-c`
 
-Specify the path to a specific config file (this is a core Nextflow command). 
-
-
+Specify the path to a specific config file (this is a core Nextflow command).
 
 #### memory issues
+
 If you get problems with the memory, you can try to tweak this:
 Increase the amount of CPUs, memory, and time for the whole pipeline. Therefor you can try to increase the resource for the parameters `--max_cpus`, `--max_memory`, and `--max_time`.
 
 #### Advanced option on process level
 
-The custom config below can  be provided to the pipeline via the [`-c`](#-c) parameter.
+The custom config below can be provided to the pipeline via the [`-c`](#-c) parameter.
 
 ```nextflow
 process {
-    withName: 'GMS_EMU:GMSEMU:EMU_ABUNDANCE' {
+    withName: 'GMS_TACO:TACO:EMU_ABUNDANCE' {
         memory = 50.GB
     }
 }
 ```
 
-
 > If you get a warning suggesting that the process selector isn't recognised check that the process name has been specified correctly.
-
-
 
 ## Running in the background
 
@@ -149,5 +143,3 @@ The Nextflow `-bg` flag launches Nextflow in the background, detached from your 
 
 Alternatively, you can use `screen` / `tmux` or similar tool to create a detached session which you can log back into at a later time.
 Some HPC setups also allow you to run nextflow within a cluster job submitted your job scheduler (from where it submits more jobs).
-
-

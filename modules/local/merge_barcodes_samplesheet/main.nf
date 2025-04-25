@@ -10,7 +10,7 @@ process MERGE_BARCODES_SAMPLESHEET {
         'quay.io/biocontainers/nf-core:3.0.2' }"
 
     input:
-    path('barcodes_samplesheet') 
+    path('barcodes_samplesheet')
     path('fastq_pass')
 
     output:
@@ -18,7 +18,7 @@ process MERGE_BARCODES_SAMPLESHEET {
     path('fastq_pass_merged/*fastq.gz') , emit : fastq_files_merged
     path('fastq_pass_merged')           , emit : fastq_dir_merged
     path "versions.yml"                 , emit: versions
-    
+
     script:
     """
     merge_barcodes_samplesheet.py $barcodes_samplesheet fastq_pass_merged $fastq_pass

@@ -1,5 +1,5 @@
 process SEQTK_SAMPLE {
-    tag "${meta.id}"
+    tag "$meta.id"
     label 'process_single'
 
     conda "${moduleDir}/environment.yml"
@@ -31,9 +31,9 @@ process SEQTK_SAMPLE {
     do
         seqtk \\
             sample \\
-            ${args} \\
+            $args \\
             \$f \\
-            ${sample_size} \\
+            $sample_size \\
             | gzip --no-name > ${prefix}_\$(basename \$f)
     done
 
@@ -45,6 +45,7 @@ process SEQTK_SAMPLE {
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
+
     """
     echo "" | gzip > ${prefix}.fastq.gz
 

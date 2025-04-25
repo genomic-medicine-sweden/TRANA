@@ -159,3 +159,31 @@ assets/databases/emu_database/taxonomy.tsv: assets/databases/emu_database/taxono
 
 assets/databases/krona/taxonomy/taxonomy.tab: assets/databases/krona/taxonomy/taxonomy.tab.gz
 	zcat $< > $@
+
+schema:
+	nf-core pipelines schema build
+
+precommit:
+	pre-commit run --all-files
+
+lint:
+	nf-core pipelines lint
+
+test:
+	nf-test test
+
+test-cli:
+	nextflow  \
+		-log $$(pwd)/nextflow.log \
+		run main.nf \
+		-profile singularity,test \
+		--outdir results \
+		--db $$(pwd)/assets/databases/emu_database \
+		--seqtype map-ont \
+		--quality_filtering \
+		--longread_qc_qualityfilter_minlength 1200 \
+		--longread_qc_qualityfilter_maxlength 1800 \
+		--merge_fastq_pass $$(pwd)/assets/test_assets/ci
+
+
+check: precommit lint test

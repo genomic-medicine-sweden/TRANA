@@ -1,20 +1,13 @@
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    VALIDATE INPUTS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-def summary_params = NfcoreSchema.paramsSummaryMap(workflow, params)
-
-// Validate input parameters
-WorkflowGmsemu.initialise(params, log)
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+include { paramsSummaryMap                       } from 'plugin/nf-schema'
+include { softwareVersionsToYAML                 } from '../subworkflows/nf-core/utils_nfcore_pipeline/main.nf'
+include { paramsSummaryMultiqc                   } from '../subworkflows/nf-core/utils_nfcore_pipeline/main.nf'
+include { methodsDescriptionText                 } from '../subworkflows/local/utils_nfcore_taco_pipeline/main.nf'
 include { GENERATE_MASTER_HTML                   } from '../modules/local/generate_master_html/main.nf'
 include { EMU_ABUNDANCE                          } from '../modules/local/emu/abundance/main.nf'
 include { KRONA_KTIMPORTTAXONOMY                 } from '../modules/nf-core/krona/ktimporttaxonomy/main.nf'
@@ -27,6 +20,7 @@ include { NANOPLOT as NANOPLOT_PROCESSED_READS   } from '../modules/nf-core/nano
 include { PORECHOP_ABI                           } from '../modules/nf-core/porechop/abi/main.nf'
 include { SEQTK_SAMPLE                           } from '../modules/nf-core/seqtk/sample/main.nf'
 include { FILTLONG                               } from '../modules/nf-core/filtlong/main.nf'
+include { EMU_COMBINE_OUTPUTS                    } from '../modules/local/emu/combine_outputs/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,7 +28,7 @@ include { FILTLONG                               } from '../modules/nf-core/filt
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-workflow GMSEMU {
+workflow TACO {
 
     take:
     ch_samplesheet  // channel: samplesheet read in from --input
@@ -44,6 +38,7 @@ workflow GMSEMU {
 
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
+    summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
 
     //
     // MODULE: Run FastQC
@@ -158,6 +153,17 @@ workflow GMSEMU {
         ch_versions = ch_versions.mix(KRONA_KTIMPORTTAXONOMY.out.versions.first())
     }
 
+    // MODULE: run emu combine-outputs
+    ch_emu_combine_input_files = Channel.empty()
+    // Collect all reports into a single list containing the paths
+    ch_emu_combine_input_files = EMU_ABUNDANCE.out.report
+        .map { it[1] }  // Extract only the file path from the tuple (meta, path)
+        .collect()
+        .set { collected_files }
+    EMU_COMBINE_OUTPUTS(collected_files)
+    ch_versions = ch_versions.mix(EMU_COMBINE_OUTPUTS.out.versions.first())
+
+    // collect tool versions.
     CUSTOM_DUMPSOFTWAREVERSIONS(ch_versions.unique().collectFile(name: 'collated_versions.yml'))
 
 /*
@@ -175,8 +181,8 @@ workflow GMSEMU {
     ch_multiqc_logo             = params.multiqc_logo   ? Channel.fromPath(params.multiqc_logo, checkIfExists: true) : Channel.empty()
     ch_multiqc_custom_methods_description = params.multiqc_methods_description ? file(params.multiqc_methods_description, checkIfExists: true) : file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
 
-    ch_workflow_summary         = Channel.value(WorkflowGmsemu.paramsSummaryMultiqc(workflow, summary_params))
-    ch_methods_description      = Channel.value(WorkflowGmsemu.methodsDescriptionText(workflow, ch_multiqc_custom_methods_description))
+    ch_workflow_summary         = Channel.value(paramsSummaryMultiqc(summary_params))
+    ch_methods_description      = Channel.value(methodsDescriptionText(ch_multiqc_custom_methods_description))
 
     ch_multiqc_files = Channel.empty()
     ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
@@ -192,7 +198,9 @@ workflow GMSEMU {
         ch_multiqc_files.collect(),
         ch_multiqc_config.toList(),
         ch_multiqc_custom_config.toList(),
-        ch_multiqc_logo.toList()
+        ch_multiqc_logo.toList(),
+        [],
+        []
     )
     multiqc_report = MULTIQC.out.report.toList()
 
