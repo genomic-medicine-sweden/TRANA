@@ -1,0 +1,35 @@
+nextflow_workflow {
+
+    name "Test Workflow PIPELINE_INITIALISATION"
+    script "../main.nf"
+    workflow "PIPELINE_INITIALISATION"
+
+    test("Should run without failures") {
+
+        when {
+            params {
+                outdir = "tests/results"
+                pipelines_testdata_base_path "../../../assets/examples/test_folder/"
+                input = "../../../assets/examples/test_folder/samplesheet.csv"
+            }
+            workflow {
+                """
+                // define inputs of the workflow here. Example:
+                input[0] = false         // Show version
+                input[1] = false         // Validate params
+                input[2] = false         // Monochrome logs
+                input[3] = ""            // Nextflow CLI args
+                input[4] = params.outdir // Out dir
+                input[5] = params.pipelines_testdata_base_path + "samplesheet.csv" // Input
+                """
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+}
