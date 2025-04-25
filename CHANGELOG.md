@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added GitHub Actions workflows for `nf-core` linting checks
 - Updated nf-core modules to include nf-tests and added minimal test
 - Added emu-combine-output
+
 ### Fixed
 
 - Fixed unused `NANOPLOT2` to `NANOPLOT_PROCESSED_READS`
