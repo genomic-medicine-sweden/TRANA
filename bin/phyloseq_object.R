@@ -59,7 +59,16 @@ gms16s_to_phyloseq <- function(counts_file, taxonomy_file,
         "species.subgroup", "species.group")]
 
     gms_taxonomy <- as.matrix(gms_taxonomy_general)
-    colnames(gms_taxonomy) <- sapply(colnames(gms_taxonomy), gtools::capwords)
+    ## code adapted from gtools::capwords
+    word_caps <- function(s, strict = TRUE) {
+        return(paste(toupper(substring(s, 1, 1)), {
+            s <- substring(s, 2)
+            if (strict)
+                tolower(s)
+            else s
+        }, sep = ""))
+    }
+    colnames(gms_taxonomy) <- sapply(colnames(gms_taxonomy), word_caps)
 
     empty_sample_data_table <- as.data.frame(matrix(colnames(otu_tab_num), nrow = ncol(otu_tab_num), dimnames = list(colnames(otu_tab_num), "SampleID")))
 

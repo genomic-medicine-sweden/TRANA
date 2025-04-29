@@ -63,11 +63,11 @@ process PHYLOSEQ_OBJECT {
 
     // //               Software MUST be pinned to channel (i.e. "bioconda"), version (i.e. "1.10").
     // //               For Conda, the build (i.e. "h9402c20_2") must be EXCLUDED to support installation on different operating systems.
-    // conda "bioconda::emu=3.4.4"
-    //  container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    //      'https://depot.galaxyproject.org/singularity/bioconductor-phyloseq:1.50.0':
-    //      'quay.io/biocontainers/bioconductor-phyloseq:1.50.0--r44hdfd78af_0' }"
     conda 'modules/local/phyloseq/env.yaml'
+
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/15/152f64a06bd7bf260139b6eae0bf7c6c7bc7f3e13011d9b70a32cc03e0986250/data':
+        'community.wave.seqera.io/library/bioconductor-phyloseq_r-base_r-stringr_r-tidyr:2c6c1953585e3a79' }"
 
     input:
     //  Where applicable all sample-specific information e.g. "id", "single_end", "read_group"
@@ -86,7 +86,6 @@ process PHYLOSEQ_OBJECT {
     script:
     """
     phyloseq_object.R  $combined_report $taxonomy_file
-    """
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
