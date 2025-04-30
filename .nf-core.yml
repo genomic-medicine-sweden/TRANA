@@ -4,6 +4,7 @@ lint:
     - CODE_OF_CONDUCT.md
     - .github/.dockstore.yml
     - .github/ISSUE_TEMPLATE/config.yml
+    - .github/workflows/template_version_comment.yml
     - assets/nf-core-taco_logo_light.png
     - docs/images/nf-core-taco_logo_light.png
     - docs/images/nf-core-taco_logo_dark.png
