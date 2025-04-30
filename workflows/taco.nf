@@ -231,16 +231,16 @@ workflow TACO {
     // PHYLOSEQ
     //
 
-    ch_tax_file          = Channel.fromPath("$projectDir/assets/databases/emu_database/taxonomy.tsv", checkIfExists: true)
+    ch_tax_file = Channel.fromPath("$projectDir/assets/databases/emu_database/taxonomy.tsv", checkIfExists: true)
 
     report_ch = EMU_ABUNDANCE.out.report
 
     all_reports_ch = report_ch
-        .map{ meta, path -> path}
+        .map{ meta, path -> path }
         .collect()
 
     COMBINE_REPORTS (
-        // meta seems to be missing...
+        // Should we add the meta-map here?
         all_reports_ch
     )
 
@@ -248,9 +248,9 @@ workflow TACO {
         COMBINE_REPORTS.out.combinedreport,
         ch_tax_file
     )
-    // ch_versions = ch_versions.mix(PHYLOSEQ.out.versions)
 
-
+    // What to do with versions?
+    //ch_versions = ch_versions.mix(PHYLOSEQ.out.versions)
 }
 
 /*

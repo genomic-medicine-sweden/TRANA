@@ -27,34 +27,14 @@ process COMBINE_REPORTS {
     // collect all reports
 
     output:
-    //tuple val(meta), path("${report.baseName}samplename.tsv"), emit: report
-    //path "$report.baseName-samplename.tsv", emit: reportsamplename
     path "combined-rel-abundance.tsv", emit: combinedreport
-
-
 
 
     script:
     """
     bash combine_tsv.sh "${report}" > "combined-rel-abundance.tsv"
     """
-
-    //"""
-    //#!/usr/bin/env nextflow
-    // def lines = report.splitCsv()
-    // for (List row : lines) {
-    //    println "$row\t${meta.id}"
-    // }
-
-    // def f = file(report)
-    // def lines = f.splitCsv()
-    // for (List row : lines) {
-    //     log.info "${row[0]} -- ${row[2]}"
-    // }
-    //"""
 }
-
-
 
 
 process PHYLOSEQ_OBJECT {
