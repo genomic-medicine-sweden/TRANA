@@ -249,8 +249,7 @@ workflow TACO {
         ch_tax_file
     )
 
-    // What to do with versions?
-    //ch_versions = ch_versions.mix(PHYLOSEQ.out.versions)
+    ch_versions = ch_versions.mix(PHYLOSEQ_OBJECT.out.versions)
 }
 
 /*
