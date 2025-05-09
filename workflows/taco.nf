@@ -153,12 +153,10 @@ workflow TACO {
         ch_versions = ch_versions.mix(KRONA_KTIMPORTTAXONOMY.out.versions.first())
     }
 
-        //
-    // PHYLOSEQ
     //
-
+    // MODULE: Generate PHYLOSEQ object
+    //
     ch_tax_file = Channel.fromPath("$projectDir/assets/databases/emu_database/taxonomy.tsv", checkIfExists: true)
-
     report_ch = EMU_ABUNDANCE.out.report
 
     all_reports_ch = report_ch
@@ -166,7 +164,6 @@ workflow TACO {
         .collect()
 
     COMBINE_REPORTS (
-        // Should we add the meta-map here?
         all_reports_ch
     )
 

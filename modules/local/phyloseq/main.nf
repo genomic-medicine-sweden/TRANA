@@ -11,8 +11,6 @@
 //  Optional inputs are not currently supported by Nextflow. However, using an empty
 //               list (`[]`) instead of a file can be used to work around this issue.
 process COMBINE_REPORTS {
-    debug true
-    // tag "${meta.id}"
     label 'process_single'
 
     input:
@@ -38,11 +36,10 @@ process COMBINE_REPORTS {
 
 
 process PHYLOSEQ_OBJECT {
-    debug true
     label 'process_single'
 
-    // //               Software MUST be pinned to channel (i.e. "bioconda"), version (i.e. "1.10").
-    // //               For Conda, the build (i.e. "h9402c20_2") must be EXCLUDED to support installation on different operating systems.
+    //               Software MUST be pinned to channel (i.e. "bioconda"), version (i.e. "1.10").
+    //               For Conda, the build (i.e. "h9402c20_2") must be EXCLUDED to support installation on different operating systems.
     conda 'modules/local/phyloseq/env.yaml'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -61,7 +58,6 @@ process PHYLOSEQ_OBJECT {
 
     output:
     path "phyloseq_object.RData"    , emit: phyloseq_output_RData
-    //path "phyloseq_object.RDS"      , emit: phyloseq_output_RDS
     path "versions.yml"             , emit: versions
 
     script:
