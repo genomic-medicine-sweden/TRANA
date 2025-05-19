@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added emu-combine-output
 - Removed authors-field in nextflow.config.
 - Added a module to output the result as a phyloseq object
+- Added figure for pipeline
 
 ### Fixed
 
