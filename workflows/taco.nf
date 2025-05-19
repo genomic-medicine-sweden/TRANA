@@ -21,7 +21,8 @@ include { PORECHOP_ABI                           } from '../modules/nf-core/pore
 include { SEQTK_SAMPLE                           } from '../modules/nf-core/seqtk/sample/main.nf'
 include { FILTLONG                               } from '../modules/nf-core/filtlong/main.nf'
 include { EMU_COMBINE_OUTPUTS                    } from '../modules/local/emu/combine_outputs/main.nf'
-
+include { COMBINE_REPORTS                        } from '../modules/local/phyloseq/main.nf'
+include { PHYLOSEQ_OBJECT                        } from '../modules/local/phyloseq/main.nf'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -163,7 +164,26 @@ workflow TACO {
     EMU_COMBINE_OUTPUTS(collected_files)
     ch_versions = ch_versions.mix(EMU_COMBINE_OUTPUTS.out.versions.first())
 
-    // collect tool versions.
+    //
+    // MODULE: Generate PHYLOSEQ object
+    //
+    ch_tax_file = Channel.fromPath("$projectDir/assets/databases/emu_database/taxonomy.tsv", checkIfExists: true)
+    report_ch = EMU_ABUNDANCE.out.report
+
+    all_reports_ch = report_ch
+        .map{ meta, path -> path }
+        .collect()
+
+    COMBINE_REPORTS (
+        all_reports_ch
+    )
+
+    PHYLOSEQ_OBJECT (
+        COMBINE_REPORTS.out.combinedreport,
+        ch_tax_file
+    )
+    ch_versions = ch_versions.mix(PHYLOSEQ_OBJECT.out.versions)
+
     CUSTOM_DUMPSOFTWAREVERSIONS(ch_versions.unique().collectFile(name: 'collated_versions.yml'))
 
 /*
@@ -222,6 +242,8 @@ workflow TACO {
     versions                = ch_versions                        // channel: [ path(versions.yml) ]
     nanostats_unprocessed   = (params.seqtype == "map-ont") ? NANOPLOT_UNPROCESSED_READS.out.txt : Channel.empty()  // channel: [ path(master.html) ]
     nanostats_processed     = (params.seqtype == "map-ont") ? NANOPLOT_PROCESSED_READS.out.txt   : Channel.empty()  // channel: [ path(master.html) ]
+
+
 
 
 }
