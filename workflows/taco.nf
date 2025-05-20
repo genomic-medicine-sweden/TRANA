@@ -166,23 +166,24 @@ workflow TACO {
 
     //
     // MODULE: Generate PHYLOSEQ object
-    //
-    ch_tax_file = Channel.fromPath("$projectDir/assets/databases/emu_database/taxonomy.tsv", checkIfExists: true)
-    report_ch = EMU_ABUNDANCE.out.report
+    if (params.phyloseq) {
+        ch_tax_file = Channel.fromPath("$projectDir/assets/databases/emu_database/taxonomy.tsv", checkIfExists: true)
+        report_ch = EMU_ABUNDANCE.out.report
 
-    all_reports_ch = report_ch
-        .map{ meta, path -> path }
-        .collect()
+        all_reports_ch = report_ch
+            .map{ meta, path -> path }
+            .collect()
 
-    COMBINE_REPORTS (
-        all_reports_ch
-    )
+        COMBINE_REPORTS (
+            all_reports_ch
+        )
 
-    PHYLOSEQ_OBJECT (
-        COMBINE_REPORTS.out.combinedreport,
-        ch_tax_file
-    )
-    ch_versions = ch_versions.mix(PHYLOSEQ_OBJECT.out.versions)
+        PHYLOSEQ_OBJECT (
+            COMBINE_REPORTS.out.combinedreport,
+            ch_tax_file
+        )
+        ch_versions = ch_versions.mix(PHYLOSEQ_OBJECT.out.versions)
+    }
 
     CUSTOM_DUMPSOFTWAREVERSIONS(ch_versions.unique().collectFile(name: 'collated_versions.yml'))
 
