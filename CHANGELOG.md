@@ -59,6 +59,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated the `ci.yml` config to run test via `nf-test` in addition to the normal test run via cli
 - Updated `README.md` with info about running `make install` to gunzip gzipped
   assets and useful `make` commands for developers.
+- Updated workflow image
+- Made phyloseq an option to protect against errors when using other databases than emu´s premade.
 
 ## [v0.1.0]
 

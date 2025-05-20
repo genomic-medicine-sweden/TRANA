@@ -277,11 +277,16 @@
         },
         "combine_counts": {
             "type": "boolean",
-            "description": "Estimated read counts instead of relative abundance"
+            "description": "Estimated read counts instead of relative abundance",
+            "default": true
         },
         "combine_split_tables": {
             "type": "boolean",
             "description": "Two output tables:abundances and taxonomy lineages"
+        },
+        "phyloseq": {
+            "type": "boolean",
+            "description": "Create a phyloseq object"
         }
     },
     "required": ["db"]
