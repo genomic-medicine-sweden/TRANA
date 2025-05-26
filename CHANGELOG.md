@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added a `generate_master_html` python script that creates `master.html` file containing a table of samples with corresponding pointers to each html output file
+- Added a `generate_master_html` python script that creates `master.html` file
+  containing a table of samples with corresponding pointers to each html output
+  file
 - Added repective `GENERATE_MASTER_HTML` process
 - Added `cmd.config`
 - Added `params.trace_timestamp` to `nextflow.config`
@@ -25,7 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added output argument to `generate_master_html.py`
 - Added prefix to `master.html` filename
 - Added `seqtk_sample` process
-- Added `Makefile` rules for `precommit`, `lint`, `schema`, `test` as well as a `check` command that runs all checks
+- Added `Makefile` rules for `precommit`, `lint`, `schema`, `test`,
+  `test-cli-fastq`, `test-cli-samplesheet`, as well as a `check` command that
+  runs all checks
 - Added `nf-test`
 - Added `pre-commit` checks, which includes the `prettier` tool
 - Added GitHub Actions workflows for `nf-core` linting checks
@@ -61,6 +65,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   assets and useful `make` commands for developers.
 - Updated workflow image
 - Made phyloseq an option to protect against errors when using other databases than emu´s premade.
+- Added steps in `PIPELINE_INITIALISATION` from nf-core template, and replaced workflow.onComplete code
+  with call to `PIPELINE_COMPLETION` subworkflow
 
 ## [v0.1.0]
 
