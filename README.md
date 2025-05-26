@@ -174,10 +174,11 @@ APPTAINER_TMPDIR
 NXF_SINGULARITY_CACHEDIR
 APPTAINER_CACHEDIR
 ```
+
 ## Multiqc report
+
 Fastqc results will be shown only for unprocessed reads. For runs using the 'map-ont' flag, qc-results from nanoplot will be
 shown for unprocessed and processed reads.
-
 
 ## Useful commands for developers
 
@@ -206,7 +207,6 @@ maintained by gms-mikro from Genomic Medicine Sweden:
 @kdannenberg
 @ikarls
 @bokelund
-
 
 This pipeline is not a formal nf-core pipeline but it partly uses code and
 infrastructure developed and maintained by the [nf-core](https://nf-co.re)
