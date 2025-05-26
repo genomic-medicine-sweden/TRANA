@@ -37,14 +37,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fixed unused `NANOPLOT2` to `NANOPLOT_PROCESSED_READS`
-- Fixed `Nanoplot` output dirs and prefix in `modules.config`
+- Readded `NANOPLOT2` as `NANOPLOT_PROCESSED_READS`
 - Fixed Dockerfile context
 - Moved nanostats_unprocessed process execution into seqtype SR if statement
 - Conditionally emit nanostats unprocessed/processed to avoid undefined output error when using --seqtype SR
 - Fixed a broken configuration file in `modules/local/emu/abundance/meta.yml`
 - Fixed failing pulls of some singularity containers by settings singularity.cacheDir
-
+- Fixed broken nanoplot code. Readded prefixes to the module.
+ 
 ### Changed
 
 - `merge_barcodes_samplesheet.py` can now handle custom barcodes.
@@ -61,6 +61,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   assets and useful `make` commands for developers.
 - Updated workflow image
 - Made phyloseq an option to protect against errors when using other databases than emu´s premade.
+- Added peoples github names to README for credit
+- Added nanoplot unprocessed reads and processed reads to multiqc. Short info about this in README.
 
 ## [v0.1.0]
 

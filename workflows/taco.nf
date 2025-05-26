@@ -212,6 +212,11 @@ workflow TACO {
     ch_multiqc_files = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect())
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
+    // collect nanoplot
+    if (params.seqtype = "map-ont") {
+        ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_UNPROCESSED_READS.out.txt.collect {it[1] })
+        ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_PROCESSED_READS.out.txt.collect {it[1] })
+    }
 
     if (params.seqtype == "sr" && !params.skip_cutadapt) {
         ch_multiqc_files = ch_multiqc_files.mix(CUTADAPT.out.log.collect { it[1] })
