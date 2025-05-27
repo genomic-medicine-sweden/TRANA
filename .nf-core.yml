@@ -13,9 +13,9 @@ lint:
     - .prettierignore
     - .prettierignore
     - CODE_OF_CONDUCT.md
-    - assets/nf-core-gms_16s_logo_light.png
-    - docs/images/nf-core-gms_16s_logo_light.png
-    - docs/images/nf-core-gms_16s_logo_dark.png
+    - assets/nf-core-taco_logo_light.png
+    - docs/images/nf-core-taco_logo_light.png
+    - docs/images/nf-core-taco_logo_dark.png
     - .github/ISSUE_TEMPLATE/bug_report.yml
     - .github/CONTRIBUTING.md
     - .github/PULL_REQUEST_TEMPLATE.md
@@ -44,9 +44,9 @@ lint:
     - assets/sendmail_template.txt
     - assets/email_template.txt
     - CODE_OF_CONDUCT.md
-    - assets/nf-core-gms_16s_logo_light.png
-    - docs/images/nf-core-gms_16s_logo_light.png
-    - docs/images/nf-core-gms_16s_logo_dark.png
+    - assets/nf-core-taco_logo_light.png
+    - docs/images/nf-core-taco_logo_light.png
+    - docs/images/nf-core-taco_logo_dark.png
     - .github/ISSUE_TEMPLATE/config.yml
     - .github/workflows/awstest.yml
     - .github/workflows/awsfulltest.yml

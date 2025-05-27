@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    genomic-medicine-sweden/gms_16s
+    genomic-medicine-sweden/taco
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/genomic-medicine-sweden/gms_16s
+    Github : https://github.com/genomic-medicine-sweden/taco
 ----------------------------------------------------------------------------------------
 */
 
@@ -13,9 +13,9 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { GMS_16S  } from './workflows/gms_16s'
-include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_gms_16s_pipeline'
-include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_gms_16s_pipeline'
+include { TACO  } from './workflows/taco'
+include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_taco_pipeline'
+include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_taco_pipeline'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     NAMED WORKFLOWS FOR PIPELINE
@@ -25,7 +25,7 @@ include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_gms_
 //
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
-workflow GENOMICMEDICINESWEDEN_GMS_16S {
+workflow GENOMICMEDICINESWEDEN_TACO {
 
     take:
     samplesheet // channel: samplesheet read in from --input
@@ -35,11 +35,11 @@ workflow GENOMICMEDICINESWEDEN_GMS_16S {
     //
     // WORKFLOW: Run pipeline
     //
-    GMS_16S (
+    TACO (
         samplesheet
     )
     emit:
-    multiqc_report = GMS_16S.out.multiqc_report // channel: /path/to/multiqc_report.html
+    multiqc_report = TACO.out.multiqc_report // channel: /path/to/multiqc_report.html
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -65,7 +65,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    GENOMICMEDICINESWEDEN_GMS_16S (
+    GENOMICMEDICINESWEDEN_TACO (
         PIPELINE_INITIALISATION.out.samplesheet
     )
     //
@@ -74,7 +74,7 @@ workflow {
     PIPELINE_COMPLETION (
         params.outdir,
         params.monochrome_logs,
-        GENOMICMEDICINESWEDEN_GMS_16S.out.multiqc_report
+        GENOMICMEDICINESWEDEN_TACO.out.multiqc_report
     )
 }
 
