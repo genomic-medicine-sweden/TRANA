@@ -46,7 +46,7 @@ nf_core_version: 3.2.0
 org_path: null
 repository_type: pipeline
 template:
-  author: "@fwa93"
+  author: Frans Wallin (@fwa93)
   description: A Nextflow pipeline for 16S typing of bacteria based on the EMU tool
     from treangenlab.
   force: true

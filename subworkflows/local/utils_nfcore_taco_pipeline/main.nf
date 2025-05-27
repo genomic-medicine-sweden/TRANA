@@ -12,7 +12,6 @@ include { GENERATE_INPUT             } from '../../../modules/local/generate_inp
 include { MERGE_BARCODES             } from '../../../modules/local/merge_barcodes/main.nf'
 include { MERGE_BARCODES_SAMPLESHEET } from '../../../modules/local/merge_barcodes_samplesheet/main.nf'
 include { SAMPLESHEET_CHECK          } from '../../../modules/local/samplesheet_check/main.nf'
-
 include { UTILS_NFSCHEMA_PLUGIN      } from '../../nf-core/utils_nfschema_plugin'
 include { paramsSummaryMap           } from 'plugin/nf-schema'
 include { samplesheetToList          } from 'plugin/nf-schema'
@@ -120,9 +119,11 @@ workflow PIPELINE_COMPLETION {
     take:
     outdir          //    path: Path to output directory where results will be published
     monochrome_logs // boolean: Disable ANSI colour codes in log output
+    multiqc_report  //  string: Path to MultiQC report
 
     main:
     summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
+    def multiqc_reports = multiqc_report.toList()
 
     //
     // Completion email and summary
@@ -166,6 +167,7 @@ def toolCitationText() {
     def citation_text = [
             "Tools used in the workflow included:",
             "FastQC (Andrews 2010),",
+            "MultiQC (Ewels et al. 2016)",
             "."
         ].join(' ').trim()
 
@@ -178,6 +180,7 @@ def toolBibliographyText() {
     // Uncomment function in methodsDescriptionText to render in MultiQC report
     def reference_text = [
             "<li>Andrews S, (2010) FastQC, URL: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).</li>",
+            "<li>Ewels, P., Magnusson, M., Lundin, S., & Käller, M. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics , 32(19), 3047–3048. doi: /10.1093/bioinformatics/btw354</li>"
         ].join(' ').trim()
 
     return reference_text

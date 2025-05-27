@@ -37,3 +37,7 @@ indent_style = unset
 
 [Makefile]
 indent_style = unset
+
+# ignore ro-crate metadata files
+[**/ro-crate-metadata.json]
+insert_final_newline = unset

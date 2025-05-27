@@ -11,9 +11,14 @@ on:
       - main
       - dev
     draft: true
+  release:
+    types: [published]
+  workflow_dispatch:
 
 env:
   NXF_ANSI_LOG: false
+  NXF_SINGULARITY_CACHEDIR: ${{ github.workspace }}/.singularity
+  NXF_SINGULARITY_LIBRARYDIR: ${{ github.workspace }}/.singularity
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}"
@@ -21,7 +26,7 @@ concurrency:
 
 jobs:
   test:
-    name: Install and run self-test pipeline
+    name: "Run pipeline with test data (${{ matrix.NXF_VER }} | ${{ matrix.test_name }} | ${{ matrix.profile }})"
     # Only run on push if this is in the main repository
     if: "${{ github.repository_owner == 'genomic-medicine-sweden' }}"
     runs-on: ubuntu-latest
@@ -41,25 +46,49 @@ jobs:
         exclude:
           - is_master: false
             profile: "conda"
+          - is_master: false
+            profile: "singularity"
     steps:
       - name: Check out pipeline code
-        uses: actions/checkout@v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
 
-      - name: Install Nextflow
-        # For running (locally) with ACT, we use a docker image with Nextflow pre-installed
-        if: "${{ ! github.event.act }}"
-        uses: nf-core/setup-nextflow@v1
+      - name: Set up Nextflow
+        uses: nf-core/setup-nextflow@v2
         with:
           version: "${{ matrix.NXF_VER }}"
 
       - name: Install nf-test
         uses: nf-core/setup-nf-test@v1
 
-      - name: Install Singularity
-        # For running (locally) with ACT, we use a docker image with Singularity already installed
-        if: "${{ ! github.event.act }}"
+      - name: Set up Apptainer
+        if: matrix.profile == 'singularity'
+        uses: eWaterCycle/setup-apptainer@main
+
+      - name: Set up Singularity
+        if: matrix.profile == 'singularity'
         run: |
-          wget https://github.com/apptainer/singularity/releases/download/v3.8.7/singularity-container_3.8.7_amd64.deb && sudo dpkg -i singularity-container_3.8.7_amd64.deb
+          mkdir -p $NXF_SINGULARITY_CACHEDIR
+          mkdir -p $NXF_SINGULARITY_LIBRARYDIR
+
+      - name: Set up Miniconda
+        if: matrix.profile == 'conda'
+        uses: conda-incubator/setup-miniconda@a4260408e20b96e80095f42ff7f1a15b27dd94ca # v3
+        with:
+          miniconda-version: "latest"
+          auto-update-conda: true
+          conda-solver: libmamba
+          channels: conda-forge,bioconda
+
+      - name: Set up Conda
+        if: matrix.profile == 'conda'
+        run: |
+          echo $(realpath $CONDA)/condabin >> $GITHUB_PATH
+          echo $(realpath python) >> $GITHUB_PATH
+
+      - name: Clean up Disk space
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.1
 
       - name: Report disk-usage before make install
         run: df -h
@@ -71,12 +100,12 @@ jobs:
         run: df -h
 
       # Make sure we can run a full pipeline from the commandline as well
-      - name: Run pipeline from the commandline with merge fastq pass
+      - name: "Run pipeline from the commandline with merge fastq pass ${{ matrix.NXF_VER }} | ${{ matrix.test_name }} | ${{ matrix.profile }}"
         run: |
           nextflow  \
             -log $(pwd)/nextflow.log \
-            run main.nf \
-            -profile singularity,test \
+            run ${GITHUB_WORKSPACE} \
+            -profile ${{ matrix.test_name}},${{ matrix.profile }} \
             --outdir results \
             --db $(pwd)/assets/databases/emu_database \
             --seqtype map-ont \
@@ -90,7 +119,7 @@ jobs:
           nextflow  \
             -log $(pwd)/nextflow.log \
             run main.nf \
-            -profile singularity,test \
+            -profile ${{ matrix.test_name}},${{ matrix.profile }} \
             --outdir results \
             --db $(pwd)/assets/databases/emu_database \
             --seqtype map-ont \
