@@ -1,35 +1,4 @@
-repository_type: pipeline
-
-nf_core_version: 3.2.0
-
 lint:
-  files_unchanged:
-    - LICENSE
-    - .prettierignore
-    - .prettierignore
-    - .prettierignore
-    - LICENSE
-    - .prettierignore
-    - .prettierignore
-    - .prettierignore
-    - CODE_OF_CONDUCT.md
-    - assets/nf-core-taco_logo_light.png
-    - docs/images/nf-core-taco_logo_light.png
-    - docs/images/nf-core-taco_logo_dark.png
-    - .github/ISSUE_TEMPLATE/bug_report.yml
-    - .github/CONTRIBUTING.md
-    - .github/PULL_REQUEST_TEMPLATE.md
-    - assets/email_template.txt
-    - docs/README.md
-  nextflow_config:
-    - manifest.name
-    - manifest.homePage
-    - validation.help.beforeText
-    - validation.help.afterText
-    - validation.summary.beforeText
-    - validation.summary.afterText
-  multiqc_config:
-    - report_comment
   files_exist:
     - conf/igenomes.config
     - conf/igenomes_ignored.config
@@ -50,15 +19,43 @@ lint:
     - .github/ISSUE_TEMPLATE/config.yml
     - .github/workflows/awstest.yml
     - .github/workflows/awsfulltest.yml
-
+  files_unchanged:
+    - LICENSE
+    - .prettierignore
+    - .prettierignore
+    - .prettierignore
+    - LICENSE
+    - .prettierignore
+    - .prettierignore
+    - .prettierignore
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-taco_logo_light.png
+    - docs/images/nf-core-taco_logo_light.png
+    - docs/images/nf-core-taco_logo_dark.png
+    - .github/ISSUE_TEMPLATE/bug_report.yml
+    - .github/CONTRIBUTING.md
+    - .github/PULL_REQUEST_TEMPLATE.md
+    - assets/email_template.txt
+    - docs/README.md
+  multiqc_config:
+    - report_comment
+  nextflow_config:
+    - manifest.name
+    - manifest.homePage
+    - validation.help.beforeText
+    - validation.help.afterText
+    - validation.summary.beforeText
+    - validation.summary.afterText
+nf_core_version: 3.2.1
+repository_type: pipeline
 template:
-  org: genomic-medicine-sweden
-  name: gms_16S
+  author: Frans Wallin (@fwa93)
   description: A pipeline based on EMU, a taxonomic profiler optimized for long 16S
     rRNA reads.
-  author: Frans Wallin (@fwa93)
-  version: 0.1.0
-  force: true
+  force: false
+  is_nfcore: false
+  name: gms_16S
+  org: genomic-medicine-sweden
   outdir: .
   skip_features:
     - igenomes
@@ -67,4 +64,4 @@ template:
     - adaptivecard
     - slackreport
     - vscode
-  is_nfcore: false
+  version: 0.1.0
