@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/environment-schema.json
+=======
+>>>>>>> TEMPLATE
 channels:
   - conda-forge
   - bioconda
 dependencies:
+<<<<<<< HEAD
   - bioconda::multiqc=1.28
+=======
+  - bioconda::multiqc=1.27
+>>>>>>> TEMPLATE

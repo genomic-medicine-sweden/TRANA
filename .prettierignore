@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 email_template.html
 adaptivecard.json
 slackreport.json
+=======
+
+>>>>>>> TEMPLATE
 .nextflow*
 work/
 data/
@@ -10,3 +14,7 @@ testing/
 testing*
 *.pyc
 bin/
+<<<<<<< HEAD
+=======
+ro-crate-metadata.json
+>>>>>>> TEMPLATE

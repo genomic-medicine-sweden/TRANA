@@ -1,7 +1,12 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+<<<<<<< HEAD
     "$id": "https://github.com/genomic-medicine-sweden/taco/main/assets/schema_input.json",
     "title": "TACO pipeline - params.input schema",
+=======
+    "$id": "https://raw.githubusercontent.com/genomic-medicine-sweden/gms_16s/main/assets/schema_input.json",
+    "title": "genomic-medicine-sweden/gms_16s pipeline - params.input schema",
+>>>>>>> TEMPLATE
     "description": "Schema for the file provided with params.input",
     "type": "array",
     "items": {
@@ -10,14 +15,25 @@
             "sample": {
                 "type": "string",
                 "pattern": "^\\S+$",
+<<<<<<< HEAD
                 "errorMessage": "Sample name must be provided and cannot contain spaces"
             },
             "fastq_1": {
                 "type": "string",
+=======
+                "errorMessage": "Sample name must be provided and cannot contain spaces",
+                "meta": ["id"]
+            },
+            "fastq_1": {
+                "type": "string",
+                "format": "file-path",
+                "exists": true,
+>>>>>>> TEMPLATE
                 "pattern": "^\\S+\\.f(ast)?q\\.gz$",
                 "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
             },
             "fastq_2": {
+<<<<<<< HEAD
                 "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'",
                 "anyOf": [
                     {
@@ -29,6 +45,13 @@
                         "maxLength": 0
                     }
                 ]
+=======
+                "type": "string",
+                "format": "file-path",
+                "exists": true,
+                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
+                "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+>>>>>>> TEMPLATE
             }
         },
         "required": ["sample", "fastq_1"]

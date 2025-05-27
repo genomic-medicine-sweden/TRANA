@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 assets/databases/emu_database/species_taxid.fasta
 assets/databases/emu_database/taxonomy.tsv
 assets/databases/krona/taxonomy/images.dmp
 assets/databases/krona/taxonomy/taxonomy.tab
+=======
+>>>>>>> TEMPLATE
 .nextflow*
 work/
 data/

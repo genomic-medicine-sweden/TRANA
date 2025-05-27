@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # TACO: Citations
 
 This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/master/LICENSE).
@@ -8,6 +9,13 @@ This pipeline uses code and infrastructure developed and maintained by the [nf-c
 >
 > Nat Biotechnol. 2020 Feb 13. doi: 10.1038/s41587-020-0439-x.
 > In addition, references of tools and data used in this pipeline are as follows:
+=======
+# genomic-medicine-sweden/gms_16s: Citations
+
+## [nf-core](https://pubmed.ncbi.nlm.nih.gov/32055031/)
+
+> Ewels PA, Peltzer A, Fillinger S, Patel H, Alneberg J, Wilm A, Garcia MU, Di Tommaso P, Nahnsen S. The nf-core framework for community-curated bioinformatics pipelines. Nat Biotechnol. 2020 Mar;38(3):276-278. doi: 10.1038/s41587-020-0439-x. PubMed PMID: 32055031.
+>>>>>>> TEMPLATE
 
 ## [Nextflow](https://pubmed.ncbi.nlm.nih.gov/28398311/)
 
@@ -17,6 +25,7 @@ This pipeline uses code and infrastructure developed and maintained by the [nf-c
 
 - [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 
+<<<<<<< HEAD
 - [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
 
   > Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.
@@ -24,6 +33,13 @@ This pipeline uses code and infrastructure developed and maintained by the [nf-c
 - [Cutadapt](https://journal.embnet.org/index.php/embnetjournal/article/view/200/479)
 
   > Marcel, M. Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet. journal 17.1 (2011): pp-10. doi: 10.14806/ej.17.1.200.
+=======
+> Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data [Online].
+
+- [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
+
+> Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.
+>>>>>>> TEMPLATE
 
 ## Software packaging/containerisation tools
 
@@ -41,9 +57,17 @@ This pipeline uses code and infrastructure developed and maintained by the [nf-c
 
 - [Docker](https://dl.acm.org/doi/10.5555/2600239.2600241)
 
+<<<<<<< HEAD
 - [Singularity](https://pubmed.ncbi.nlm.nih.gov/28494014/)
 
   > Kurtzer GM, Sochat V, Bauer MW. Singularity: Scientific containers for mobility of compute. PLoS One. 2017 May 11;12(5):e0177459. doi: 10.1371/journal.pone.0177459. eCollection 2017. PubMed PMID: 28494014; PubMed Central PMCID: PMC5426675.
 
 - [EMU](https://gitlab.com/treangenlab/emu)
   > Kristen D. Curry et al., “Emu: Species-Level Microbial Community Profiling of Full-Length 16S RRNA Oxford Nanopore Sequencing Data,” Nature Methods, June 30, 2022, 1–9, https://doi.org/10.1038/s41592-022-01520-4
+=======
+  > Merkel, D. (2014). Docker: lightweight linux containers for consistent development and deployment. Linux Journal, 2014(239), 2. doi: 10.5555/2600239.2600241.
+
+- [Singularity](https://pubmed.ncbi.nlm.nih.gov/28494014/)
+
+  > Kurtzer GM, Sochat V, Bauer MW. Singularity: Scientific containers for mobility of compute. PLoS One. 2017 May 11;12(5):e0177459. doi: 10.1371/journal.pone.0177459. eCollection 2017. PubMed PMID: 28494014; PubMed Central PMCID: PMC5426675.
+>>>>>>> TEMPLATE

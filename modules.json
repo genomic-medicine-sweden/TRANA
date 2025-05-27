@@ -1,10 +1,16 @@
 {
+<<<<<<< HEAD
     "name": "TACO",
     "homePage": "https://github.com/genomic-medicine-sweden/taco",
+=======
+    "name": "genomic-medicine-sweden/gms_16s",
+    "homePage": "https://github.com/genomic-medicine-sweden/gms_16s",
+>>>>>>> TEMPLATE
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {
                 "nf-core": {
+<<<<<<< HEAD
                     "custom/dumpsoftwareversions": {
                         "branch": "master",
                         "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
@@ -33,10 +39,16 @@
                     "krona/ktimporttaxonomy": {
                         "branch": "master",
                         "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
+=======
+                    "fastqc": {
+                        "branch": "master",
+                        "git_sha": "08108058ea36a63f141c25c4e75f9f872a5b2296",
+>>>>>>> TEMPLATE
                         "installed_by": ["modules"]
                     },
                     "multiqc": {
                         "branch": "master",
+<<<<<<< HEAD
                         "git_sha": "7b50cb7be890e4b28cffb82e438cc6a8d7805d3f",
                         "installed_by": ["modules"]
                     },
@@ -59,6 +71,29 @@
                         "branch": "master",
                         "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
                         "installed_by": ["modules"]
+=======
+                        "git_sha": "f0719ae309075ae4a291533883847c3f7c441dad",
+                        "installed_by": ["modules"]
+                    }
+                }
+            },
+            "subworkflows": {
+                "nf-core": {
+                    "utils_nextflow_pipeline": {
+                        "branch": "master",
+                        "git_sha": "c2b22d85f30a706a3073387f30380704fcae013b",
+                        "installed_by": ["subworkflows"]
+                    },
+                    "utils_nfcore_pipeline": {
+                        "branch": "master",
+                        "git_sha": "51ae5406a030d4da1e49e4dab49756844fdd6c7a",
+                        "installed_by": ["subworkflows"]
+                    },
+                    "utils_nfschema_plugin": {
+                        "branch": "master",
+                        "git_sha": "2fd2cd6d0e7b273747f32e465fdc6bcc3ae0814e",
+                        "installed_by": ["subworkflows"]
+>>>>>>> TEMPLATE
                     }
                 }
             }

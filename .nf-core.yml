@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 bump_version: null
 lint:
   files_exist:
@@ -35,10 +36,57 @@ lint:
     - params.max_cpus
     - params.max_memory
     - params.max_time
+=======
+lint:
+  files_exist:
+    - conf/igenomes.config
+    - conf/igenomes_ignored.config
+    - LICENSE
+    - assets/email_template.html
+    - assets/sendmail_template.txt
+    - assets/email_template.txt
+    - conf/igenomes.config
+    - conf/igenomes_ignored.config
+    - LICENSE
+    - assets/email_template.html
+    - assets/sendmail_template.txt
+    - assets/email_template.txt
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-gms_16s_logo_light.png
+    - docs/images/nf-core-gms_16s_logo_light.png
+    - docs/images/nf-core-gms_16s_logo_dark.png
+    - .github/ISSUE_TEMPLATE/config.yml
+    - .github/workflows/awstest.yml
+    - .github/workflows/awsfulltest.yml
+  files_unchanged:
+    - LICENSE
+    - .prettierignore
+    - .prettierignore
+    - .prettierignore
+    - LICENSE
+    - .prettierignore
+    - .prettierignore
+    - .prettierignore
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-gms_16s_logo_light.png
+    - docs/images/nf-core-gms_16s_logo_light.png
+    - docs/images/nf-core-gms_16s_logo_dark.png
+    - .github/ISSUE_TEMPLATE/bug_report.yml
+    - .github/CONTRIBUTING.md
+    - .github/PULL_REQUEST_TEMPLATE.md
+    - assets/email_template.txt
+    - docs/README.md
+  multiqc_config:
+    - report_comment
+  nextflow_config:
+    - manifest.name
+    - manifest.homePage
+>>>>>>> TEMPLATE
     - validation.help.beforeText
     - validation.help.afterText
     - validation.summary.beforeText
     - validation.summary.afterText
+<<<<<<< HEAD
   template_strings:
     - assets/master_template.html
   actions_ci: False
@@ -57,3 +105,24 @@ template:
   skip_features: null
   version: v0.1.0
 update: null
+=======
+nf_core_version: 3.2.1
+repository_type: pipeline
+template:
+  author: Frans Wallin (@fwa93)
+  description: A pipeline based on EMU, a taxonomic profiler optimized for long 16S
+    rRNA reads.
+  force: false
+  is_nfcore: false
+  name: gms_16S
+  org: genomic-medicine-sweden
+  outdir: .
+  skip_features:
+    - igenomes
+    - license
+    - email
+    - adaptivecard
+    - slackreport
+    - vscode
+  version: 0.1.0
+>>>>>>> TEMPLATE

@@ -1,21 +1,35 @@
 <!--
+<<<<<<< HEAD
 # genomic-medicine-sweden/taco pull request
 
 Many thanks for contributing to genomic-medicine-sweden/taco!
+=======
+# genomic-medicine-sweden/gms_16s pull request
+
+Many thanks for contributing to genomic-medicine-sweden/gms_16s!
+>>>>>>> TEMPLATE
 
 Please fill in the appropriate checklist below (delete whatever is not relevant).
 These are the most common things requested on pull requests (PRs).
 
 Remember that PRs should be made against the dev branch, unless you're preparing a pipeline release.
 
+<<<<<<< HEAD
 Learn more about contributing: [CONTRIBUTING.md](https://github.com/genomic-medicine-sweden/taco/tree/main/.github/CONTRIBUTING.md)
+=======
+Learn more about contributing: [CONTRIBUTING.md](https://github.com/genomic-medicine-sweden/gms_16s/tree/main/.github/CONTRIBUTING.md)
+>>>>>>> TEMPLATE
 -->
 
 ## PR checklist
 
 - [ ] This comment contains a description of changes (with reason).
 - [ ] If you've fixed a bug or added code that should be tested, add tests!
+<<<<<<< HEAD
 - [ ] If you've added a new tool - have you followed the pipeline conventions in the [contribution docs](https://github.com/genomic-medicine-sweden/taco/tree/main/.github/CONTRIBUTING.md)
+=======
+- [ ] If you've added a new tool - have you followed the pipeline conventions in the [contribution docs](https://github.com/genomic-medicine-sweden/gms_16s/tree/main/.github/CONTRIBUTING.md)
+>>>>>>> TEMPLATE
 - [ ] Make sure your code lints (`nf-core pipelines lint`).
 - [ ] Ensure the test suite passes (`nextflow run . -profile test,docker --outdir <OUTDIR>`).
 - [ ] Check for unexpected warnings in debug mode (`nextflow run . -profile debug,test,docker --outdir <OUTDIR>`).

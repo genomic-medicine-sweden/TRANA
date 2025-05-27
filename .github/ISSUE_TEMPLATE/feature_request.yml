@@ -1,5 +1,9 @@
 name: Feature request
+<<<<<<< HEAD
 description: Suggest an idea for the genomic-medicine-sweden/taco pipeline
+=======
+description: Suggest an idea for the genomic-medicine-sweden/gms_16s pipeline
+>>>>>>> TEMPLATE
 labels: enhancement
 body:
   - type: textarea

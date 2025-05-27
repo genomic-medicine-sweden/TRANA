@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 # `genomic-medicine-sweden/taco`: Contributing Guidelines
 
 Hi there!
 Many thanks for taking an interest in improving genomic-medicine-sweden/taco.
 
 We try to manage the required tasks for genomic-medicine-sweden/taco using GitHub issues, you probably came to this page when creating one.
+=======
+# `genomic-medicine-sweden/gms_16s`: Contributing Guidelines
+
+Hi there!
+Many thanks for taking an interest in improving genomic-medicine-sweden/gms_16s.
+
+We try to manage the required tasks for genomic-medicine-sweden/gms_16s using GitHub issues, you probably came to this page when creating one.
+>>>>>>> TEMPLATE
 Please use the pre-filled template to save time.
 
 However, don't be put off by this template - other more general issues and suggestions are welcome!
@@ -11,10 +20,17 @@ Contributions to the code are even more welcome ;)
 
 ## Contribution workflow
 
+<<<<<<< HEAD
 If you'd like to write some code for genomic-medicine-sweden/taco, the standard workflow is as follows:
 
 1. Check that there isn't already an issue about your idea in the [genomic-medicine-sweden/taco issues](https://github.com/genomic-medicine-sweden/taco/issues) to avoid duplicating work. If there isn't one already, please create one so that others know you're working on this
 2. [Fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) the [genomic-medicine-sweden/taco repository](https://github.com/genomic-medicine-sweden/taco) to your GitHub account
+=======
+If you'd like to write some code for genomic-medicine-sweden/gms_16s, the standard workflow is as follows:
+
+1. Check that there isn't already an issue about your idea in the [genomic-medicine-sweden/gms_16s issues](https://github.com/genomic-medicine-sweden/gms_16s/issues) to avoid duplicating work. If there isn't one already, please create one so that others know you're working on this
+2. [Fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) the [genomic-medicine-sweden/gms_16s repository](https://github.com/genomic-medicine-sweden/gms_16s) to your GitHub account
+>>>>>>> TEMPLATE
 3. Make the necessary changes / additions within your forked repository following [Pipeline conventions](#pipeline-contribution-conventions)
 4. Use `nf-core pipelines schema build` and add any new parameters to the pipeline JSON schema (requires [nf-core tools](https://github.com/nf-core/tools) >= 1.10).
 5. Submit a Pull Request against the `dev` branch and wait for the code to be reviewed and merged
@@ -58,7 +74,11 @@ These tests are run both with the latest available version of `Nextflow` and als
 
 ## Pipeline contribution conventions
 
+<<<<<<< HEAD
 To make the `genomic-medicine-sweden/taco` code and processing logic more understandable for new contributors and to ensure quality, we semi-standardise the way the code and other contributions are written.
+=======
+To make the `genomic-medicine-sweden/gms_16s` code and processing logic more understandable for new contributors and to ensure quality, we semi-standardise the way the code and other contributions are written.
+>>>>>>> TEMPLATE
 
 ### Adding a new step
 
@@ -72,6 +92,11 @@ If you wish to contribute a new step, please use the following coding standards:
 6. Add sanity checks and validation for all relevant parameters.
 7. Perform local tests to validate that the new code works as expected.
 8. If applicable, add a new test command in `.github/workflow/ci.yml`.
+<<<<<<< HEAD
+=======
+9. Update MultiQC config `assets/multiqc_config.yml` so relevant suffixes, file name clean up and module plots are in the appropriate order. If applicable, add a [MultiQC](https://https://multiqc.info/) module.
+10. Add a description of the output files and if relevant any appropriate images from the MultiQC report to `docs/output.md`.
+>>>>>>> TEMPLATE
 
 ### Default values
 
@@ -99,3 +124,21 @@ If you are using a new feature from core Nextflow, you may bump the minimum requ
 ### Images and figures
 
 For overview images and other documents we follow the nf-core [style guidelines and examples](https://nf-co.re/developers/design_guidelines).
+<<<<<<< HEAD
+=======
+
+## GitHub Codespaces
+
+This repo includes a devcontainer configuration which will create a GitHub Codespaces for Nextflow development! This is an online developer environment that runs in your browser, complete with VSCode and a terminal.
+
+To get started:
+
+- Open the repo in [Codespaces](https://github.com/genomic-medicine-sweden/gms_16s/codespaces)
+- Tools installed
+  - nf-core
+  - Nextflow
+
+Devcontainer specs:
+
+- [DevContainer config](.devcontainer/devcontainer.json)
+>>>>>>> TEMPLATE
