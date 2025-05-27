@@ -244,6 +244,7 @@ workflow TACO {
     versions                = ch_versions                        // channel: [ path(versions.yml) ]
     nanostats_unprocessed   = (params.seqtype == "map-ont") ? NANOPLOT_UNPROCESSED_READS.out.txt : Channel.empty()  // channel: [ path(master.html) ]
     nanostats_processed     = (params.seqtype == "map-ont") ? NANOPLOT_PROCESSED_READS.out.txt   : Channel.empty()  // channel: [ path(master.html) ]
+    multiqc_report          = multiqc_report
 }
 
 /*
