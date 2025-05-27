@@ -1,4 +1,4 @@
-# genomic-medicine-sweden/gms_16s: Output
+# genomic-medicine-sweden/taco: Output
 
 ## Introduction
 

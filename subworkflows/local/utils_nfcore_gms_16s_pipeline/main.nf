@@ -1,5 +1,5 @@
 //
-// Subworkflow with functionality specific to the genomic-medicine-sweden/gms_16s pipeline
+// Subworkflow with functionality specific to the genomic-medicine-sweden/taco pipeline
 //
 
 /*
