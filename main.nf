@@ -18,22 +18,16 @@ nextflow.enable.dsl = 2
 
 params.fasta = getGenomeAttribute('fasta')
 
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    IMPORT LOCAL SUBWORKFLOWS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-include { PIPELINE_INITIALISATION      } from './subworkflows/local/utils_nfcore_taco_pipeline/main.nf'
-include { PIPELINE_COMPLETION          } from './subworkflows/local/utils_nfcore_taco_pipeline/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    NAMED WORKFLOW FOR PIPELINE
+    IMPORTS OF SUB-WORKFLOWS AND MAIN PIPELINE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { TACO } from './workflows/taco.nf'
+include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_taco_pipeline/main.nf'
+include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_taco_pipeline/main.nf'
+include { TACO                    } from './workflows/taco.nf'
 
 //
 // WORKFLOW: Run main TACO analysis pipeline
