@@ -81,9 +81,6 @@ workflow {
         PIPELINE_INITIALISATION.out.reads
     )
 
-    // TODO: What should be done with these versions finally?
-    ch_versions = PIPELINE_INITIALISATION.out.versions.mix(GMS_TACO.out.versions)
-
     PIPELINE_COMPLETION (
         params.outdir,
         params.monochrome_logs
