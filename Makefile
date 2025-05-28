@@ -191,3 +191,5 @@ test-cli-samplesheet:
 		--input https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/samplesheet.csv
 
 check: precommit lint test test-cli-fastq test-cli-samplesheet
+
+test-all: test test-cli-fastq test-cli-samplesheet
