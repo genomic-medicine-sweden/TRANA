@@ -47,6 +47,7 @@ workflow GMS_TACO {
     nanostats_unprocessed   = TACO.out.nanostats_unprocessed  // channel: /path/to/nanostats.txt
     nanostats_processed     = TACO.out.nanostats_processed    // channel: /path/to/nanostats.txt
     versions                = TACO.out.versions               // channel: /path/to/versions.yaml
+    multiqc_report          = TACO.out.multiqc_report
 }
 
 /*
@@ -83,7 +84,8 @@ workflow {
 
     PIPELINE_COMPLETION (
         params.outdir,
-        params.monochrome_logs
+        params.monochrome_logs,
+        GMS_TACO.out.multiqc_report
     )
 }
 
