@@ -11,7 +11,6 @@
 include { GENERATE_INPUT             } from '../../../modules/local/generate_input/main.nf'
 include { MERGE_BARCODES             } from '../../../modules/local/merge_barcodes/main.nf'
 include { MERGE_BARCODES_SAMPLESHEET } from '../../../modules/local/merge_barcodes_samplesheet/main.nf'
-include { SAMPLESHEET_CHECK          } from '../../../modules/local/samplesheet_check/main.nf'
 
 include { UTILS_NFSCHEMA_PLUGIN      } from '../../nf-core/utils_nfschema_plugin'
 include { paramsSummaryMap           } from 'plugin/nf-schema'
@@ -83,13 +82,13 @@ workflow PIPELINE_INITIALISATION {
     //
     if ( params.merge_fastq_pass && !params.barcodes_samplesheet ) {
         MERGE_BARCODES(params.merge_fastq_pass)
-        GENERATE_INPUT(MERGE_BARCODES.out.fastq_dir_merged).sample_sheet_merged.set{ ch_samplesheet }
+        GENERATE_INPUT(MERGE_BARCODES.out.fastq_dir_merged).sample_sheet_merged.set{ ch_samplesheet_path }
     } else if ( params.merge_fastq_pass && params.barcodes_samplesheet ) {
         MERGE_BARCODES_SAMPLESHEET(params.barcodes_samplesheet, params.merge_fastq_pass)
-        GENERATE_INPUT(MERGE_BARCODES_SAMPLESHEET.out.fastq_dir_merged).sample_sheet_merged.set{ ch_samplesheet }
+        GENERATE_INPUT(MERGE_BARCODES_SAMPLESHEET.out.fastq_dir_merged).sample_sheet_merged.set{ ch_samplesheet_path }
         ch_versions = ch_versions.mix(MERGE_BARCODES_SAMPLESHEET.out.versions.first())
     } else if ( !params.merge_fastq_pass && !params.barcodes_samplesheet && samplesheet ) {
-        ch_samplesheet = Channel.value(samplesheet)
+        ch_samplesheet_path = Channel.value(samplesheet)
     } else {
         error "Invalid input. Please specify either '--input' or '--merge_fastq_pass' (and '--barcodes_samplesheet' if available)."
     }
@@ -97,17 +96,26 @@ workflow PIPELINE_INITIALISATION {
     //
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
     //
-    SAMPLESHEET_CHECK ( ch_samplesheet )
-        .csv
-        .splitCsv ( header:true, sep:',' )
-        .map { create_fastq_channel(it) }
+    ch_samplesheet_path
+        .flatMap { samplesheet_path ->
+            samplesheetToList(samplesheet_path, "${projectDir}/assets/schema_input.json")
+        }
+        .map {
+            meta, fastq_1, fastq_2 ->
+                if (!fastq_2) {
+                    return [ meta.id, meta + [ single_end:true ], [ fastq_1 ] ]
+                } else {
+                    return [ meta.id, meta + [ single_end:false ], [ fastq_1, fastq_2 ] ]
+                }
+        }
+        .groupTuple()
+        .map { validateInputSamplesheet( it ) }
         .set { ch_reads }
-    ch_versions = ch_versions.mix(SAMPLESHEET_CHECK.out.versions.first())
 
     emit:
-    reads       = ch_reads          // channel: [ val(meta), [ reads ] ]
-    samplesheet = ch_samplesheet    // channel: [ val(meta), [ samplesheet ] ]
-    versions    = ch_versions       // channel: [ versions.yml ]
+    reads       = ch_reads            // channel: [ val(meta), [ reads ] ]
+    samplesheet = ch_samplesheet_path // channel: [ val(meta), [ samplesheet ] ]
+    versions    = ch_versions         // channel: [ versions.yml ]
 }
 
 /*
@@ -165,7 +173,7 @@ def validateInputSamplesheet(input) {
         error("Please check input samplesheet -> Multiple runs of a sample must be of the same datatype i.e. single-end or paired-end: ${metas[0].id}")
     }
 
-    return [ metas[0], fastqs ]
+    return [ metas[0], fastqs[0] ]
 }
 //
 // Generate methods description for MultiQC
@@ -233,6 +241,9 @@ def methodsDescriptionText(mqc_methods_yaml) {
 
 // Function to get list of [ meta, [ fastq_1, fastq_2 ] ]
 def create_fastq_channel(LinkedHashMap row) {
+
+    println "ROW: ${row}"
+
     // Create meta map
     def meta = [:]
     meta.id                 = row.sample
