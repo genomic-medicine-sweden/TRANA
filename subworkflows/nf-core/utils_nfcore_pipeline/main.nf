@@ -49,7 +49,7 @@ def checkProfileProvided(nextflow_cli_args) {
             "The `-profile` option cannot end with a trailing comma, please remove it and re-run the pipeline!\n" + "HINT: A common mistake is to provide multiple values separated by spaces e.g. `-profile test, docker`.\n"
         )
     }
-    if (nextflow_cli_args[0]) {
+    if (nextflow_cli_args && nextflow_cli_args[0]) {
         log.warn(
             "nf-core pipelines do not accept positional arguments. The positional argument `${nextflow_cli_args[0]}` has been detected.\n" + "HINT: A common mistake is to provide multiple values separated by spaces e.g. `-profile test, docker`.\n"
         )
