@@ -69,7 +69,6 @@ workflow PIPELINE_INITIALISATION {
         nextflow_cli_args
     )
 
-
     // Check input path parameters to see if they exist
     def checkPathParamList = !params.merge_fastq_pass ? [params.input] : []
     checkPathParamList += [params.multiqc_config, params.fasta]

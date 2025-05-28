@@ -9,8 +9,8 @@ nextflow_workflow {
         when {
             params {
                 outdir = "tests/results"
-                pipelines_testdata_base_path "../../../assets/examples/test_folder/"
-                input = "../../../assets/examples/test_folder/samplesheet.csv"
+                pipelines_testdata_base_path "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/"
+                input = "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/samplesheet.csv"
             }
             workflow {
                 """
