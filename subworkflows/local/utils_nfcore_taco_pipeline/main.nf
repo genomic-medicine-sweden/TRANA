@@ -16,7 +16,9 @@ include { SAMPLESHEET_CHECK          } from '../../../modules/local/samplesheet_
 include { UTILS_NFSCHEMA_PLUGIN      } from '../../nf-core/utils_nfschema_plugin'
 include { paramsSummaryMap           } from 'plugin/nf-schema'
 include { samplesheetToList          } from 'plugin/nf-schema'
+include { completionEmail            } from '../../nf-core/utils_nfcore_pipeline'
 include { completionSummary          } from '../../nf-core/utils_nfcore_pipeline'
+include { imNotification             } from '../../nf-core/utils_nfcore_pipeline'
 include { UTILS_NFCORE_PIPELINE      } from '../../nf-core/utils_nfcore_pipeline'
 include { UTILS_NEXTFLOW_PIPELINE    } from '../../nf-core/utils_nextflow_pipeline'
 
@@ -129,6 +131,14 @@ workflow PIPELINE_COMPLETION {
     //
     // Completion email and summary
     //
+
+
+    if (params.email || params.email_on_fail) {
+        completionEmail(summary_params, params.email, params.email_on_fail, params.plaintext_email, outdir, monochrome_logs, multiqc_report)
+    }
+    if (params.hook_url) {
+        imNotification(summary_params, params.hook_url)
+    }
     workflow.onComplete {
         completionSummary(monochrome_logs)
     }
