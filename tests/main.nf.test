@@ -20,8 +20,8 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert workflow.trace.succeeded().size() > 0 // Adjust this number based on the number of processes in your pipeline
-            assert path("$projectDir/results/results/barcode01_T1_filtered.fastq_rel-abundance.tsv").exists()
-            assert path("$projectDir/results/results/barcode02_T1_filtered.fastq_rel-abundance.tsv").exists()
+            assert path("$projectDir/results/results/barcode01_filtered.fastq_rel-abundance.tsv").exists()
+            assert path("$projectDir/results/results/barcode02_filtered.fastq_rel-abundance.tsv").exists()
         }
     }
 }
