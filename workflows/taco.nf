@@ -40,6 +40,7 @@ workflow TACO {
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
     summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
+    ch_dummy_file = file("assets/dummy_file.txt", checkIfExists: true)
 
     //
     // MODULE: Run FastQC
@@ -55,12 +56,18 @@ workflow TACO {
         NANOPLOT_UNPROCESSED_READS(ch_reads)
         ch_versions = ch_versions.mix(NANOPLOT_UNPROCESSED_READS.out.versions.first())
 
+        if (params.custom_adapters) {
+            ch_custom_adapters = params.custom_adapters
+        } else {
+            ch_custom_adapters = ch_dummy_file    
+        }            
+
         if (params.adapter_trimming && !params.quality_filtering) {
 
             //
             // MODULE: Run Porechop to trim ONT adapters
             //
-            PORECHOP_ABI(ch_reads)
+            PORECHOP_ABI(ch_reads,ch_custom_adapters)
 
             PORECHOP_ABI.out.reads.map {
                 meta, reads -> [meta + [single_end: 1], reads]
@@ -86,7 +93,7 @@ workflow TACO {
             //
             // MODULE: Run Porechop to trim ONT adapters
             //
-            PORECHOP_ABI(ch_reads)
+            PORECHOP_ABI(ch_reads,ch_custom_adapters)
 
             PORECHOP_ABI.out.reads.map {
                 meta, reads -> [meta + [single_end: 1], reads]

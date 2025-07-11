@@ -287,6 +287,10 @@
         "phyloseq": {
             "type": "boolean",
             "description": "Create a phyloseq object"
+        },
+        "ab_initio": {
+            "type": "boolean",
+            "description": "allows to first guess the adapters from the reads, add the adapters to the list of Porechop adapters (adapters.py file) and then run Porechop to remove adapters. Used with adapter_trimming"
         }
     },
     "required": ["db"]
