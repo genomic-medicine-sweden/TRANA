@@ -48,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed a broken configuration file in `modules/local/emu/abundance/meta.yml`
 - Fixed failing pulls of some singularity containers by settings singularity.cacheDir
 - Fixed broken nanoplot code. Readded prefixes to the module.
+- Fixed broken `--help` screen by adding missing nf-schema plugin and validation config.
 
 ### Changed
 
