@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed failing pulls of some singularity containers by settings singularity.cacheDir
 - Fixed broken nanoplot code. Readded prefixes to the module.
 - Fixed broken `--help` screen by adding missing nf-schema plugin and validation config.
+- Fixed broken e-mail sending, where a (corrupt) e-mail would be sent at the start of a pipeline rather than at the end.
 
 ### Changed
 
