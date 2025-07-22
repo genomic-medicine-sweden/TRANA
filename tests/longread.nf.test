@@ -1,12 +1,11 @@
 nextflow_pipeline {
-    name "Test Main Pipeline"
+    name "Test main pipeline with long-read data"
     script "main.nf"
 
     test("Should run pipeline with test profile") {
-
+        tag "seqtype-map-ont"
         when {
             params {
-                outdir = "$projectDir/results"
                 db = "$projectDir/assets/databases/emu_database"
                 seqtype = "map-ont"
                 quality_filtering = true
@@ -14,9 +13,9 @@ nextflow_pipeline {
                 longread_qc_qualityfilter_maxlength = 1800
                 merge_fastq_pass = "$projectDir/assets/test_assets/ci"
                 pipelines_testdata_base_path = "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/"
+                outdir = "$projectDir/results"
             }
         }
-
         then {
             assert workflow.success
             assert workflow.trace.succeeded().size() > 0 // Adjust this number based on the number of processes in your pipeline

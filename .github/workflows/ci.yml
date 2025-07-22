@@ -102,4 +102,4 @@ jobs:
       # Run via nf-test for more detailed checking
       - name: Run nf-test
         run: |
-          nf-test test tests/main.nf.test
+          nf-test test tests/
