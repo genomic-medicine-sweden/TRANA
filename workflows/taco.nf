@@ -39,6 +39,7 @@ workflow TACO {
 
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
+
     summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
 
     //
@@ -54,6 +55,7 @@ workflow TACO {
         //
         NANOPLOT_UNPROCESSED_READS(ch_reads)
         ch_versions = ch_versions.mix(NANOPLOT_UNPROCESSED_READS.out.versions.first())
+        ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_UNPROCESSED_READS.out.txt.collect {it[1] })
 
         if (params.adapter_trimming && !params.quality_filtering) {
 
@@ -79,7 +81,7 @@ workflow TACO {
             }).reads.set{ ch_processed_reads}
 
             ch_versions = ch_versions.mix(FILTLONG.out.versions.first())
-            ch_multiqc_files = ch_multiqc_files.mix(FILTLONG.out.log)
+            ch_multiqc_files = ch_multiqc_files.mix(FILTLONG.out.log.collect{it[1]}.ifEmpty([]))
 
         } else if (params.adapter_trimming && params.quality_filtering) {
 
@@ -113,6 +115,7 @@ workflow TACO {
         //
         NANOPLOT_PROCESSED_READS(ch_processed_reads)
         ch_versions = ch_versions.mix(NANOPLOT_PROCESSED_READS.out.versions.first())
+        ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_PROCESSED_READS.out.txt.collect {it[1] })
 
     } else if (params.seqtype == "sr") {
 
@@ -205,17 +208,12 @@ workflow TACO {
     ch_workflow_summary         = Channel.value(paramsSummaryMultiqc(summary_params))
     ch_methods_description      = Channel.value(methodsDescriptionText(ch_multiqc_custom_methods_description))
 
-    ch_multiqc_files = Channel.empty()
     ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect())
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
-    // collect nanoplot
-    if (params.seqtype = "map-ont") {
-        //ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_UNPROCESSED_READS.out.txt.collect {it[1] })
-        //ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_PROCESSED_READS.out.txt.collect {it[1] })
-    }
 
+    // collect nanoplot
     if (params.seqtype == "sr" && !params.skip_cutadapt) {
         ch_multiqc_files = ch_multiqc_files.mix(CUTADAPT.out.log.collect { it[1] })
     }
