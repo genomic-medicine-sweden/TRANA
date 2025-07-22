@@ -212,8 +212,8 @@ workflow TACO {
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
     // collect nanoplot
     if (params.seqtype = "map-ont") {
-        ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_UNPROCESSED_READS.out.txt.collect {it[1] })
-        ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_PROCESSED_READS.out.txt.collect {it[1] })
+        //ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_UNPROCESSED_READS.out.txt.collect {it[1] })
+        //ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_PROCESSED_READS.out.txt.collect {it[1] })
     }
 
     if (params.seqtype == "sr" && !params.skip_cutadapt) {
