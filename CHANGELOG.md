@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed authors-field in nextflow.config.
 - Added a module to output the result as a phyloseq object
 - Added figure for pipeline
+- Added an nf-test for short-read, paired-end data
 
 ### Fixed
 
@@ -50,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed broken nanoplot code. Readded prefixes to the module.
 - Fixed broken `--help` screen by adding missing nf-schema plugin and validation config.
 - Fixed broken e-mail sending, where a (corrupt) e-mail would be sent at the start of a pipeline rather than at the end.
+- Fixed a pipeline ordering error in the main workflow where Nanoplot outputs were accessed before executing the module.
 
 ### Changed
 
