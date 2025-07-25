@@ -3,7 +3,6 @@ nextflow_pipeline {
     script "main.nf"
 
     test("Should run pipeline with test profile for shortread data") {
-        tag "seqtype-sr"
         when {
             params {
                 db = "$projectDir/assets/databases/emu_database"
