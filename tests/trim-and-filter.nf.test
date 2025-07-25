@@ -1,0 +1,100 @@
+nextflow_pipeline {
+    name "Test Main Pipeline"
+    script "main.nf"
+
+    test("Should run pipeline WITH adapter trimming but WITHOUT quality filtering") {
+        when {
+            params {
+                db = "$projectDir/assets/databases/emu_database"
+                seqtype = "map-ont"
+                longread_qc_qualityfilter_minlength = 1200
+                longread_qc_qualityfilter_maxlength = 1800
+                merge_fastq_pass = "$projectDir/assets/test_assets/ci"
+                pipelines_testdata_base_path = "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/"
+                outdir = outputDir
+
+                // The parameters we are varying here
+                adapter_trimming = true
+                quality_filtering = false
+            }
+        }
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0 // Adjust this number based on the number of processes in your pipeline
+            assert path("${params.outdir}/results/barcode01.porechop_abi.fastq_rel-abundance.tsv").exists()
+            assert path("${params.outdir}/results/barcode02.porechop_abi.fastq_rel-abundance.tsv").exists()
+
+            // Ensure that Porechop ABI has ran
+            assert path("${params.outdir}/porechop_abi/barcode01.porechop_abi.log").exists()
+            assert path("${params.outdir}/porechop_abi/barcode02.porechop_abi.log").exists()
+
+            // Ensure that Filtlong has NOT run
+            assert !path("${params.outdir}/filtlong/barcode01_filtered.log").exists()
+            assert !path("${params.outdir}/filtlong/barcode02_filtered.log").exists()
+        }
+    }
+
+    test("Should run pipeline WITHOUT adapter trimming but WITH quality filtering") {
+        when {
+            params {
+                db = "$projectDir/assets/databases/emu_database"
+                seqtype = "map-ont"
+                longread_qc_qualityfilter_minlength = 1200
+                longread_qc_qualityfilter_maxlength = 1800
+                merge_fastq_pass = "$projectDir/assets/test_assets/ci"
+                pipelines_testdata_base_path = "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/"
+                outdir = outputDir
+
+                // The parameters we are varying here
+                adapter_trimming = false
+                quality_filtering = true
+            }
+        }
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0 // Adjust this number based on the number of processes in your pipeline
+            assert path("${params.outdir}/results/barcode01_filtered.fastq_rel-abundance.tsv").exists()
+            assert path("${params.outdir}/results/barcode02_filtered.fastq_rel-abundance.tsv").exists()
+
+            // Ensure that Porechop ABI has NOT ran
+            assert !path("${params.outdir}/porechop_abi/barcode01.porechop_abi.log").exists()
+            assert !path("${params.outdir}/porechop_abi/barcode02.porechop_abi.log").exists()
+
+            // Ensure that Filtlong HAS run
+            assert path("${params.outdir}/filtlong/barcode01_filtered.log").exists()
+            assert path("${params.outdir}/filtlong/barcode02_filtered.log").exists()
+        }
+    }
+
+    test("Should run pipeline WITH adapter trimming and WITH quality filtering") {
+        when {
+            params {
+                db = "$projectDir/assets/databases/emu_database"
+                seqtype = "map-ont"
+                longread_qc_qualityfilter_minlength = 1200
+                longread_qc_qualityfilter_maxlength = 1800
+                merge_fastq_pass = "$projectDir/assets/test_assets/ci"
+                pipelines_testdata_base_path = "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/"
+                outdir = outputDir
+
+                // The parameters we are varying here
+                adapter_trimming = true
+                quality_filtering = true
+            }
+        }
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() > 0 // Adjust this number based on the number of processes in your pipeline
+            assert path("${params.outdir}/results/barcode01_filtered.fastq_rel-abundance.tsv").exists()
+            assert path("${params.outdir}/results/barcode02_filtered.fastq_rel-abundance.tsv").exists()
+
+            // Ensure that Porechop ABI has ran
+            assert path("${params.outdir}/porechop_abi/barcode01.porechop_abi.log").exists()
+            assert path("${params.outdir}/porechop_abi/barcode02.porechop_abi.log").exists()
+
+            // Ensure that Filtlong HAS run
+            assert path("${params.outdir}/filtlong/barcode01_filtered.log").exists()
+            assert path("${params.outdir}/filtlong/barcode02_filtered.log").exists()
+        }
+    }
+}
