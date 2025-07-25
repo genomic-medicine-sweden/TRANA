@@ -57,10 +57,14 @@ workflow TACO {
         //
         NANOPLOT_UNPROCESSED_READS(ch_reads)
         ch_versions = ch_versions.mix(NANOPLOT_UNPROCESSED_READS.out.versions.first())
-        ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_UNPROCESSED_READS.out.txt.collect{ it[1] })
+        ch_multiqc_files = ch_multiqc_files.mix(
+            NANOPLOT_UNPROCESSED_READS.out.txt.collect{ it[1] }
+        )
 
-        if (params.adapter_trimming && !params.quality_filtering) {
-
+        //
+        // Optional adapter trimming
+        //
+        if (params.adapter_trimming) {
             //
             // MODULE: Run Porechop to trim ONT adapters
             //
@@ -68,49 +72,33 @@ workflow TACO {
 
             PORECHOP_ABI.out.reads.map {
                 meta, reads -> [meta + [single_end: 1], reads]
-            }.set { ch_processed_reads }
+            }.set{ ch_optionally_trimmed_reads }
 
             ch_versions = ch_versions.mix(PORECHOP_ABI.out.versions.first())
-            ch_multiqc_files = ch_multiqc_files.mix(PORECHOP_ABI.out.log.collect{ it[1] })
+            ch_multiqc_files = ch_multiqc_files.mix(
+                PORECHOP_ABI.out.log.collect{ it[1] }
+            )
+        } else {
+            ch_reads.set{ ch_optionally_trimmed_reads }
+        }
 
-        } else if (!params.adapter_trimming && params.quality_filtering) {
-
+        //
+        // Optional quality filtering
+        //
+        if (params.quality_filtering) {
             //
             // MODULE: Run filtlong to filter on read length
             //
-            FILTLONG(ch_reads.map {
-                meta, reads -> [meta, [], reads]
-            }).reads.set { ch_processed_reads}
-
-            ch_versions = ch_versions.mix(FILTLONG.out.versions.first())
-            ch_multiqc_files = ch_multiqc_files.mix(FILTLONG.out.log.collect{ it[1] })
-
-        } else if (params.adapter_trimming && params.quality_filtering) {
-
-            //
-            // MODULE: Run Porechop to trim ONT adapters
-            //
-            PORECHOP_ABI(ch_reads, [])
-
-            PORECHOP_ABI.out.reads.map {
-                meta, reads -> [meta + [single_end: 1], reads]
-            }.set { ch_clipped_reads }
-
-            ch_versions = ch_versions.mix(PORECHOP_ABI.out.versions.first())
-            ch_multiqc_files = ch_multiqc_files.mix(PORECHOP_ABI.out.log.collect{ it[1] })
-
-            //
-            // MODULE: Run filtlong to filter on read length
-            //
-            FILTLONG(ch_clipped_reads.map {
+            FILTLONG(ch_optionally_trimmed_reads.map {
                 meta, reads -> [meta, [], reads]
             }).reads.set { ch_processed_reads }
 
             ch_versions = ch_versions.mix(FILTLONG.out.versions.first())
-            ch_multiqc_files = ch_multiqc_files.mix(FILTLONG.out.log.collect{ it[1] })
-
+            ch_multiqc_files = ch_multiqc_files.mix(
+                FILTLONG.out.log.collect{ it[1] }
+            )
         } else {
-            ch_reads.set { ch_processed_reads }
+            ch_optionally_trimmed_reads.set{ ch_processed_reads }
         }
 
         //
@@ -118,7 +106,9 @@ workflow TACO {
         //
         NANOPLOT_PROCESSED_READS(ch_processed_reads)
         ch_versions = ch_versions.mix(NANOPLOT_PROCESSED_READS.out.versions.first())
-        ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_PROCESSED_READS.out.txt.collect{ it[1] })
+        ch_multiqc_files = ch_multiqc_files.mix(
+            NANOPLOT_PROCESSED_READS.out.txt.collect{ it[1] }
+        )
 
     } else if (params.seqtype == "sr") {
 
@@ -129,7 +119,9 @@ workflow TACO {
             CUTADAPT(ch_reads)
             CUTADAPT.out.reads.set { ch_processed_reads }
             ch_versions = ch_versions.mix(CUTADAPT.out.versions.first())
-            ch_multiqc_files = ch_multiqc_files.mix(CUTADAPT.out.log.collect{ it[1] })
+            ch_multiqc_files = ch_multiqc_files.mix(
+                CUTADAPT.out.log.collect{ it[1] }
+            )
         } else {
             ch_reads.set { ch_processed_reads }
         }
@@ -141,23 +133,34 @@ workflow TACO {
         //
         // MODULE: Downsample reads
         //
-        SEQTK_SAMPLE( ch_processed_reads, params.sample_size ).reads.set { ch_processed_sampled_reads }
+        // Fold in the sample size in the tuple
+        ch_processed_reads.map { reads ->
+            reads + params.sample_size
+        }.set{ ch_processed_reads_with_sample_size }
+
+        SEQTK_SAMPLE(
+            ch_processed_reads_with_sample_size
+        ).reads.set{ ch_processed_optionally_sampled_reads }
+
         ch_versions = ch_versions.mix(SEQTK_SAMPLE.out.versions)
     } else {
-        ch_processed_reads.set { ch_processed_sampled_reads }
+        ch_processed_reads.set{ ch_processed_optionally_sampled_reads }
     }
 
     //
     // MODULE: run EMU abundance calculation
     //
-    EMU_ABUNDANCE(ch_processed_sampled_reads)
+    EMU_ABUNDANCE(ch_processed_optionally_sampled_reads)
     ch_versions = ch_versions.mix(EMU_ABUNDANCE.out.versions.first())
 
     if (params.run_krona) {
         //
         // MODULE: Run krona plot
         //
-        KRONA_KTIMPORTTAXONOMY(EMU_ABUNDANCE.out.report, file(params.krona_taxonomy_tab, checkExists: true))
+        KRONA_KTIMPORTTAXONOMY(
+            EMU_ABUNDANCE.out.report,
+            file(params.krona_taxonomy_tab, checkExists: true)
+        )
         ch_versions = ch_versions.mix(KRONA_KTIMPORTTAXONOMY.out.versions.first())
     }
 
@@ -174,26 +177,30 @@ workflow TACO {
     //
     // MODULE: Generate PHYLOSEQ object
     if (params.phyloseq) {
-        ch_tax_file = Channel.fromPath("$projectDir/assets/databases/emu_database/taxonomy.tsv", checkIfExists: true)
         report_ch = EMU_ABUNDANCE.out.report
-
         all_reports_ch = report_ch
             .map { meta, path -> path }
             .collect()
-
         COMBINE_REPORTS (
             all_reports_ch
         )
 
+        ch_tax_file = Channel.fromPath(
+            "$projectDir/assets/databases/emu_database/taxonomy.tsv",
+            checkIfExists: true
+        )
         PHYLOSEQ_OBJECT (
             COMBINE_REPORTS.out.combinedreport,
             ch_tax_file
         )
+
         ch_versions = ch_versions.mix(PHYLOSEQ_OBJECT.out.versions)
     }
 
     // collect tool versions.
-    CUSTOM_DUMPSOFTWAREVERSIONS(ch_versions.unique().collectFile(name: 'collated_versions.yml'))
+    CUSTOM_DUMPSOFTWAREVERSIONS(
+        ch_versions.unique().collectFile(name: 'collated_versions.yml')
+    )
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
