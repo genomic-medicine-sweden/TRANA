@@ -63,7 +63,7 @@ workflow TACO {
             //
             // MODULE: Run Porechop to trim ONT adapters
             //
-            PORECHOP_ABI(ch_reads)
+            PORECHOP_ABI(ch_reads, [])
 
             PORECHOP_ABI.out.reads.map {
                 meta, reads -> [meta + [single_end: 1], reads]
@@ -89,7 +89,7 @@ workflow TACO {
             //
             // MODULE: Run Porechop to trim ONT adapters
             //
-            PORECHOP_ABI(ch_reads)
+            PORECHOP_ABI(ch_reads, [])
 
             PORECHOP_ABI.out.reads.map {
                 meta, reads -> [meta + [single_end: 1], reads]
