@@ -11,14 +11,14 @@ nextflow_pipeline {
                 retain_untrimmed = true
                 pipelines_testdata_base_path = "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/"
                 input = "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/samplesheet-shortread.csv"
-                outdir = "$projectDir/results"
+                outdir = outputDir
             }
         }
         then {
             assert workflow.success
             assert workflow.trace.succeeded().size() > 0 // Adjust this number based on the number of processes in your pipeline
-            assert path("$projectDir/results/results/SAMPLE_1.trimmed_1.trim.fastq-SAMPLE_1.trimmed_2.trim.fastq_rel-abundance.tsv").exists()
-            assert path("$projectDir/results/results/SAMPLE_2.trimmed_1.trim.fastq-SAMPLE_2.trimmed_2.trim.fastq_rel-abundance.tsv").exists()
+            assert path("${params.outdir}/results/SAMPLE_1.trimmed_1.trim.fastq-SAMPLE_1.trimmed_2.trim.fastq_rel-abundance.tsv").exists()
+            assert path("${params.outdir}/results/SAMPLE_2.trimmed_1.trim.fastq-SAMPLE_2.trimmed_2.trim.fastq_rel-abundance.tsv").exists()
         }
     }
 }
