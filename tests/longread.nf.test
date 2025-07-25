@@ -13,14 +13,14 @@ nextflow_pipeline {
                 longread_qc_qualityfilter_maxlength = 1800
                 merge_fastq_pass = "$projectDir/assets/test_assets/ci"
                 pipelines_testdata_base_path = "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/"
-                outdir = "$projectDir/results"
+                outdir = outputDir
             }
         }
         then {
             assert workflow.success
             assert workflow.trace.succeeded().size() > 0 // Adjust this number based on the number of processes in your pipeline
-            assert path("$projectDir/results/results/barcode01_filtered.fastq_rel-abundance.tsv").exists()
-            assert path("$projectDir/results/results/barcode02_filtered.fastq_rel-abundance.tsv").exists()
+            assert path("${params.outdir}/results/barcode01_filtered.fastq_rel-abundance.tsv").exists()
+            assert path("${params.outdir}/results/barcode02_filtered.fastq_rel-abundance.tsv").exists()
         }
     }
 }
