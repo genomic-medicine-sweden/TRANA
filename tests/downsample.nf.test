@@ -1,25 +1,31 @@
 nextflow_pipeline {
-    name "Test main pipeline with long-read data"
+    name "Test Main Pipeline"
     script "main.nf"
 
-    test("Should run pipeline with test profile") {
+    test("Should run pipeline WITH the --sample-size parameter set") {
         when {
             params {
                 db = "$projectDir/assets/databases/emu_database"
                 seqtype = "map-ont"
-                quality_filtering = true
                 longread_qc_qualityfilter_minlength = 1200
                 longread_qc_qualityfilter_maxlength = 1800
                 merge_fastq_pass = "$projectDir/assets/test_assets/ci"
                 pipelines_testdata_base_path = "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/"
                 outdir = outputDir
+
+                // The parameters we are varying here
+                sample_size = "100"
             }
         }
         then {
             assert workflow.success
             assert workflow.trace.succeeded().size() > 0 // Adjust this number based on the number of processes in your pipeline
-            assert path("${params.outdir}/results/barcode01_filtered.fastq_rel-abundance.tsv").exists()
-            assert path("${params.outdir}/results/barcode02_filtered.fastq_rel-abundance.tsv").exists()
+            assert path("${params.outdir}/results/barcode01_barcode01_filtered.fastq_rel-abundance.tsv").exists()
+            assert path("${params.outdir}/results/barcode02_barcode02_filtered.fastq_rel-abundance.tsv").exists()
+
+            // Ensure that SeqTK Sample was run
+            assert path("${params.outdir}/seqtk/barcode01_barcode01_filtered.fastq.gz").exists()
+            assert path("${params.outdir}/seqtk/barcode02_barcode02_filtered.fastq.gz").exists()
         }
     }
 }
