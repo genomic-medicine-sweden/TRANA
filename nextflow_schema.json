@@ -146,7 +146,6 @@
                 },
                 "email": {
                     "type": "string",
-                    "type": "string",
                     "description": "Email address for completion summary.",
                     "fa_icon": "fas fa-envelope",
                     "help_text": "Set this parameter to your e-mail address to get a summary e-mail with details of the run sent to you when the workflow exits. If set in your user config file (`~/.nextflow/config`) then y                                                                                                                                                                                                                       ou don't need to specify this on the command line for every run.",
@@ -456,6 +455,9 @@
         },
         {
             "$ref": "#/$defs/max_job_request_options"
+        },
+        {
+            "$ref": "#/$defs/institutional_config_options"
         },
         {
             "$ref": "#/$defs/short_read_options"
