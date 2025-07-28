@@ -70,6 +70,9 @@ jobs:
       - name: Report disk-usage after make install
         run: df -h
 
+      - name: Run Nextflow lint to catch errors early
+        run: nextflow lint main.nf
+
       # Make sure we can run a full pipeline from the commandline as well
       - name: Run pipeline from the commandline with merge fastq pass
         run: |
