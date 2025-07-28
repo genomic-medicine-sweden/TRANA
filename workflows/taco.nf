@@ -47,6 +47,7 @@ workflow TACO {
     //
     FASTQC (ch_reads)
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+    ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{ it[1] })
 
     if (params.seqtype == "map-ont") {
 
@@ -55,7 +56,7 @@ workflow TACO {
         //
         NANOPLOT_UNPROCESSED_READS(ch_reads)
         ch_versions = ch_versions.mix(NANOPLOT_UNPROCESSED_READS.out.versions.first())
-        ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_UNPROCESSED_READS.out.txt.collect {it[1] })
+        ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_UNPROCESSED_READS.out.txt.collect{ it[1] })
 
         if (params.adapter_trimming && !params.quality_filtering) {
 
@@ -66,10 +67,10 @@ workflow TACO {
 
             PORECHOP_ABI.out.reads.map {
                 meta, reads -> [meta + [single_end: 1], reads]
-            }.set{ ch_processed_reads }
+            }.set { ch_processed_reads }
 
             ch_versions = ch_versions.mix(PORECHOP_ABI.out.versions.first())
-            ch_multiqc_files = ch_multiqc_files.mix(PORECHOP_ABI.out.log)
+            ch_multiqc_files = ch_multiqc_files.mix(PORECHOP_ABI.out.log.collect{ it[1] })
 
         } else if (!params.adapter_trimming && params.quality_filtering) {
 
@@ -78,10 +79,10 @@ workflow TACO {
             //
             FILTLONG(ch_reads.map {
                 meta, reads -> [meta, [], reads]
-            }).reads.set{ ch_processed_reads}
+            }).reads.set { ch_processed_reads}
 
             ch_versions = ch_versions.mix(FILTLONG.out.versions.first())
-            ch_multiqc_files = ch_multiqc_files.mix(FILTLONG.out.log.collect{it[1]}.ifEmpty([]))
+            ch_multiqc_files = ch_multiqc_files.mix(FILTLONG.out.log.collect{ it[1] })
 
         } else if (params.adapter_trimming && params.quality_filtering) {
 
@@ -92,22 +93,23 @@ workflow TACO {
 
             PORECHOP_ABI.out.reads.map {
                 meta, reads -> [meta + [single_end: 1], reads]
-            }.set{ ch_clipped_reads }
+            }.set { ch_clipped_reads }
+
+            ch_versions = ch_versions.mix(PORECHOP_ABI.out.versions.first())
+            ch_multiqc_files = ch_multiqc_files.mix(PORECHOP_ABI.out.log.collect{ it[1] })
 
             //
             // MODULE: Run filtlong to filter on read length
             //
             FILTLONG(ch_clipped_reads.map {
                 meta, reads -> [meta, [], reads]
-            }).reads.set{ ch_processed_reads }
+            }).reads.set { ch_processed_reads }
 
-            ch_versions = ch_versions.mix(PORECHOP_ABI.out.versions.first())
             ch_versions = ch_versions.mix(FILTLONG.out.versions.first())
-            ch_multiqc_files = ch_multiqc_files.mix(PORECHOP_ABI.out.log)
-            ch_multiqc_files = ch_multiqc_files.mix(FILTLONG.out.log)
+            ch_multiqc_files = ch_multiqc_files.mix(FILTLONG.out.log.collect{ it[1] })
 
         } else {
-            ch_reads.set{ ch_processed_reads }
+            ch_reads.set { ch_processed_reads }
         }
 
         //
@@ -115,7 +117,7 @@ workflow TACO {
         //
         NANOPLOT_PROCESSED_READS(ch_processed_reads)
         ch_versions = ch_versions.mix(NANOPLOT_PROCESSED_READS.out.versions.first())
-        ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_PROCESSED_READS.out.txt.collect {it[1] })
+        ch_multiqc_files = ch_multiqc_files.mix(NANOPLOT_PROCESSED_READS.out.txt.collect{ it[1] })
 
     } else if (params.seqtype == "sr") {
 
@@ -124,10 +126,11 @@ workflow TACO {
         //
         if (!params.skip_cutadapt) {
             CUTADAPT(ch_reads)
-            CUTADAPT.out.reads.set{ ch_processed_reads }
+            CUTADAPT.out.reads.set { ch_processed_reads }
             ch_versions = ch_versions.mix(CUTADAPT.out.versions.first())
+            ch_multiqc_files = ch_multiqc_files.mix(CUTADAPT.out.log.collect{ it[1] })
         } else {
-            ch_reads.set{ ch_processed_reads }
+            ch_reads.set { ch_processed_reads }
         }
     } else {
         error "Invalid seqtype. Please specify either 'map-ont' or 'sr'."
@@ -137,10 +140,10 @@ workflow TACO {
         //
         // MODULE: Downsample reads
         //
-        SEQTK_SAMPLE( ch_processed_reads, params.sample_size ).reads.set{ ch_processed_sampled_reads }
+        SEQTK_SAMPLE( ch_processed_reads, params.sample_size ).reads.set { ch_processed_sampled_reads }
         ch_versions = ch_versions.mix(SEQTK_SAMPLE.out.versions)
     } else {
-        ch_processed_reads.set{ ch_processed_sampled_reads }
+        ch_processed_reads.set { ch_processed_sampled_reads }
     }
 
     //
@@ -174,7 +177,7 @@ workflow TACO {
         report_ch = EMU_ABUNDANCE.out.report
 
         all_reports_ch = report_ch
-            .map{ meta, path -> path }
+            .map { meta, path -> path }
             .collect()
 
         COMBINE_REPORTS (
@@ -211,12 +214,6 @@ workflow TACO {
     ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect())
-    ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
-
-    // collect nanoplot
-    if (params.seqtype == "sr" && !params.skip_cutadapt) {
-        ch_multiqc_files = ch_multiqc_files.mix(CUTADAPT.out.log.collect { it[1] })
-    }
 
     MULTIQC (
         ch_multiqc_files.collect(),
@@ -233,11 +230,11 @@ workflow TACO {
     //
 
     ch_reads
-        .map{
+        .map {
             meta, reads -> meta
         }
         .first()
-        .set{ch_meta}
+        .set {ch_meta}
     GENERATE_MASTER_HTML(ch_meta, ch_samplesheet)
     ch_versions = ch_versions.mix(GENERATE_MASTER_HTML.out.versions)
 
