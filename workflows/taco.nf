@@ -131,16 +131,9 @@ workflow TACO {
     if ( params.sample_size ) {
         //
         // MODULE: Downsample reads
-        //
-        // Fold in the sample size in the tuple
-        ch_processed_reads.map { reads ->
-            reads + params.sample_size
-        }.set{ ch_processed_reads_with_sample_size }
-
         SEQTK_SAMPLE(
-            ch_processed_reads_with_sample_size
-        ).reads.set{ ch_processed_optionally_sampled_reads }
-
+            ch_processed_reads.map { meta, reads -> tuple(meta, reads, params.sample_size) }
+            ).reads.set { ch_processed_sampled_reads }
         ch_versions = ch_versions.mix(SEQTK_SAMPLE.out.versions)
     } else {
         ch_processed_reads.set{ ch_processed_optionally_sampled_reads }
