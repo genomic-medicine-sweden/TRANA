@@ -52,6 +52,204 @@
                     "hidden": true
                 }
             }
+        },
+        "emu": {
+            "title": "EMU",
+            "type": "object",
+            "description": "Options for EMU",
+            "default": "",
+            "properties": {
+                "db": {
+                    "type": "string",
+                    "description": "Real path to the database used by emu"
+                },
+                "seqtype": {
+                    "type": "string",
+                    "default": "map-ont",
+                    "description": "short-read: sr, Pac-Bio:map-pb, ONT:map-ont"
+                },
+                "min_abundance": {
+                    "type": "number",
+                    "default": 0.0001,
+                    "description": "min species abundance in results"
+                },
+                "minimap_max_alignments": {
+                    "type": "integer",
+                    "default": 50,
+                    "description": "miminimap max number of secondary alignments per read"
+                },
+                "minibatch_size": {
+                    "type": "integer",
+                    "default": 500000000,
+                    "description": "minibatch size for minimap2 mapping"
+                },
+                "keep_read_assignments": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Output file with likelihoods."
+                },
+                "keep_files": {
+                    "type": "boolean",
+                    "description": "Keep sam file"
+                },
+                "output_unclassified": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Output fiels for unclassified reads: 1) File containing reads that was not mapped to the database, 2) File containing reads that mapped to the database but was presumed to be not in the sample by EMU\u00b4s algorithm."
+                },
+                "combine_levels": {
+                    "type": "string",
+                    "default": "family",
+                    "description": "Taxonomic level which emu combine-output will make results for"
+                },
+                "combine_counts": {
+                    "type": "boolean",
+                    "description": "Estimated read counts instead of relative abundance",
+                    "default": true
+                },
+                "combine_split_tables": {
+                    "type": "boolean",
+                    "description": "Two output tables:abundances and taxonomy lineages"
+                }
+            },
+            "required": ["db"]
+        },
+        "short_read_options": {
+            "title": "short read options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "FW_primer": {
+                    "type": "string",
+                    "description": "Forward primer"
+                },
+                "RV_primer": {
+                    "type": "string",
+                    "description": "Reverse primer"
+                },
+                "skip_cutadapt": {
+                    "type": "boolean",
+                    "description": "Skip primer trimming with cutadapt"
+                },
+                "cutadapt_min_overlap": {
+                    "type": "integer",
+                    "default": 3,
+                    "description": "Minimum overlap for valid matches of primer sequences with reads for cutadapt (-O)."
+                },
+                "cutadapt_max_error_rate": {
+                    "type": "number",
+                    "default": 0.1,
+                    "description": "Sets the maximum error rate for valid matches of primer sequences with reads for cutadapt (-e)."
+                },
+                "retain_untrimmed": {
+                    "type": "boolean",
+                    "description": "Cutadapt will retain untrimmed reads, choose only if input reads are not expected to contain primer sequences."
+                },
+                "save_intermediates": {
+                    "type": "boolean",
+                    "description": "Save trimmed files from cutadapt"
+                }
+            }
+        },
+        "preprocessing_long_reads": {
+            "title": "Preprocessing long reads",
+            "type": "object",
+            "description": "Options concering preprocessing of long read data",
+            "default": "",
+            "properties": {
+                "merge_fastq_pass": {
+                    "type": "string",
+                    "description": "Path to a directory containing barcode directories. For nanopore data. This option merges the fastq-files in the barcode directories for each barcode folder. Use the flag in combination with \"--barcodes_samplesheet\" to get correct sample ids for each result file. If  merge_barcodes_samplesheet is not defined, the result files will have the prefix according to respective barcode derectory."
+                },
+                "barcodes_samplesheet": {
+                    "type": "string",
+                    "description": "Path to barcode samplesheet. Tab separated samplesheet where column1 hold the barcode directory e.g., barcode01, and column2 holds the sample id. Headers: barcode sample_id.  Flag is used in combination with \"merge_fastq_pass\".  With this flag , the results files are named after sample id and not barcode directory."
+                },
+                "quality_filtering": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Filter reads by quality and length"
+                },
+                "longread_qc_qualityfilter_minlength": {
+                    "type": "integer",
+                    "default": 1200,
+                    "description": "Minimum length for reads"
+                },
+                "longread_qc_qualityfilter_maxlength": {
+                    "type": "integer",
+                    "default": 1800,
+                    "description": "Maximum length for reads"
+                },
+                "longread_qc_qualityfilter_min_mean_q": {
+                    "type": "integer",
+                    "default": 94,
+                    "description": "minimum mean quality threshold (identity)"
+                },
+                "save_preprocessed_reads": {
+                    "type": "boolean",
+                    "description": "save preprocessed reads"
+                },
+                "save_merged_reads": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "save merged ont reads"
+                }
+            }
+        },
+        "krona_options": {
+            "title": "krona options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "run_krona": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Run krona, true or false"
+                },
+                "krona_taxonomy_tab": {
+                    "type": "string",
+                    "default": "assets/databases/krona/taxonomy/taxonomy.tab",
+                    "description": "Path to the taxonomy.tab used by Krona"
+                }
+            }
+        },
+        "porechop_abi_options": {
+            "title": "porechop_abi options",
+            "type": "object",
+            "description": "Adapter trimming for long read data",
+            "default": "",
+            "properties": {
+                "adapter_trimming": {
+                    "type": "boolean",
+                    "description": "Adapter trimming for long read data. Requires a list with adapters to trim"
+                }
+            }
+        },
+        "phyloseq_options": {
+            "title": "Phyloseq options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "phyloseq": {
+                    "type": "boolean",
+                    "description": "Create a phyloseq object"
+                }
+            }
+        },
+        "seqtk_options": {
+            "title": "seqtk options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "sample_size": {
+                    "type": "integer",
+                    "description": "Subsample reads to this size"
+                }
+            }
         }
     },
     "allOf": [
@@ -60,121 +258,60 @@
         },
         {
             "$ref": "#/$defs/generic_options"
+        },
+        {
+            "$ref": "#/$defs/emu"
+        },
+        {
+            "$ref": "#/$defs/short_read_options"
+        },
+        {
+            "$ref": "#/$defs/preprocessing_long_reads"
+        },
+        {
+            "$ref": "#/$defs/krona_options"
+        },
+        {
+            "$ref": "#/$defs/porechop_abi_options"
+        },
+        {
+            "$ref": "#/$defs/phyloseq_options"
+        },
+        {
+            "$ref": "#/$defs/seqtk_options"
         }
     ],
     "properties": {
-        "db": {
-            "type": "string"
-        },
-        "seqtype": {
-            "type": "string",
-            "default": "map-ont"
-        },
-        "min_abundance": {
-            "type": "number",
-            "default": 0.0001
-        },
-        "minimap_max_alignments": {
-            "type": "integer",
-            "default": 50
-        },
-        "minibatch_size": {
-            "type": "integer",
-            "default": 500000000
-        },
-        "keep_read_assignments": {
-            "type": "boolean",
-            "default": true
-        },
-        "keep_files": {
-            "type": "boolean"
-        },
-        "output_unclassified": {
-            "type": "boolean",
-            "default": true
-        },
-        "FW_primer": {
-            "type": "string"
-        },
-        "RV_primer": {
-            "type": "string"
-        },
-        "cutadapt_min_overlap": {
-            "type": "integer",
-            "default": 3
-        },
-        "cutadapt_max_error_rate": {
-            "type": "number",
-            "default": 0.1
-        },
-        "retain_untrimmed": {
-            "type": "boolean"
-        },
-        "skip_cutadapt": {
-            "type": "boolean"
-        },
-        "save_intermediates": {
-            "type": "boolean"
-        },
-        "adapter_trimming": {
-            "type": "boolean"
-        },
-        "quality_filtering": {
-            "type": "boolean",
-            "default": true
-        },
-        "longread_qc_qualityfilter_minlength": {
-            "type": "integer",
-            "default": 1200
-        },
-        "longread_qc_qualityfilter_maxlength": {
-            "type": "integer",
-            "default": 1800
-        },
-        "longread_qc_qualityfilter_min_mean_q": {
-            "type": "integer",
-            "default": 94
-        },
-        "save_preprocessed_reads": {
-            "type": "boolean"
-        },
-        "run_krona": {
-            "type": "boolean",
-            "default": true
-        },
-        "krona_taxonomy_tab": {
-            "type": "string",
-            "default": "assets/databases/krona/taxonomy/taxonomy.tab"
-        },
-        "merge_fastq_pass": {
-            "type": "string"
-        },
-        "barcodes_samplesheet": {
-            "type": "string"
-        },
         "multiqc_config": {
-            "type": "string"
+            "type": "string",
+            "hidden": true
         },
         "multiqc_title": {
-            "type": "string"
+            "type": "string",
+            "hidden": true
         },
         "multiqc_logo": {
-            "type": "string"
+            "type": "string",
+            "hidden": true
         },
         "max_multiqc_email_size": {
             "type": "string",
-            "default": "25.MB"
+            "default": "25.MB",
+            "hidden": true
         },
         "multiqc_methods_description": {
-            "type": "string"
+            "type": "string",
+            "hidden": true
         },
         "tracedir": {
             "type": "string",
-            "default": "null/pipeline_info"
+            "default": "null/pipeline_info",
+            "hidden": true
         },
         "publish_dir_mode": {
             "type": "string",
-            "default": "copy"
+            "default": "copy",
+            "hidden": true
         },
         "email": {
             "type": "string"
@@ -186,36 +323,46 @@
             "type": "boolean"
         },
         "monochrome_logs": {
-            "type": "boolean"
+            "type": "boolean",
+            "hidden": true
         },
         "hook_url": {
-            "type": "string"
+            "type": "string",
+            "hidden": true
         },
         "show_hidden_params": {
-            "type": "boolean"
+            "type": "boolean",
+            "hidden": true
         },
         "schema_ignore_params": {
-            "type": "string"
+            "type": "string",
+            "hidden": true
         },
         "custom_config_version": {
             "type": "string",
-            "default": "master"
+            "default": "master",
+            "hidden": true
         },
         "custom_config_base": {
             "type": "string",
-            "default": "https://raw.githubusercontent.com/nf-core/configs/master"
+            "default": "https://raw.githubusercontent.com/nf-core/configs/master",
+            "hidden": true
         },
         "config_profile_description": {
-            "type": "string"
+            "type": "string",
+            "hidden": true
         },
         "config_profile_contact": {
-            "type": "string"
+            "type": "string",
+            "hidden": true
         },
         "config_profile_url": {
-            "type": "string"
+            "type": "string",
+            "hidden": true
         },
         "config_profile_name": {
-            "type": "string"
+            "type": "string",
+            "hidden": true
         },
         "max_memory": {
             "type": "string",
@@ -230,64 +377,46 @@
             "default": "240.h"
         },
         "fasta": {
-            "type": "string"
-        },
-        "sample_size": {
-            "type": "string"
+            "type": "string",
+            "hidden": true
         },
         "master_template": {
             "type": "string",
-            "default": "assets/master_template.html"
-        },
-        "save_merged_reads": {
-            "type": "boolean",
-            "default": true
+            "default": "assets/master_template.html",
+            "hidden": true
         },
         "publish_dir_overwrite": {
-            "type": "boolean"
+            "type": "boolean",
+            "hidden": true
         },
         "trace_timestamp": {
             "type": "string",
-            "default": "2025-04-16_10-58-28"
+            "default": "2025-04-16_10-58-28",
+            "hidden": true
         },
         "igenomes_ignore": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "hidden": true
         },
         "igenomes_base": {
-            "type": "string"
+            "type": "string",
+            "hidden": true
         },
         "genome": {
-            "type": "string"
+            "type": "string",
+            "hidden": true
         },
         "genomes": {
             "type": "string",
-            "default": "[]"
+            "default": "[]",
+            "hidden": true
         },
         "pipelines_testdata_base_path": {
             "type": "string",
             "default": "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/",
             "description": "Base for test data directory",
             "hidden": true
-        },
-        "combine_levels": {
-            "type": "string",
-            "default": "family",
-            "description": "Taxonomic level which emu combine-output will make results for"
-        },
-        "combine_counts": {
-            "type": "boolean",
-            "description": "Estimated read counts instead of relative abundance",
-            "default": true
-        },
-        "combine_split_tables": {
-            "type": "boolean",
-            "description": "Two output tables:abundances and taxonomy lineages"
-        },
-        "phyloseq": {
-            "type": "boolean",
-            "description": "Create a phyloseq object"
         }
-    },
-    "required": ["db"]
+    }
 }
