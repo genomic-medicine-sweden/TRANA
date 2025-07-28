@@ -169,7 +169,9 @@ precommit:
 lint:
 	nf-core pipelines lint
 
-test:
+check: precommit lint
+
+nf-test:
 	nf-test test
 
 test-cli-fastq:
@@ -190,6 +192,6 @@ test-cli-samplesheet:
 		--db $$(pwd)/assets/databases/emu_database \
 		--input https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/samplesheet.csv
 
-check: precommit lint test test-cli-fastq test-cli-samplesheet
+test: nf-test test-cli-fastq test-cli-samplesheet
 
-test-all: test test-cli-fastq test-cli-samplesheet
+check-and-test: check test
