@@ -166,8 +166,13 @@ schema:
 precommit:
 	pre-commit run --all-files
 
-lint:
+nf-core-lint:
 	nf-core pipelines lint
+
+nextflow-lint:
+	nextflow lint -o concise main.nf
+
+lint: nextflow-lint nf-core-lint
 
 check: precommit lint
 
