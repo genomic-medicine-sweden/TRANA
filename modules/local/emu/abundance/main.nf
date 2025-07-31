@@ -39,6 +39,8 @@ process EMU_ABUNDANCE {
     tuple val(meta), path("*.fastq_unclassified_mapped.fasta")  , emit: unclassified_mapped_fa , optional:true
     tuple val(meta), path("*.fastq_unmapped.fasta")             , emit: unclassified_unmapped_fa , optional:true
     path "versions.yml"                                         , emit: versions
+    path "*_emu_log.txt"                                         , emit: emu_log
+
 
     when:
     task.ext.when == null || task.ext.when
@@ -47,11 +49,14 @@ process EMU_ABUNDANCE {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+    {
+    echo "$reads"
     emu \\
         abundance \\
         $args \\
         --threads $task.cpus \\
         $reads
+    } > "${prefix}_emu_log.txt" 2>&1
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
