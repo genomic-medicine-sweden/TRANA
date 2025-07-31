@@ -23,6 +23,8 @@ include { FILTLONG                               } from '../modules/nf-core/filt
 include { EMU_COMBINE_OUTPUTS                    } from '../modules/local/emu/combine_outputs/main.nf'
 include { COMBINE_REPORTS                        } from '../modules/local/phyloseq/main.nf'
 include { PHYLOSEQ_OBJECT                        } from '../modules/local/phyloseq/main.nf'
+include { ASSIGNMENT_HEATMAP                     } from '../modules/local/assignment_heatmap/main.nf'
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -154,6 +156,8 @@ workflow TACO {
         )
         ch_versions = ch_versions.mix(KRONA_KTIMPORTTAXONOMY.out.versions.first())
     }
+    ASSIGNMENT_HEATMAP(EMU_ABUNDANCE.out.assignment_report)
+
 
     // MODULE: run emu combine-outputs
     ch_emu_combine_input_files = Channel.empty()

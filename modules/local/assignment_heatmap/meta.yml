@@ -1,0 +1,33 @@
+name: "assignment_heatmap"
+description: Creates a likelihood heatmap for the taxonomic classification for all reads for each sample.
+keywords:
+  - emu
+  - likelihood
+  - R
+tools:
+  - assignment_heatmap.R:
+    description: "In-house script for creating a simple heatmap."
+    homepage: "-"
+    documentation: "-"
+input:
+  # Abundance file
+  - assignment_report:
+    type: file
+    description: "File from emu abundance that describes the likelihood for the taxonomic classification for each read."
+    pattern: "*{read-assignment-distributions.tsv}"
+output:
+  - assignment_heatmap:
+    type: file
+    description: a heatmap
+    pattern: "*assignment_heatmap.png"
+  - versions:
+    type: file
+    description: File containing software versions
+    pattern: "versions.yml"
+  - assignment_heatmap_log:
+    type: file
+    description: log
+    pattern: "assignment_heatmap_log.txt"
+
+authors:
+  - "@fwa93"
