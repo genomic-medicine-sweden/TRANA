@@ -49,5 +49,9 @@ output:
       type: file
       description: File containing reads that was not mapped to the database.
       pattern: "*{.fastq_unmapped.fasta}"
+  - emu_log:
+      type: file
+      description: standard out for emu
+      pattern: "*{_emu_log.txt}"
 authors:
   - "@fwa93"

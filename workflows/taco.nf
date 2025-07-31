@@ -144,7 +144,6 @@ workflow TACO {
     //
     EMU_ABUNDANCE(ch_processed_optionally_sampled_reads)
     ch_versions = ch_versions.mix(EMU_ABUNDANCE.out.versions.first())
-
     if (params.run_krona) {
         //
         // MODULE: Run krona plot
