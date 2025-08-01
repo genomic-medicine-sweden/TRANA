@@ -1,17 +1,3 @@
-//  A module file SHOULD only define input and output files as command-line parameters.
-//               All other parameters MUST be provided using the "task.ext" directive, see here:
-//               https://www.nextflow.io/docs/latest/process.html#ext
-//               where "task.ext" is a string.
-//               Any parameters that need to be evaluated in the context of a particular sample
-//               e.g. single-end/paired-end data MUST also be defined and evaluated appropriately.
-//  Software that can be piped together SHOULD be added to separate module files
-//               unless there is a run-time, storage advantage in implementing in this way
-//               e.g. it's ok to have a single module for bwa to output BAM instead of SAM:
-//                 bwa mem | samtools view -B -T ref.fasta
-//  Optional inputs are not currently supported by Nextflow. However, using an empty
-//               list (`[]`) instead of a file can be used to work around this issue.
-
-
 process ASSIGNMENT_HEATMAP {
     debug true
     tag "$meta.id"
@@ -22,8 +8,8 @@ process ASSIGNMENT_HEATMAP {
     conda 'modules/local/assignment_heatmap/env.yaml'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/15/152f64a06bd7bf260139b6eae0bf7c6c7bc7f3e13011d9b70a32cc03e0986250/data':
-        'community.wave.seqera.io/library/bioconductor-phyloseq_r-base_r-stringr_r-tidyr:2c6c1953585e3a79' }"
+      'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/9a/9abfb11a46cc7dc1bbf2846d0c2d20e8decdbd1e74a782cd1f61fdba887e844b/data':
+      'community.wave.seqera.io/library/r-base_r-data.table_r-ggplot2:89f7b5fed11f380a'}"
 
     input:
     //  Where applicable all sample-specific information e.g. "id", "single_end", "read_group"
@@ -37,7 +23,7 @@ process ASSIGNMENT_HEATMAP {
     output:
     path "*assignment_heatmap.png"    , emit: assignment_heatmap
     path "versions.yml"             , emit: versions
-    path "*assignment_heatmap_log.txt"             , emit: assignment_heatmap_log
+    path "*assignment_heatmap_log.log"             , emit: assignment_heatmap_log
 
     when:
     task.ext.when == null || task.ext.when
@@ -46,16 +32,16 @@ process ASSIGNMENT_HEATMAP {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    assignment_heatmap.R  "$assignment_report" "${prefix}_assignment_heatmap.png" > ${prefix}_assignment_heatmap_log.txt
+    export XDG_CACHE_HOME=".cache"
+    mkdir -p \${XDG_CACHE_HOME}/fontconfig
+    assignment_heatmap.R  "$assignment_report" "${prefix}_assignment_heatmap.png" > ${prefix}_assignment_heatmap_log.log 2>&1
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
+        assignment_heatmap.R: \$(assignment_heatmap.R --version | sed 's/assignment_heatmap.R version//') 
         r-base: \$(echo \$(R --version 2>&1) | sed 's/^.*R version //; s/ .*\$//')
-        bioconductor-phyloseq: \$(Rscript -e "library(phyloseq); cat(as.character(packageVersion('phyloseq')))")
-        r-tidyr: \$(Rscript -e "library(tidyr); cat(as.character(packageVersion('tidyr')))")
-        r-stringr: \$(Rscript -e "library(stringr); cat(as.character(packageVersion('stringr')))")
-        r-stringr: \$(Rscript -e "library(ggplot2); cat(as.character(packageVersion('ggplot2')))")
-        r-stringr: \$(Rscript -e "library(data.table); cat(as.character(packageVersion('data.table')))")
+        r-ggplot2: \$(Rscript -e "library(ggplot2); cat(as.character(packageVersion('ggplot2')))")
+        r-data.table: \$(Rscript -e "library(data.table); cat(as.character(packageVersion('data.table')))")
 
     END_VERSIONS
     """

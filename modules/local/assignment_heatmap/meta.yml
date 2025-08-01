@@ -27,7 +27,7 @@ output:
   - assignment_heatmap_log:
     type: file
     description: log
-    pattern: "assignment_heatmap_log.txt"
+    pattern: "assignment_heatmap_log.log"
 
 authors:
   - "@fwa93"
