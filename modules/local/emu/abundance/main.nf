@@ -39,7 +39,7 @@ process EMU_ABUNDANCE {
     tuple val(meta), path("*.fastq_unclassified_mapped.fasta")  , emit: unclassified_mapped_fa , optional:true
     tuple val(meta), path("*.fastq_unmapped.fasta")             , emit: unclassified_unmapped_fa , optional:true
     path "versions.yml"                                         , emit: versions
-    path "*_emu_log.txt"                                         , emit: emu_log
+    path "*_emu_log.log"                                         , emit: emu_log
 
 
     when:
@@ -56,7 +56,7 @@ process EMU_ABUNDANCE {
         $args \\
         --threads $task.cpus \\
         $reads
-    } > "${prefix}_emu_log.txt" 2>&1
+    } > "${prefix}_emu_log.log" 2>&1
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -72,6 +72,7 @@ process EMU_ABUNDANCE {
     touch ${prefix}.sam
     touch ${prefix}.fastq_unclassified_mapped.fasta
     touch ${prefix}.fastq_unmapped.fasta
+    touch ${prefix}_emu_log.log
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
