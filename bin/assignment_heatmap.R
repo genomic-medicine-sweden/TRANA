@@ -10,7 +10,7 @@ args <- commandArgs(trailingOnly = TRUE)
 
 # Handle --version
 if ("--version" %in% args) {
-  cat("Heatmap Generator version", version, "\n")
+  cat("assignment_heatmap.R version", version, "\n")
   quit(status = 0)
 }
 
@@ -49,7 +49,8 @@ p <- ggplot(melted_data, aes(x = variable, y = X, fill = value)) +
     axis.ticks.y = element_blank()
   )
 
-# Save to PNG with good resolution
+# Save to PNG
 ggsave(output_file, plot = p, width = 10, height = 8, dpi = 300)
 
+sessionInfo()
 cat("Plot saved to", output_file, "\n")
