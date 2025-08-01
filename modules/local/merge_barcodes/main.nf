@@ -10,7 +10,7 @@ process MERGE_BARCODES {
         'quay.io/biocontainers/python:3.9' }"
 
     input:
-    path('fastq_pass')
+    path fastq_pass
 
     output:
     // publishDir 'fastq_pass_merged', mode: 'move'
