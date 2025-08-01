@@ -1,0 +1,34 @@
+name: "ctrl_comparison"
+description: Creates stacked bar plots for sample vs a control. The plots can be used to get an idea of contamination in the samples. 
+keywords:
+  - emu
+  - coontamination
+  - control
+  - bar plot
+  - R
+tools:
+  - ctrl_comparison.R:
+    description: "Script for comparison between control and samples"
+    homepage: "-"
+    documentation: "-"
+input:
+  - combined_report:
+    type: file
+    description: "Result file from emu_combined"
+    pattern: "*{emu-combined-*.tsv}"
+output:
+  - ctrl_comparison_png:
+    type: file
+    description: a stacked bar plot
+    pattern: "*.png"
+  - versions:
+    type: file
+    description: File containing software versions
+    pattern: "versions.yml"
+  - ctrl_comparison_log:
+    type: file
+    description: log
+    pattern: "ctrl_comparison_log.log"
+
+authors:
+  - "@fwa93"
