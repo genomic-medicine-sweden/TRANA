@@ -24,6 +24,7 @@ include { EMU_COMBINE_OUTPUTS                    } from '../modules/local/emu/co
 include { COMBINE_REPORTS                        } from '../modules/local/phyloseq/main.nf'
 include { PHYLOSEQ_OBJECT                        } from '../modules/local/phyloseq/main.nf'
 include { ASSIGNMENT_HEATMAP                     } from '../modules/local/assignment_heatmap/main.nf'
+include { CTRL_COMPARISON                        } from '../modules/local/ctrl_comparison/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -168,6 +169,10 @@ workflow TACO {
         .set { collected_files }
     EMU_COMBINE_OUTPUTS(collected_files)
     ch_versions = ch_versions.mix(EMU_COMBINE_OUTPUTS.out.versions.first())
+
+    // MODULE: run ctrl_comparison 
+    CTRL_COMPARISON(EMU_COMBINE_OUTPUTS.out.combined_report)
+    ch_versions = ch_versions.mix(CTRL_COMPARISON.out.versions)
 
     //
     // MODULE: Generate PHYLOSEQ object
