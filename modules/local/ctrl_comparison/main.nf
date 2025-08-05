@@ -1,6 +1,6 @@
 process CTRL_COMPARISON {
     debug true
-    tag "$meta.id"
+    //tag "$meta.id"
     label 'process_single'
 
     //               Software MUST be pinned to channel (i.e. "bioconda"), version (i.e. "1.10").
@@ -33,25 +33,25 @@ process CTRL_COMPARISON {
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
    {
-    export XDG_CACHE_HOME=".cache"
-    mkdir -p \${XDG_CACHE_HOME}/fontconfig
-    # ctrl_comparison_cli.R ctrl_comparison_cli_data.tsv my_neg.fastq
+    # ctrl_comparison_cli.R ctrl_comparison_cli_data.tsv my_neg.fastq my_pos.fastq
     ctrl_comparison_cli.R \\
     $combined_report \\
-    $args 
+    $args
     } > ${prefix}_ctrl_comparison_log.log 2>&1
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        assignment_heatmap.R: \$(assignment_heatmap.R --version | sed 's/assignment_heatmap.R version//') 
+        ctrl_comparison_cli.R: \$(ctrl_comparison_cli.R --version | sed 's/ctrl_comparison_cli.R version//')
         r-base: \$(echo \$(R --version 2>&1) | sed 's/^.*R version //; s/ .*\$//')
         r-ggplot2: \$(Rscript -e "library(ggplot2); cat(as.character(packageVersion('ggplot2')))")
-        r-data.table: \$(Rscript -e "library(data.table); cat(as.character(packageVersion('data.table')))")
+        r-r-dplyr: \$(Rscript -e "library(dplyr); cat(as.character(packageVersion('dplyr')))")
+        r-glue: \$(Rscript -e "library(glue); cat(as.character(packageVersion('glue')))")
+        r-readr: \$(Rscript -e "library(readr); cat(as.character(packageVersion('readr')))")
+        r-tidyr: \$(Rscript -e "library(tidyr); cat(as.character(packageVersion('tidyr')))")
+        r-viridis: \$(Rscript -e "library(viridis); cat(as.character(packageVersion('viridis')))")
+        r-viridislite: \$(Rscript -e "library(viridislite); cat(as.character(packageVersion('viridislite')))")
 
     END_VERSIONS
     """
 }
-
-
-
 
