@@ -1,8 +1,26 @@
 #!/usr/bin/env Rscript
 # Author: fwa93
 # This script creates bar plots for the taxonomic information from emu-combine-outputs
-# One bar plot is created for each sample. The plot also contain all taxa from 
+# One bar plot is created for each sample. The plot also contain all taxa from
 # the controls. The user can choose up too two controls. One controls is required.
+
+# ---- Parse command-line args ----
+
+version <- "0.0.4"
+
+args <- commandArgs(trailingOnly = TRUE)
+
+# Handle --version
+if ("--version" %in% args) {
+  cat("ctrl_comparison_cli.R version", version, "\n")
+  quit(status = 0)
+}
+
+if (length(args) < 2) {
+  cat("Usage:\n")
+  cat("  Rscript ctrl_comparison_cli.R <tsv result file from emu_combine> <same name on control as in the samplesheet. >\n <Second control> ")
+  quit(status = 1)
+}
 
 # ---- Load libraries ----
 suppressPackageStartupMessages({
@@ -14,31 +32,16 @@ suppressPackageStartupMessages({
   library(viridis)
 })
 
-# ---- Parse command-line args ----
 
-version <- "0.0.2"
-
-args <- commandArgs(trailingOnly = TRUE)
-
-# Handle --version
-if ("--version" %in% args) {
-  cat("ctrl_comparison.R version", version, "\n")
-  quit(status = 0)
-}
-
-if (length(args) < 3) {
-  cat("Usage:\n")
-  cat("  Rscript ctrl_comparison_cli.R <tsv result file from emu_combine> <name of control. Name here must end with .fastq>\n <Second control> ")
-  quit(status = 1)
-}
 data_file <- args[1]
 ## Use this instead if you are not running through command line
-#data_file <- "emu-combined-outputs.tsv" 
+#data_file <- "emu-combined-family-counts.tsv"
 #control_name1 <- "my_neg.fastq"
 #control_name2 <- "my_spike.fastq"
+#control_name2 <- NULL
 ##
 control_name1 <- args[2]
-control_name2 <- args[3]
+control_name2 <- if (length(args) >= 3 && args[3] != "") args[3] else NULL
 
 # ---- Output folder ----
 output_dir <- "plots_vs_selected_ctrl"
@@ -47,6 +50,7 @@ dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 # ---- Read and reshape data ----
 raw <- read_tsv(data_file, col_types = cols(.default = col_character())) %>%
   mutate(across(where(is.character), ~na_if(., "")))  # Treat empty strings as NA
+colnames(raw) <- gsub("\\.fastq$", "", colnames(raw))
 
 ##
 # Find the last row index
@@ -80,17 +84,30 @@ long_df_original <- long_df
 long_df <- long_df %>%
   unite("Taxonomic_level", colnames(raw)[1], sep = " | ", remove = FALSE)
 ##
-# 
+#
 # controls
-ctrl_df <- filter(long_df, sample_name %in% c(control_name1, control_name2))
-missing_controls <- setdiff(c(control_name1, control_name2), unique(ctrl_df$sample_name))
+# ---- Controls ----
+control_names <- if (!is.null(control_name2)) {
+  c(control_name1, control_name2)
+} else {
+  c(control_name1)
+}
+
+ctrl_df <- filter(long_df, sample_name %in% control_names)
+missing_controls <- setdiff(control_names, unique(ctrl_df$sample_name))
 
 if (length(missing_controls) > 0) {
   stop(glue("❌ Missing control(s): {paste(missing_controls, collapse = ', ')}"))
 }
+  ##
+#ctrl_df <- filter(long_df, sample_name %in% c(control_name1, control_name2))
+#missing_controls <- setdiff(c(control_name1, control_name2), unique(ctrl_df$sample_name))
+
 
 
 # ---- Define sample names (excluding controls) ----
+
+
 control_names <- c(control_name1, control_name2)
 sample_names <- setdiff(unique(long_df$sample_name), control_names)
 
@@ -122,13 +139,16 @@ for (samp in sample_names) {
     geom_bar(stat = "identity", position = "stack") +
     coord_flip() +
     labs(
-      title = glue("Sample: {samp} vs controls: {paste(control_names, collapse = ', ')}"),
+      title = glue("{samp} vs controls: "),
+      subtitle = glue("Control(s): {paste(control_names, collapse = ', ')} "),
       x = "Taxa", y = "Abundance", fill = "Sample"
     ) +
     theme_bw(base_size = 14) +
     theme(
       plot.title = element_text(hjust = 0.5, size = 16),
-      axis.text.y = element_text(size = 10)
+      axis.text.y = element_text(size = 10),
+      plot.subtitle = element_text(hjust = 0.5)
+      
     ) +
     scale_fill_viridis_d()
   
@@ -138,5 +158,6 @@ for (samp in sample_names) {
   
   cat(glue("✅ Saved plot: {out_file}\n"))
 }
-print("Plots created show all taxa in the sample, control 1 and control 2 (if specified)")
+print("Plots created show all taxa present in the sample, control 1 and control 2 (if specified)")
+
 

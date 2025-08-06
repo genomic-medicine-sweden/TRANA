@@ -38,11 +38,10 @@ process ASSIGNMENT_HEATMAP {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        assignment_heatmap.R: \$(assignment_heatmap.R --version | sed 's/assignment_heatmap.R version//') 
+        assignment_heatmap: \$(assignment_heatmap.R --version | sed 's/assignment_heatmap.R version//') 
         r-base: \$(echo \$(R --version 2>&1) | sed 's/^.*R version //; s/ .*\$//')
         r-ggplot2: \$(Rscript -e "library(ggplot2); cat(as.character(packageVersion('ggplot2')))")
         r-data.table: \$(Rscript -e "library(data.table); cat(as.character(packageVersion('data.table')))")
-
     END_VERSIONS
     """
 }
