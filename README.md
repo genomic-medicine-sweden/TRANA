@@ -33,7 +33,7 @@ and update software dependencies.
 
 ## Pipeline summary
 
-![Pipeline overview image](docs/images/emu_workflow_20250520_300dpi.png)
+![Pipeline overview image](docs/images/emu_workflow_20250806_300dpi.png)
 
 The Nanopore and shortread workflow is available.
 Minor testing has been done for PacBio and it seems to work.
@@ -43,6 +43,21 @@ pipeline info.
 ![Krona plot](https://github.com/genomic-medicine-sweden/taco/assets/115690981/dcdd5da4-135c-48c4-b64f-82f0452b5520)
 
 Krona plot
+
+![Likelihood heatmap per sample](docs/images/medium_Mock_dil_1_2_BC1_assignment_heatmap.png)
+Heatmap generated from from likelihood data. Each read has a likelihood that it is derived from a certain taxon.
+Each row sums up to 1.
+
+![sample-control bar plot comparison. Abundance](docs/images/medium_Mock_dil_1_2_BC1_vs_controls_abundance.png)
+If your data has 1 or two controls e.g., a negative and a positive control or spike, then it is possible to generate bar plots for a quick comparison
+between each sample and each control. This is supported for absolute abundance and relative abundance (see image below)
+
+
+![sample-control bar plot comparison. Relative abundance](docs/images/medium_Mock_dil_1_2_BC1_vs_controls.png)
+Relative abundance comparison to controls
+
+
+
 
 ## Quick Start
 
