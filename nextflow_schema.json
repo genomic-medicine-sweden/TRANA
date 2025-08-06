@@ -435,7 +435,7 @@
                 }
             }
         },
-        "Control comparison": {
+        "Control_comparison": {
             "title": "Control vs sample plots",
             "type": "object",
             "description": "Generate plots for comparison between controls and samples",
@@ -487,7 +487,7 @@
             "$ref": "#/$defs/institutional_config_options"
         },
         {
-            "$ref": "#/$defs/plots"
+            "$ref": "#/$defs/Control_comparison"
         }
     ],
     "properties": {
