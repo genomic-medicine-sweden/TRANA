@@ -36,7 +36,7 @@ output:
   - report:
       type: file
       description: Report (tsv file) over detected species and estimated number of reads and relative abundance
-      pattern: "*{.tsv}"
+      pattern: "*{abundance.tsv}"
   - samfile:
       type: file
       description: File containing alignment data

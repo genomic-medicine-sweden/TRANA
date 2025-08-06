@@ -66,7 +66,7 @@ process PHYLOSEQ_OBJECT {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        combine_reports.sh: \$ echo 1.0
+        combine_reports.sh: \$(echo 1.0)
         r-base: \$(echo \$(R --version 2>&1) | sed 's/^.*R version //; s/ .*\$//')
         bioconductor-phyloseq: \$(Rscript -e "library(phyloseq); cat(as.character(packageVersion('phyloseq')))")
         r-tidyr: \$(Rscript -e "library(tidyr); cat(as.character(packageVersion('tidyr')))")

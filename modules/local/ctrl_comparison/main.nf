@@ -21,7 +21,7 @@ process CTRL_COMPARISON {
     path(combined_report)
 
     output:
-    path "*.png"    , emit: ctrl_comparison_png
+    path "plots_vs_selected_ctrl/*.png"    , emit: ctrl_comparison_png
     path "versions.yml"             , emit: versions
     path "*ctrl_comparison_log.log"             , emit: ctrl_comparison_log
 
@@ -32,25 +32,26 @@ process CTRL_COMPARISON {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-   {
+    {
+    export XDG_CACHE_HOME=".cache"
+    mkdir -p \${XDG_CACHE_HOME}/fontconfig
+
     # ctrl_comparison_cli.R ctrl_comparison_cli_data.tsv my_neg.fastq my_pos.fastq
     ctrl_comparison_cli.R \\
     $combined_report \\
     $args
-    } > ${prefix}_ctrl_comparison_log.log 2>&1
+    } > ctrl_comparison_log.log 2>&1
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        ctrl_comparison_cli.R: \$(ctrl_comparison_cli.R --version | sed 's/ctrl_comparison_cli.R version//')
-        r-base: \$(echo \$(R --version 2>&1) | sed 's/^.*R version //; s/ .*\$//')
+        ctrl_comparison_cli.R: \$(echo \$(ctrl_comparison_cli.R --version 2>&1)  | sed 's/ctrl_comparison_cli.R version //')
         r-ggplot2: \$(Rscript -e "library(ggplot2); cat(as.character(packageVersion('ggplot2')))")
-        r-r-dplyr: \$(Rscript -e "library(dplyr); cat(as.character(packageVersion('dplyr')))")
+        r-dplyr: \$(Rscript -e "library(dplyr); cat(as.character(packageVersion('dplyr')))")
         r-glue: \$(Rscript -e "library(glue); cat(as.character(packageVersion('glue')))")
         r-readr: \$(Rscript -e "library(readr); cat(as.character(packageVersion('readr')))")
         r-tidyr: \$(Rscript -e "library(tidyr); cat(as.character(packageVersion('tidyr')))")
         r-viridis: \$(Rscript -e "library(viridis); cat(as.character(packageVersion('viridis')))")
-        r-viridislite: \$(Rscript -e "library(viridislite); cat(as.character(packageVersion('viridislite')))")
-
+        r-viridisLite: \$(Rscript -e "library(viridisLite); cat(as.character(packageVersion('viridisLite')))")
     END_VERSIONS
     """
 }
