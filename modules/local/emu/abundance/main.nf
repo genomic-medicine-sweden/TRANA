@@ -12,7 +12,7 @@
 //               list (`[]`) instead of a file can be used to work around this issue.
 
 process EMU_ABUNDANCE {
-    debug true
+    debug false
     tag "$meta.id"
     label 'process_high'
 
@@ -39,7 +39,7 @@ process EMU_ABUNDANCE {
     tuple val(meta), path("*.fastq_unclassified_mapped.fasta")  , emit: unclassified_mapped_fa , optional:true
     tuple val(meta), path("*.fastq_unmapped.fasta")             , emit: unclassified_unmapped_fa , optional:true
     path "versions.yml"                                         , emit: versions
-    path "*_emu_log.log"                                         , emit: emu_log
+    path "*_emu_log.log"                                        , emit: emu_log
 
 
     when:

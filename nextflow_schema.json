@@ -201,7 +201,7 @@
                 "combine_levels": {
                     "type": "string",
                     "default": "family",
-                    "description": "Taxonomic level which emu combine-output will make results for"
+                    "description": "Taxonomic level which emu combine-output will make results for. Choose between species,genus,family,order,class,phylum,clade,superkingdom,subspecies,species subgroup,species group"
                 },
                 "combine_counts": {
                     "type": "boolean",
@@ -434,6 +434,22 @@
                     "fa_icon": "fas fa-users-cog"
                 }
             }
+        },
+        "Control comparison": {
+            "title": "Control vs sample plots",
+            "type": "object",
+            "description": "Generate plots for comparison between controls and samples",
+            "default": "",
+            "properties": {
+                "ctrl_1": {
+                    "type": "string",
+                    "description": "Name of control_1. Name must be the same as in the sample sheet. This will be used to generate bar plots for comparison between each sample and the control. This parameter is required for bar plot generation"
+                },
+                "ctrl_2": {
+                    "type": "string",
+                    "description": "Name of control_2. Name must be the same as in the sample sheet. This will be used to generate bar plots for comparison between each sample and the control. Can be used together with the 'ctrl_1'-parameter but not alone."
+                }
+            }
         }
     },
     "allOf": [
@@ -445,12 +461,6 @@
         },
         {
             "$ref": "#/$defs/emu"
-        },
-        {
-            "$ref": "#/$defs/max_job_request_options"
-        },
-        {
-            "$ref": "#/$defs/institutional_config_options"
         },
         {
             "$ref": "#/$defs/short_read_options"
@@ -469,6 +479,15 @@
         },
         {
             "$ref": "#/$defs/seqtk_options"
+        },
+        {
+            "$ref": "#/$defs/max_job_request_options"
+        },
+        {
+            "$ref": "#/$defs/institutional_config_options"
+        },
+        {
+            "$ref": "#/$defs/plots"
         }
     ],
     "properties": {

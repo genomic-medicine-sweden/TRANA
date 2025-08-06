@@ -49,8 +49,7 @@ workflow TACO {
     // MODULE: Run FastQC
     //
     FASTQC (ch_reads)
-    ch_versions = ch_versions.mix(FASTQC.out.versions.first())
-    ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{ it[1] })
+    ch_versions = ch_versions.mix(FASTQC.out.versions)
 
     if (params.seqtype == "map-ont") {
 
@@ -58,7 +57,7 @@ workflow TACO {
         // MODULE: Run NANOPLOT_UNPROCESSED_READS
         //
         NANOPLOT_UNPROCESSED_READS(ch_reads)
-        ch_versions = ch_versions.mix(NANOPLOT_UNPROCESSED_READS.out.versions.first())
+        ch_versions = ch_versions.mix(NANOPLOT_UNPROCESSED_READS.out.versions)
         ch_multiqc_files = ch_multiqc_files.mix(
             NANOPLOT_UNPROCESSED_READS.out.txt.collect{ it[1] }
         )
@@ -107,7 +106,7 @@ workflow TACO {
         // MODULE: run NANOPLOT_PROCESSED_READS
         //
         NANOPLOT_PROCESSED_READS(ch_processed_reads)
-        ch_versions = ch_versions.mix(NANOPLOT_PROCESSED_READS.out.versions.first())
+        ch_versions = ch_versions.mix(NANOPLOT_PROCESSED_READS.out.versions)
         ch_multiqc_files = ch_multiqc_files.mix(
             NANOPLOT_PROCESSED_READS.out.txt.collect{ it[1] }
         )
@@ -146,7 +145,7 @@ workflow TACO {
     // MODULE: run EMU abundance calculation
     //
     EMU_ABUNDANCE(ch_processed_optionally_sampled_reads)
-    ch_versions = ch_versions.mix(EMU_ABUNDANCE.out.versions.first())
+    ch_versions = ch_versions.mix(EMU_ABUNDANCE.out.versions)
     if (params.run_krona) {
         //
         // MODULE: Run krona plot
@@ -158,7 +157,7 @@ workflow TACO {
         ch_versions = ch_versions.mix(KRONA_KTIMPORTTAXONOMY.out.versions.first())
     }
     ASSIGNMENT_HEATMAP(EMU_ABUNDANCE.out.assignment_report)
-
+    ch_versions = ch_versions.mix(ASSIGNMENT_HEATMAP.out.versions)
 
     // MODULE: run emu combine-outputs
     ch_emu_combine_input_files = Channel.empty()
@@ -168,12 +167,13 @@ workflow TACO {
         .collect()
         .set { collected_files }
     EMU_COMBINE_OUTPUTS(collected_files)
-    ch_versions = ch_versions.mix(EMU_COMBINE_OUTPUTS.out.versions.first())
+    ch_versions = ch_versions.mix(EMU_COMBINE_OUTPUTS.out.versions)
 
     // MODULE: run ctrl_comparison 
-    CTRL_COMPARISON(EMU_COMBINE_OUTPUTS.out.combined_report)
-    ch_versions = ch_versions.mix(CTRL_COMPARISON.out.versions)
-
+    if (params.ctrl_1) {
+        CTRL_COMPARISON(EMU_COMBINE_OUTPUTS.out.combined_report)
+        ch_versions = ch_versions.mix(CTRL_COMPARISON.out.versions)
+    }
     //
     // MODULE: Generate PHYLOSEQ object
     if (params.phyloseq) {
