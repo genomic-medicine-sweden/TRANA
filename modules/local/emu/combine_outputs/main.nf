@@ -34,7 +34,8 @@ process EMU_COMBINE_OUTPUTS {
 
     output:
     path("collected_reports_dir/emu-combined-*.tsv"), emit: combined_report
-    path "versions.yml"           , emit: versions
+    path "versions.yml"                             , emit: versions
+    path "emu_combine_outputs.log"                  , emit: log
 
 
     when:
@@ -48,13 +49,13 @@ process EMU_COMBINE_OUTPUTS {
 
     """
     mkdir -p collected_reports_dir
-    cp -v ${file_list} collected_reports_dir/
-
+    cp ${file_list} collected_reports_dir/
+    {
     emu \\
         combine-outputs \\
         './collected_reports_dir/' \\
         $args
-
+    } > emu_combine_outputs.log 2>1
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         emu: \$(echo \$(emu --version 2>&1) | sed 's/^.*emu //; s/Using.*\$//' )
