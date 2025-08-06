@@ -40,7 +40,7 @@ Minor testing has been done for PacBio and it seems to work.
 MultiQC collects only info from FastQC and some information about software versions and
 pipeline info.
 
-![Krona plot](https://github.com/genomic-medicine-sweden/taco/assets/115690981/dcdd5da4-135c-48c4-b64f-82f0452b5520)
+![Krona plot](docs/images/krona_example_data_.svg)
 
 Krona plot
 
