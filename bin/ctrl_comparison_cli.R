@@ -6,7 +6,7 @@
 
 # ---- Parse command-line args ----
 
-version <- "0.0.4"
+version <- "0.0.5"
 
 args <- commandArgs(trailingOnly = TRUE)
 
@@ -14,6 +14,11 @@ args <- commandArgs(trailingOnly = TRUE)
 if ("--version" %in% args) {
   cat("ctrl_comparison_cli.R version", version, "\n")
   quit(status = 0)
+}
+if ("--counts_file" %in% args) {
+  counts = TRUE
+} else {
+counts = FALSE
 }
 
 if (length(args) < 2) {
@@ -99,7 +104,7 @@ missing_controls <- setdiff(control_names, unique(ctrl_df$sample_name))
 if (length(missing_controls) > 0) {
   stop(glue("❌ Missing control(s): {paste(missing_controls, collapse = ', ')}"))
 }
-  ##
+##
 #ctrl_df <- filter(long_df, sample_name %in% c(control_name1, control_name2))
 #missing_controls <- setdiff(c(control_name1, control_name2), unique(ctrl_df$sample_name))
 
@@ -153,11 +158,16 @@ for (samp in sample_names) {
     scale_fill_viridis_d()
   
   # Save plot
-  out_file <- file.path(output_dir, paste0(samp, "_vs_controls.png"))
+  suffix <- if (counts) {
+    paste0(samp, "_counts_vs_controls.png")
+  } else {
+    paste0(samp, "_vs_controls.png")
+  }
+  
+  out_file <- file.path(output_dir, suffix)
   ggsave(out_file, p, dpi = 300, width = 10, height = 6)
   
   cat(glue("✅ Saved plot: {out_file}\n"))
 }
 print("Plots created show all taxa present in the sample, control 1 and control 2 (if specified)")
-
 

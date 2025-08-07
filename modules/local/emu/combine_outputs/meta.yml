@@ -47,8 +47,12 @@ output:
   ## TODO nf-core: Delete / customise this example output
   - combined_report:
       type: file
+      description: Report (tsv file) over detected species and relative abundance
+      pattern: "collected_reports_dir/emu-combined-*{species,genus,family,order,class,phylum,superkingdom,}.tsv"
+  - combined_counts_report:
+      type: file
       description: Report (tsv file) over detected species and estimated number of reads and relative abundance
-      pattern: "{collected_reports_dir/emu-combined-*.tsv}"
+      pattern: "collected_reports_dir/emu-combined-*counts.tsv"
   - log:
       type: file
       description: log file for the module

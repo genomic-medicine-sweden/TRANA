@@ -171,7 +171,7 @@ workflow TACO {
 
     // MODULE: run ctrl_comparison 
     if (params.ctrl_1) {
-        CTRL_COMPARISON(EMU_COMBINE_OUTPUTS.out.combined_report)
+        CTRL_COMPARISON(EMU_COMBINE_OUTPUTS.out.combined_report,EMU_COMBINE_OUTPUTS.out.combined_counts_report)
         ch_versions = ch_versions.mix(CTRL_COMPARISON.out.versions)
     }
     //

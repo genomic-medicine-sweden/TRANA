@@ -34,6 +34,8 @@ process EMU_COMBINE_OUTPUTS {
 
     output:
     path("collected_reports_dir/emu-combined-*.tsv"), emit: combined_report
+    path("collected_reports_counts_dir/emu-combined-*counts.tsv"), emit: combined_counts_report
+
     path "versions.yml"                             , emit: versions
     path "emu_combine_outputs.log"                  , emit: log
 
@@ -48,13 +50,21 @@ process EMU_COMBINE_OUTPUTS {
 //    def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
+    {
     mkdir -p collected_reports_dir
     cp ${file_list} collected_reports_dir/
-    {
+    mkdir -p collected_reports_counts_dir
+    cp -v ${file_list} collected_reports_counts_dir/
+    emu \\
+        combine-outputs \\
+        './collected_reports_counts_dir/' \\
+        --counts \\
+        $args
     emu \\
         combine-outputs \\
         './collected_reports_dir/' \\
         $args
+
     } > emu_combine_outputs.log 2>1
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

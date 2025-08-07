@@ -19,11 +19,13 @@ process CTRL_COMPARISON {
     //  Where applicable please provide/convert compressed files as input/output
     //               e.g. "*.fastq.gz" and NOT "*.fastq", "*.bam" and NOT "*.sam" etc.
     path(combined_report)
+    path(combined_counts_report)
+
 
     output:
     path "plots_vs_selected_ctrl/*.png"    , emit: ctrl_comparison_png
-    path "versions.yml"             , emit: versions
-    path "*ctrl_comparison_log.log"             , emit: ctrl_comparison_log
+    path "versions.yml"                    , emit: versions
+    path "*ctrl_comparison_log.log"        , emit: ctrl_comparison_log
 
     when:
     task.ext.when == null || task.ext.when
@@ -40,6 +42,12 @@ process CTRL_COMPARISON {
     ctrl_comparison_cli.R \\
     $combined_report \\
     $args
+
+    ctrl_comparison_cli.R \\
+    $combined_counts_report \\
+    $args \\
+    --counts_file
+
     } > ctrl_comparison_log.log 2>&1
 
     cat <<-END_VERSIONS > versions.yml
