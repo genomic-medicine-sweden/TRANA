@@ -1,6 +1,6 @@
 // Merge nanopore barcode fastq.gz files
 process MERGE_BARCODES {
-    debug true //print to stdout
+    debug false //print to stdout
 
     //               Software MUST be pinned to channel (i.e. "bioconda"), version (i.e. "1.10").
     //               For Conda, the build (i.e. "h9402c20_2") must be EXCLUDED to support installation on different operating systems.

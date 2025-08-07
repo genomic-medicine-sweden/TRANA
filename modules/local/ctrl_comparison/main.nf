@@ -1,5 +1,5 @@
 process CTRL_COMPARISON {
-    debug true
+    debug false
     //tag "$meta.id"
     label 'process_single'
 
