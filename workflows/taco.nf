@@ -25,6 +25,7 @@ include { COMBINE_REPORTS                        } from '../modules/local/phylos
 include { PHYLOSEQ_OBJECT                        } from '../modules/local/phyloseq/main.nf'
 include { ASSIGNMENT_HEATMAP                     } from '../modules/local/assignment_heatmap/main.nf'
 include { CTRL_COMPARISON                        } from '../modules/local/ctrl_comparison/main.nf'
+include { TRANSLATE_TAXIDS                       } from '../modules/local/translate_taxids/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -156,7 +157,13 @@ workflow TACO {
         )
         ch_versions = ch_versions.mix(KRONA_KTIMPORTTAXONOMY.out.versions.first())
     }
-    ASSIGNMENT_HEATMAP(EMU_ABUNDANCE.out.assignment_report)
+
+    //MODULE: run translate_taxids
+    TRANSLATE_TAXIDS(EMU_ABUNDANCE.out.assignment_report)
+    ch_versions = ch_versions.mix(TRANSLATE_TAXIDS.out.versions)
+ 
+    //Module: run assignment_heatmap
+    ASSIGNMENT_HEATMAP(TRANSLATE_TAXIDS.out.assignment_translated_report)
     ch_versions = ch_versions.mix(ASSIGNMENT_HEATMAP.out.versions)
 
     // MODULE: run emu combine-outputs

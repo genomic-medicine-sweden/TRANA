@@ -11,10 +11,10 @@ tools:
     documentation: "-"
 input:
   # Abundance file
-  - assignment_report:
+  - assignment_translated_report:
     type: file
-    description: "File from emu abundance that describes the likelihood for the taxonomic classification for each read."
-    pattern: "*{read-assignment-distributions.tsv}"
+    description: "Modified file (names instead of tax-id) from emu abundance that describes the likelihood for the taxonomic classification for each read."
+    pattern: "*{read-assignment-distributions_translated.tsv}"
 output:
   - assignment_heatmap:
     type: file
