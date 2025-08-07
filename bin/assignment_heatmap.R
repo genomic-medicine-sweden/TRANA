@@ -3,7 +3,7 @@
 suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(data.table))
 
-version <- "0.0.1"
+version <- "0.0.2"
 
 # Get command-line arguments
 args <- commandArgs(trailingOnly = TRUE)
@@ -32,22 +32,23 @@ input_file <- args[1]
 output_file <- args[2]
 
 # Read the data
-likelihood_df <- read.table(input_file, sep = "\t", header = TRUE)
-likelihood_data <- as.data.table(likelihood_df)
+likelihood_df <- read.table(input_file, sep = "\t", header = TRUE, row.names = 1, check.names = FALSE)
+likelihood_data <- as.data.table(likelihood_df, keep.rownames = "ReadID")
 
 # Melt the data
-melted_data <- melt(likelihood_data, id.vars = "X")
+melted_data <- melt(likelihood_data, id.vars = "ReadID")
 
 # Create the plot
-p <- ggplot(melted_data, aes(x = variable, y = X, fill = value)) +
+p <- ggplot(melted_data, aes(x = ReadID, y = variable, fill = value)) +
   geom_tile() +
   scale_fill_gradient(low = "white", high = "blue") +
-  labs(x = "Taxid", y = "Reads", fill = "Likelihood") +
+  labs(x = "Reads", y = "Taxon name", fill = "Likelihood") +
   theme(
-    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
-    axis.text.y = element_blank(),
-    axis.ticks.y = element_blank()
+    axis.text.x = element_blank(),
+    axis.text.y = element_text(angle = 0, vjust = 0.5, hjust = 1),
+    axis.ticks.x = element_blank()
   )
+
 
 # Save to PNG
 ggsave(output_file, plot = p, width = 10, height = 8, dpi = 300)
