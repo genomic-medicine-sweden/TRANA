@@ -82,11 +82,15 @@ workflow PIPELINE_INITIALISATION {
     //
     if ( params.merge_fastq_pass && !params.barcodes_samplesheet ) {
         MERGE_BARCODES(params.merge_fastq_pass)
+        ch_versions = ch_versions.mix(MERGE_BARCODES.out.versions)
         GENERATE_INPUT(MERGE_BARCODES.out.fastq_dir_merged).sample_sheet_merged.set{ ch_samplesheet_path }
+        ch_versions = ch_versions.mix(GENERATE_INPUT.out.versions)
+
     } else if ( params.merge_fastq_pass && params.barcodes_samplesheet ) {
         MERGE_BARCODES_SAMPLESHEET(params.barcodes_samplesheet, params.merge_fastq_pass)
+        ch_versions = ch_versions.mix(MERGE_BARCODES_SAMPLESHEET.out.versions)
         GENERATE_INPUT(MERGE_BARCODES_SAMPLESHEET.out.fastq_dir_merged).sample_sheet_merged.set{ ch_samplesheet_path }
-        ch_versions = ch_versions.mix(MERGE_BARCODES_SAMPLESHEET.out.versions.first())
+        ch_versions = ch_versions.mix(GENERATE_INPUT.out.versions)
     } else if ( !params.merge_fastq_pass && !params.barcodes_samplesheet && samplesheet ) {
         ch_samplesheet_path = Channel.value(samplesheet)
     } else {

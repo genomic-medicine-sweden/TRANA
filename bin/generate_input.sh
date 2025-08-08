@@ -4,6 +4,11 @@ set -eo pipefail
 # Trap any errors and exit with a useful error message
 trap 'exit_status="$?" && echo "Error occurred on line $LINENO: $BASH_COMMAND" && echo "Exit status: $exit_status" && exit "$exit_status"' ERR
 
+version="0.0.1"
+if [[ "$1" == "version" ]]; then
+    echo "$version"
+    exit 0
+fi
 # Usage message
 if [ "$#" -ne 1 ]; then
     echo "Usage: $0 <directory>"

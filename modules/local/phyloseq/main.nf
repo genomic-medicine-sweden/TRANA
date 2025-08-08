@@ -30,7 +30,9 @@ process COMBINE_REPORTS {
 
     script:
     """
-    bash combine_tsv.sh "${report}" > "combined-rel-abundance.tsv"
+    {
+        bash combine_tsv.sh "${report}" > "combined-rel-abundance.tsv"
+    } > combine_reports_log.log 2>1
     """
 }
 
@@ -57,15 +59,18 @@ process PHYLOSEQ_OBJECT {
     path taxonomy_file
 
     output:
-    path "phyloseq_object.RData"    , emit: phyloseq_output_RData
-    path "versions.yml"             , emit: versions
+    path "phyloseq_object.RData"          , emit: phyloseq_output_RData
+    path "versions.yml"                   , emit: versions
+    path "phyloseq_object_log.log"        , emit: phyloseq_object_log.log
 
     script:
     """
-    phyloseq_object.R  $combined_report $taxonomy_file
-
+    {
+        phyloseq_object.R  $combined_report $taxonomy_file
+    } > phyloseq_object_log.log 2>&1
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
+        phyloseq_object.R: \$(echo \$(phyloseq_object.R --version 2>&1) | grep -i 'version' | sed 's/phyloseq_object.R version//') 
         combine_reports.sh: \$(echo 1.0)
         r-base: \$(echo \$(R --version 2>&1) | sed 's/^.*R version //; s/ .*\$//')
         bioconductor-phyloseq: \$(Rscript -e "library(phyloseq); cat(as.character(packageVersion('phyloseq')))")
