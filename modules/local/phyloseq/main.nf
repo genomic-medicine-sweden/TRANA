@@ -61,7 +61,7 @@ process PHYLOSEQ_OBJECT {
     output:
     path "phyloseq_object.RData"          , emit: phyloseq_output_RData
     path "versions.yml"                   , emit: versions
-    path "phyloseq_object_log.log"        , emit: phyloseq_object_log.log
+    path "phyloseq_object_log.log"        , emit: phyloseq_object_log
 
     script:
     """
