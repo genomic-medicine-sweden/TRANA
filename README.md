@@ -33,7 +33,7 @@ and update software dependencies.
 
 ## Pipeline summary
 
-![Pipeline overview image](docs/images/emu_workflow_20250806_300dpi.png)
+![Pipeline overview image](docs/images/emu_workflow_20250808_300dpi.png)
 
 The Nanopore and shortread workflow is available.
 Minor testing has been done for PacBio and it seems to work.
@@ -48,7 +48,7 @@ Krona plot
 Heatmap generated from from likelihood data. Each read has a likelihood that it is derived from a certain taxon.
 Each row sums up to 1.
 
-![sample-control bar plot comparison. Abundance](docs/images/medium_Mock_dil_1_2_BC1_vs_controls_abundance.png)
+![sample-control bar plot comparison. Abundance](docs/images/medium_Mock_dil_1_2_BC1_counts_vs_controls.png)
 If your data has 1 or two controls e.g., a negative and a positive control or spike, then it is possible to generate bar plots for a quick comparison
 between each sample and each control. This is supported for absolute abundance and relative abundance (see image below)
 
