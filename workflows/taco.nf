@@ -184,7 +184,8 @@ workflow TACO {
     }
     //
     // MODULE: Generate PHYLOSEQ object
-    if (params.phyloseq) {
+    if (params.phyloseq)  {
+        ch_tax_file = Channel.fromPath("$projectDir/assets/databases/emu_database/taxonomy.tsv", checkIfExists: true)
         report_ch = EMU_ABUNDANCE.out.report
         all_reports_ch = report_ch
             .map { meta, path -> path }
