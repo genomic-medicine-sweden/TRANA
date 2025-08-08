@@ -28,6 +28,12 @@ output:
     type: file
     description: File containing software versions
     pattern: "versions.yml"
+  - phyloseq_object_log:
+    type: file
+    description: log
+    pattern: "phyloseq_object_log.log"
 
+
+phyloseq_object_log.log
 authors:
   - "@kdannenberg"

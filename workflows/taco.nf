@@ -159,13 +159,14 @@ workflow TACO {
     }
 
     //MODULE: run translate_taxids
-    TRANSLATE_TAXIDS(EMU_ABUNDANCE.out.assignment_report)
-    ch_versions = ch_versions.mix(TRANSLATE_TAXIDS.out.versions)
- 
-    //Module: run assignment_heatmap
-    ASSIGNMENT_HEATMAP(TRANSLATE_TAXIDS.out.assignment_translated_report)
-    ch_versions = ch_versions.mix(ASSIGNMENT_HEATMAP.out.versions)
-
+    if (params.make_heatmap) {
+        TRANSLATE_TAXIDS(EMU_ABUNDANCE.out.assignment_report)
+        ch_versions = ch_versions.mix(TRANSLATE_TAXIDS.out.versions)
+    
+        //Module: run assignment_heatmap
+        ASSIGNMENT_HEATMAP(TRANSLATE_TAXIDS.out.assignment_translated_report)
+        ch_versions = ch_versions.mix(ASSIGNMENT_HEATMAP.out.versions)
+    }
     // MODULE: run emu combine-outputs
     ch_emu_combine_input_files = Channel.empty()
     // Collect all reports into a single list containing the paths

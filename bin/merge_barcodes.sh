@@ -2,6 +2,14 @@
 set -eo pipefail
 trap 'exit_status="$?" && echo Failed on line: $LINENO at command: $BASH_COMMAND && echo "exit status $exit_status" && exit' ERR
 # if not 2 arguments passed, quit
+
+version="0.0.1"
+if [[ "$1" == "version" ]]; then
+    echo "$version"
+    exit 0
+fi
+
+
 if [ $# -ne 2 ]
 then
     echo "arguments are missing to start script. 2 argumens are expected"

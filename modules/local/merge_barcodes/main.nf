@@ -17,16 +17,28 @@ process MERGE_BARCODES {
     // path('*fastq.gz') , emit : fastq_files_merged
     path('fastq_pass_merged/*fastq.gz') , emit : fastq_files_merged
     path('fastq_pass_merged')           , emit : fastq_dir_merged
+    path "versions.yml"                                         , emit: versions
+    path "merge_barcodes_log.log"                               , emit: merge_barcodes_log
+
 
     script:
     """
-    merge_barcodes.sh $fastq_pass fastq_pass_merged
+    {
+        merge_barcodes.sh $fastq_pass fastq_pass_merged
+    } > merge_barcodes_log.log 2>&1 
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        merge_barcodes.sh: \$(echo \$(merge_barcodes.sh version 2>&1))
+    END_VERSIONS
+
     """
 
     stub:
     """
     mkdir fastq_pass_merged
     touch fastq_pass_merged/1.fastq.gz
+    touch fastq_pass_merged/merge_barcodes_log.log
     """
 }
 

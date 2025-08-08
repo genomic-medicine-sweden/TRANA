@@ -16,16 +16,30 @@ process GENERATE_INPUT {
 
     output:
     // publishDir 'fastq_pass_merged', mode: 'move'
-    path '*amplesheet_merged.csv' , emit : sample_sheet_merged
+    path '*amplesheet_merged.csv'                               ,emit : sample_sheet_merged
+    path "versions.yml"                                         , emit: versions
 
     script:
     """
+    {
     generate_input.sh $merged_files
+    } > generate_input_log.log 2>&1
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        generate_input: \$(echo \$(generate_input.sh version 2>&1))  
+    END_VERSIONS
+
     """
 
     stub:
     """
     touch samplesheet_merged.csv
+    touch versions.yml
+    touch generate_input_log.log
+
     """
 }
+
+
 

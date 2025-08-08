@@ -1,7 +1,5 @@
 #!/usr/bin/env Rscript
 
-suppressPackageStartupMessages(library(phyloseq))
-suppressPackageStartupMessages(library(stringr))
 
 
 # # # # # # # # # # # # # # # # #
@@ -130,6 +128,14 @@ is_numeric <- function(n) {
 ###### MAIN #######
 # # # # # # # # # #
 args <- commandArgs(trailingOnly = TRUE)
+version <- "0.0.2"
+# Handle --version
+if ("--version" %in% args) {
+  cat("phyloseq_object.R version", version, "\n")
+  quit(status = 0)
+}
+suppressPackageStartupMessages(library(phyloseq))
+suppressPackageStartupMessages(library(stringr))
 
 phyloseq_object <- gms16s_to_phyloseq(counts_file = args[1], # e.g. gms_16s_Samples.xlsx or tsv
     taxonomy_file = args[2], n_parts_filename_to_sample = 3)

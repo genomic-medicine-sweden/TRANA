@@ -435,19 +435,23 @@
                 }
             }
         },
-        "Control_comparison": {
-            "title": "Control vs sample plots",
+        "r_plots": {
+            "title": "r plots",
             "type": "object",
-            "description": "Generate plots for comparison between controls and samples",
             "default": "",
             "properties": {
                 "ctrl_1": {
                     "type": "string",
-                    "description": "Name of control_1. Name must be the same as in the sample sheet. This will be used to generate bar plots for comparison between each sample and the control. This parameter is required for bar plot generation"
+                    "description": "Generate plots for comparison between controls and samples. Name of control_1. Name must be the same as in the sample sheet. This will be used to generate bar plots for comparison between each sample and the control. This parameter is required for bar plot generation"
                 },
                 "ctrl_2": {
                     "type": "string",
                     "description": "Name of control_2. Name must be the same as in the sample sheet. This will be used to generate bar plots for comparison between each sample and the control. Can be used together with the 'ctrl_1'-parameter but not alone."
+                },
+                "make_heatmap": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Translate the tax-ids in the likelihood-distribution.tsv from emu to scientific names. A heatmap will be generated from the translated file."
                 }
             }
         }
@@ -487,7 +491,7 @@
             "$ref": "#/$defs/institutional_config_options"
         },
         {
-            "$ref": "#/$defs/Control_comparison"
+            "$ref": "#/$defs/r_plots"
         }
     ],
     "properties": {
