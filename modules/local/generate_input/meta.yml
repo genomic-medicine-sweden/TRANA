@@ -1,19 +1,19 @@
-name: "emu_abundance"
+name: "generate_input"
 ## TODO nf-core: Add a description of the module and list keywords
-description: A taxonomic profiler for metagenomic 16S data optimized for error prone long reads.
+description: Produce a samplesheet for previously merged fastq-files
 keywords:
-  - Metagenomics
-  - 16S
+  - fastq-concatenation
+  - samplesheet-generation
   - Nanopore
 
 tools:
-  - "emu":
+  - "generate_input.sh":
       ## TODO nf-core: Add a description and other details for the software below
-      description: "Emu is a relative abundance estimator for 16s genomic data."
-      homepage: "https://gitlab.com/treangenlab/emu"
-      documentation: "https://gitlab.com/treangenlab/emu"
+      description: "Produce a samplesheet for previously merged fastq-files"
+      homepage: ""
+      documentation: ""
       tool_dev_url: "None"
-      doi: "https://doi.org/10.1038/s41592-022-01520-4"
+      doi: ""
       licence: "['MIT']"
 
 ## TODO nf-core: Add a description of all of the variables used as input
@@ -26,9 +26,9 @@ input:
         e.g. [ id:'test', single_end:false ]
   #
   ## TODO nf-core: Delete / customise this example input
-  - reads:
+  - merged_files:
       type: file
-      description: fastq.gz file containing metagenomic 16S data
+      description: merged fastq.gz files
       pattern: "*.{fastq.gz}"
 
 ## TODO nf-core: Add a description of all of the variables used as output
@@ -45,10 +45,14 @@ output:
       description: File containing software versions
       pattern: "versions.yml"
   ## TODO nf-core: Delete / customise this example output
-  - report:
+  - sample_sheet_merged:
       type: file
-      description: Report (tsv file) over detected species and estimated number of reads and relative abundance
-      pattern: "*{.tsv}"
+      description: A samplesheet containgin info about reads and sample names
+      pattern: "*{amplesheet_merged.csv}"
+  - generate_input_log:
+      type: file
+      description: log
+      pattern: "*{.log}"
 
 authors:
   - "@fwa93"
