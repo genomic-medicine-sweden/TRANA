@@ -27,7 +27,7 @@ process GENERATE_INPUT {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        generate_input: \$(echo \$(generate_input.sh version 2>&1))  
+        generate_input: \$(echo \$(generate_input.sh version 2>&1))
     END_VERSIONS
 
     """

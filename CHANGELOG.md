@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added barplots for control comparison
 - Added module for translation of tax-ids into scientific name for heatmap generation
 - Logs for local modules
+
 ### Fixed
 
 - Readded `NANOPLOT2` as `NANOPLOT_PROCESSED_READS`
@@ -62,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - updated schema
 - Fized input channel for seqtk
 - Fixed names for containers
+
 ### Changed
 
 - `merge_barcodes_samplesheet.py` can now handle custom barcodes.
@@ -84,6 +86,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   with call to `PIPELINE_COMPLETION` subworkflow
 - Updated images for github
 - Added versions for local scripts
+
 ## [v0.1.0]
 
 ### Added

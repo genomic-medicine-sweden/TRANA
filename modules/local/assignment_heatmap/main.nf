@@ -8,8 +8,8 @@ process ASSIGNMENT_HEATMAP {
     conda 'modules/local/assignment_heatmap/env.yaml'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-      'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/9a/9abfb11a46cc7dc1bbf2846d0c2d20e8decdbd1e74a782cd1f61fdba887e844b/data':
-      'community.wave.seqera.io/library/r-base_r-data.table_r-ggplot2:89f7b5fed11f380a'}"
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/9a/9abfb11a46cc7dc1bbf2846d0c2d20e8decdbd1e74a782cd1f61fdba887e844b/data':
+        'community.wave.seqera.io/library/r-base_r-data.table_r-ggplot2:89f7b5fed11f380a'}"
 
     input:
     //  Where applicable all sample-specific information e.g. "id", "single_end", "read_group"
@@ -32,14 +32,13 @@ process ASSIGNMENT_HEATMAP {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    
     export XDG_CACHE_HOME=".cache"
     mkdir -p \${XDG_CACHE_HOME}/fontconfig
     assignment_heatmap.R  "$assignment_translated_report" "${prefix}_assignment_heatmap.png" > ${prefix}_assignment_heatmap_log.log 2>&1
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        assignment_heatmap: \$(assignment_heatmap.R --version | sed 's/assignment_heatmap.R version//') 
+        assignment_heatmap: \$(assignment_heatmap.R --version | sed 's/assignment_heatmap.R version//')
         r-base: \$(echo \$(R --version 2>&1) | sed 's/^.*R version //; s/ .*\$//')
         r-ggplot2: \$(Rscript -e "library(ggplot2); cat(as.character(packageVersion('ggplot2')))")
         r-data.table: \$(Rscript -e "library(data.table); cat(as.character(packageVersion('data.table')))")
