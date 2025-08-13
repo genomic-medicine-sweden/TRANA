@@ -25,7 +25,7 @@ process MERGE_BARCODES {
     """
     {
         merge_barcodes.sh $fastq_pass fastq_pass_merged
-    } > merge_barcodes_log.log 2>&1 
+    } > merge_barcodes_log.log 2>&1
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

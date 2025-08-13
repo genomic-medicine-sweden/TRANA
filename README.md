@@ -52,12 +52,8 @@ Each row sums up to 1.
 If your data has 1 or two controls e.g., a negative and a positive control or spike, then it is possible to generate bar plots for a quick comparison
 between each sample and each control. This is supported for absolute abundance and relative abundance (see image below)
 
-
 ![sample-control bar plot comparison. Relative abundance](docs/images/medium_Mock_dil_1_2_BC1_vs_controls.png)
 Relative abundance comparison to controls
-
-
-
 
 ## Quick Start
 

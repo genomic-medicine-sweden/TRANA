@@ -10,21 +10,21 @@ args <- commandArgs(trailingOnly = TRUE)
 
 # Handle --version
 if ("--version" %in% args) {
-  cat("assignment_heatmap.R version", version, "\n")
-  quit(status = 0)
+    cat("assignment_heatmap.R version", version, "\n")
+    quit(status = 0)
 }
 
 # Print help if too few args or help flag is used
 if (length(args) < 2 || "--help" %in% args || "-h" %in% args) {
-  cat("
+    cat("
 Usage:
-  Rscript script.R <input_file.tsv> <output_file.png>
+    Rscript script.R <input_file.tsv> <output_file.png>
 
 Options:
-  --version     Print version and exit
-  --help, -h    Show this help message
+    --version     Print version and exit
+    --help, -h    Show this help message
 \n")
-  quit(status = 1)
+    quit(status = 1)
 }
 
 # Assign positional arguments
@@ -40,14 +40,14 @@ melted_data <- melt(likelihood_data, id.vars = "ReadID")
 
 # Create the plot
 p <- ggplot(melted_data, aes(x = ReadID, y = variable, fill = value)) +
-  geom_tile() +
-  scale_fill_gradient(low = "white", high = "blue") +
-  labs(x = "Reads", y = "Taxon name", fill = "Likelihood") +
-  theme(
-    axis.text.x = element_blank(),
-    axis.text.y = element_text(angle = 0, vjust = 0.5, hjust = 1),
-    axis.ticks.x = element_blank()
-  )
+    geom_tile() +
+    scale_fill_gradient(low = "white", high = "blue") +
+    labs(x = "Reads", y = "Taxon name", fill = "Likelihood") +
+    theme(
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(angle = 0, vjust = 0.5, hjust = 1),
+        axis.ticks.x = element_blank()
+    )
 
 
 # Save to PNG
