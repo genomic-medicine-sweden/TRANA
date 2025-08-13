@@ -42,7 +42,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added tests for the combinations of adapter trimming and quality filtering parameters.
 - Added test for downsampling
 - Added running of `nextflow lint` to CI
-
+- Added module for heatmap for emu likelihood file
+- Added barplots for control comparison
+- Added module for translation of tax-ids into scientific name for heatmap generation
+- Logs for local modules
 ### Fixed
 
 - Readded `NANOPLOT2` as `NANOPLOT_PROCESSED_READS`
@@ -56,7 +59,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed broken e-mail sending, where a (corrupt) e-mail would be sent at the start of a pipeline rather than at the end.
 - Fixed a pipeline ordering error in the main workflow where Nanoplot outputs were accessed before executing the module.
 - Fixed various broken process calls in the main Taco workflow found when adding tests for parameter combinations.
-
+- updated schema
+- Fized input channel for seqtk
+- Fixed names for containers
 ### Changed
 
 - `merge_barcodes_samplesheet.py` can now handle custom barcodes.
@@ -77,7 +82,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added nanoplot unprocessed reads and processed reads to multiqc. Short info about this in README.
 - Added steps in `PIPELINE_INITIALISATION` from nf-core template, and replaced workflow.onComplete code
   with call to `PIPELINE_COMPLETION` subworkflow
-
+- Updated images for github
+- Added versions for local scripts
 ## [v0.1.0]
 
 ### Added
