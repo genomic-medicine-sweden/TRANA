@@ -1,5 +1,5 @@
 name: "ctrl_comparison"
-description: Creates stacked bar plots for sample vs a control. The plots can be used to get an idea of contamination in the samples. 
+description: Creates stacked bar plots for sample vs a control. The plots can be used to get an idea of contamination in the samples.
 keywords:
   - emu
   - contamination

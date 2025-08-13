@@ -8,8 +8,8 @@ process CTRL_COMPARISON {
     conda 'modules/local/assignment_heatmap/env.yaml'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-      'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/70/701063393e92e8ae9c7632857dd6f5c42c04f6d7f26f7ea299cb89c98eae9226/data':
-      'community.wave.seqera.io/library/r-base_r-dplyr_r-ggplot2_r-glue_pruned:c573c918fb79c025'}"
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/70/701063393e92e8ae9c7632857dd6f5c42c04f6d7f26f7ea299cb89c98eae9226/data':
+        'community.wave.seqera.io/library/r-base_r-dplyr_r-ggplot2_r-glue_pruned:c573c918fb79c025'}"
 
     input:
     //  Where applicable all sample-specific information e.g. "id", "single_end", "read_group"

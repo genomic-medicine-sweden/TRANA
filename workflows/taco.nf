@@ -162,7 +162,7 @@ workflow TACO {
     if (params.make_heatmap) {
         TRANSLATE_TAXIDS(EMU_ABUNDANCE.out.assignment_report)
         ch_versions = ch_versions.mix(TRANSLATE_TAXIDS.out.versions)
-    
+
         //Module: run assignment_heatmap
         ASSIGNMENT_HEATMAP(TRANSLATE_TAXIDS.out.assignment_translated_report)
         ch_versions = ch_versions.mix(ASSIGNMENT_HEATMAP.out.versions)
@@ -177,7 +177,7 @@ workflow TACO {
     EMU_COMBINE_OUTPUTS(collected_files)
     ch_versions = ch_versions.mix(EMU_COMBINE_OUTPUTS.out.versions)
 
-    // MODULE: run ctrl_comparison 
+    // MODULE: run ctrl_comparison
     if (params.ctrl_1) {
         CTRL_COMPARISON(EMU_COMBINE_OUTPUTS.out.combined_report,EMU_COMBINE_OUTPUTS.out.combined_counts_report)
         ch_versions = ch_versions.mix(CTRL_COMPARISON.out.versions)
