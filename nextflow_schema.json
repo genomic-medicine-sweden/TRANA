@@ -336,7 +336,7 @@
             "properties": {
                 "phyloseq": {
                     "type": "boolean",
-                    "description": "Create a phyloseq object"
+                    "description": "Create a phyloseq object. Works only if there are 2 samples or more in the run."
                 }
             }
         },
