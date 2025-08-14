@@ -32,7 +32,8 @@ process CTRL_COMPARISON {
 
     script:
     def args = task.ext.args ?: ''
-    def _prefix = task.ext.prefix ?: "${meta.id}"
+    //uncomment and remove _ if the prefix should be used. 
+    //def _prefix = task.ext.prefix ?: "${meta.id}"
     """
     {
     export XDG_CACHE_HOME=".cache"
