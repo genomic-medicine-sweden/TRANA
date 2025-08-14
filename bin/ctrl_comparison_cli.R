@@ -6,7 +6,7 @@
 
 # ---- Parse command-line args ----
 
-version <- "0.0.5"
+version <- "0.0.6"
 
 args <- commandArgs(trailingOnly = TRUE)
 
@@ -46,7 +46,7 @@ data_file <- args[1]
 #control_name2 <- NULL
 ##
 control_name1 <- args[2]
-control_name2 <- if (length(args) >= 3 && args[3] != "") args[3] else NULL
+control_name2 <- if (length(args) >= 3 && args[3] != "" && args[3] != "--counts_file") args[3] else NULL
 
 # ---- Output folder ----
 output_dir <- "plots_vs_selected_ctrl"
@@ -55,8 +55,16 @@ dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 # ---- Read and reshape data ----
 raw <- read_tsv(data_file, col_types = cols(.default = col_character())) %>%
     mutate(across(where(is.character), ~na_if(., "")))  # Treat empty strings as NA
-colnames(raw) <- gsub("\\.fastq$", "", colnames(raw))
-
+# patterns to remove from the header
+# only filtlong read names
+remove_this1 <- "_filtered.fastq$"
+# downsampled reads
+remove_this2 <- "_downsampled.fastq$"
+# reads with only .fastq suffix
+remove_this3 <-  "\\.fastq$"
+colnames(raw) <- gsub(remove_this1, "", colnames(raw))
+colnames(raw) <- gsub(remove_this2, "", colnames(raw))
+colnames(raw) <- gsub(remove_this3, "", colnames(raw))
 ##
 # Find the last row index
 last_row <- nrow(raw)
