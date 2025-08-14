@@ -62,7 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed a pipeline ordering error in the main workflow where Nanoplot outputs were accessed before executing the module.
 - Fixed various broken process calls in the main Taco workflow found when adding tests for parameter combinations.
 - updated schema
-- Fized input channel for seqtk
+- Fixed input channel for seqtk
 - Fixed names for containers
 
 ### Changed
