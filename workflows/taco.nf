@@ -184,7 +184,7 @@ workflow TACO {
     //
     // MODULE: Generate PHYLOSEQ object
     if (params.phyloseq)  {
-        ch_tax_file = Channel.fromPath("$projectDir/assets/databases/emu_database/taxonomy.tsv", checkIfExists: true)
+        ch_tax_file = channel.fromPath("$projectDir/assets/databases/emu_database/taxonomy.tsv", checkIfExists: true)
         report_ch = EMU_ABUNDANCE.out.report
         all_reports_ch = report_ch
             .map { meta, path -> path }
@@ -193,7 +193,7 @@ workflow TACO {
             all_reports_ch
         )
 
-        ch_tax_file = Channel.fromPath(
+        ch_tax_file = channel.fromPath(
             "$projectDir/assets/databases/emu_database/taxonomy.tsv",
             checkIfExists: true
         )
@@ -220,13 +220,13 @@ workflow TACO {
     // MODULE: MultiQC
     //
 
-    ch_multiqc_config           = Channel.fromPath("$projectDir/assets/multiqc_config.yml", checkIfExists: true)
-    ch_multiqc_custom_config    = params.multiqc_config ? Channel.fromPath(params.multiqc_config, checkIfExists: true) : channel.empty()
-    ch_multiqc_logo             = params.multiqc_logo   ? Channel.fromPath(params.multiqc_logo, checkIfExists: true) : channel.empty()
+    ch_multiqc_config           = channel.fromPath("$projectDir/assets/multiqc_config.yml", checkIfExists: true)
+    ch_multiqc_custom_config    = params.multiqc_config ? channel.fromPath(params.multiqc_config, checkIfExists: true) : channel.empty()
+    ch_multiqc_logo             = params.multiqc_logo   ? channel.fromPath(params.multiqc_logo, checkIfExists: true) : channel.empty()
     ch_multiqc_custom_methods_description = params.multiqc_methods_description ? file(params.multiqc_methods_description, checkIfExists: true) : file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
 
-    ch_workflow_summary         = Channel.value(paramsSummaryMultiqc(summary_params))
-    ch_methods_description      = Channel.value(methodsDescriptionText(ch_multiqc_custom_methods_description))
+    ch_workflow_summary         = channel.value(paramsSummaryMultiqc(summary_params))
+    ch_methods_description      = channel.value(methodsDescriptionText(ch_multiqc_custom_methods_description))
 
     ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml'))
