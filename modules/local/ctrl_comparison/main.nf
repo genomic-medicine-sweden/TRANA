@@ -32,7 +32,7 @@ process CTRL_COMPARISON {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def _prefix = task.ext.prefix ?: "${meta.id}"
     """
     {
     export XDG_CACHE_HOME=".cache"

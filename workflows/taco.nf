@@ -41,8 +41,8 @@ workflow TACO {
 
     main:
 
-    ch_versions = Channel.empty()
-    ch_multiqc_files = Channel.empty()
+    ch_versions = channel.empty()
+    ch_multiqc_files = channel.empty()
 
     summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
 
@@ -167,7 +167,7 @@ workflow TACO {
         ch_versions = ch_versions.mix(ASSIGNMENT_HEATMAP.out.versions)
     }
     // MODULE: run emu combine-outputs
-    ch_emu_combine_input_files = Channel.empty()
+    ch_emu_combine_input_files = channel.empty()
     // Collect all reports into a single list containing the paths
     ch_emu_combine_input_files = EMU_ABUNDANCE.out.report
         .map { it[1] }  // Extract only the file path from the tuple (meta, path)
@@ -220,8 +220,8 @@ workflow TACO {
     //
 
     ch_multiqc_config           = Channel.fromPath("$projectDir/assets/multiqc_config.yml", checkIfExists: true)
-    ch_multiqc_custom_config    = params.multiqc_config ? Channel.fromPath(params.multiqc_config, checkIfExists: true) : Channel.empty()
-    ch_multiqc_logo             = params.multiqc_logo   ? Channel.fromPath(params.multiqc_logo, checkIfExists: true) : Channel.empty()
+    ch_multiqc_custom_config    = params.multiqc_config ? Channel.fromPath(params.multiqc_config, checkIfExists: true) : channel.empty()
+    ch_multiqc_logo             = params.multiqc_logo   ? Channel.fromPath(params.multiqc_logo, checkIfExists: true) : channel.empty()
     ch_multiqc_custom_methods_description = params.multiqc_methods_description ? file(params.multiqc_methods_description, checkIfExists: true) : file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
 
     ch_workflow_summary         = Channel.value(paramsSummaryMultiqc(summary_params))
@@ -257,8 +257,8 @@ workflow TACO {
     emit:
     master_html             = GENERATE_MASTER_HTML.out.html      // channel: [ path(master.html) ]
     versions                = ch_versions                        // channel: [ path(versions.yml) ]
-    nanostats_unprocessed   = (params.seqtype == "map-ont") ? NANOPLOT_UNPROCESSED_READS.out.txt : Channel.empty()  // channel: [ path(master.html) ]
-    nanostats_processed     = (params.seqtype == "map-ont") ? NANOPLOT_PROCESSED_READS.out.txt   : Channel.empty()  // channel: [ path(master.html) ]
+    nanostats_unprocessed   = (params.seqtype == "map-ont") ? NANOPLOT_UNPROCESSED_READS.out.txt : channel.empty()  // channel: [ path(master.html) ]
+    nanostats_processed     = (params.seqtype == "map-ont") ? NANOPLOT_PROCESSED_READS.out.txt   : channel.empty()  // channel: [ path(master.html) ]
     multiqc_report          = multiqc_report
 }
 

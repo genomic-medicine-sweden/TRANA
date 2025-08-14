@@ -47,7 +47,7 @@ process EMU_COMBINE_OUTPUTS {
     def file_list = collected_files.join(' ')
 
     def args = task.ext.args ?: ''
-//    def prefix = task.ext.prefix ?: "${meta.id}"
+    def _prefix = task.ext.prefix ?: "${meta.id}"
 
     """
     {
