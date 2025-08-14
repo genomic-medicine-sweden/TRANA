@@ -11,7 +11,7 @@ process SEQTK_SAMPLE {
     tuple val(meta), path(reads), val(sample_size)
 
     output:
-    tuple val(meta), path("*.fastq.gz"), emit: reads
+    tuple val(meta), path("*downsampled*.fastq.gz"), emit: reads
     path "versions.yml"                , emit: versions
 
     when:
@@ -34,7 +34,7 @@ process SEQTK_SAMPLE {
             $args \\
             \$f \\
             $sample_size \\
-            | gzip --no-name > ${prefix}_\$(basename \$f)
+            | gzip --no-name > ${prefix}.fastq.gz
     done
 
     cat <<-END_VERSIONS > versions.yml
