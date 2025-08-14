@@ -51,7 +51,6 @@ workflow TACO {
     //
     FASTQC (ch_reads)
     ch_versions = ch_versions.mix(FASTQC.out.versions)
-
     if (params.seqtype == "map-ont") {
 
         //
@@ -136,7 +135,7 @@ workflow TACO {
         // MODULE: Downsample reads
         SEQTK_SAMPLE(
             ch_processed_reads.map { meta, reads -> tuple(meta, reads, params.sample_size) }
-            ).reads.set { ch_processed_sampled_reads }
+            ).reads.set { ch_processed_optionally_sampled_reads }
         ch_versions = ch_versions.mix(SEQTK_SAMPLE.out.versions)
     } else {
         ch_processed_reads.set{ ch_processed_optionally_sampled_reads }
