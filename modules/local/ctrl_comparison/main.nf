@@ -32,7 +32,7 @@ process CTRL_COMPARISON {
 
     script:
     def args = task.ext.args ?: ''
-    //uncomment and remove _ if the prefix should be used. 
+    //uncomment and remove _ if the prefix should be used.
     //def _prefix = task.ext.prefix ?: "${meta.id}"
     """
     {
