@@ -46,7 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added barplots for control comparison
 - Added module for translation of tax-ids into scientific name for heatmap generation
 - Logs for local modules
-
+- result directory for seqtk
 ### Fixed
 
 - Readded `NANOPLOT2` as `NANOPLOT_PROCESSED_READS`
