@@ -40,7 +40,7 @@ workflow PIPELINE_INITIALISATION {
 
     main:
 
-    ch_versions = Channel.empty()
+    ch_versions = channel.empty()
 
     //
     // Print version and exit if required and dump pipeline parameters to JSON file
@@ -92,7 +92,7 @@ workflow PIPELINE_INITIALISATION {
         GENERATE_INPUT(MERGE_BARCODES_SAMPLESHEET.out.fastq_dir_merged).sample_sheet_merged.set{ ch_samplesheet_path }
         ch_versions = ch_versions.mix(GENERATE_INPUT.out.versions)
     } else if ( !params.merge_fastq_pass && !params.barcodes_samplesheet && samplesheet ) {
-        ch_samplesheet_path = Channel.value(samplesheet)
+        ch_samplesheet_path = channel.value(samplesheet)
     } else {
         error "Invalid input. Please specify either '--input' or '--merge_fastq_pass' (and '--barcodes_samplesheet' if available)."
     }
