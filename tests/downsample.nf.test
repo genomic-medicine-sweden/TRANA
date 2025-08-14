@@ -2,7 +2,7 @@ nextflow_pipeline {
     name "Test Main Pipeline"
     script "main.nf"
 
-    test("Should run pipeline WITH the --sample-size parameter set") {
+    test("Should run pipeline WITH the --sample_size parameter set") {
         when {
             params {
                 db = "$projectDir/assets/databases/emu_database"
@@ -14,18 +14,18 @@ nextflow_pipeline {
                 outdir = outputDir
 
                 // The parameters we are varying here
-                sample_size = "100"
+                sample_size = 100
             }
         }
         then {
             assert workflow.success
             assert workflow.trace.succeeded().size() > 0 // Adjust this number based on the number of processes in your pipeline
-            assert path("${params.outdir}/results/barcode01_barcode01_filtered.fastq_rel-abundance.tsv").exists()
-            assert path("${params.outdir}/results/barcode02_barcode02_filtered.fastq_rel-abundance.tsv").exists()
+            assert path("${params.outdir}/results/barcode01_downsampled.fastq_rel-abundance.tsv").exists()
+            assert path("${params.outdir}/results/barcode02_downsampled.fastq_rel-abundance.tsv").exists()
 
             // Ensure that SeqTK Sample was run
-            assert path("${params.outdir}/seqtk/barcode01_barcode01_filtered.fastq.gz").exists()
-            assert path("${params.outdir}/seqtk/barcode02_barcode02_filtered.fastq.gz").exists()
+            assert path("${params.outdir}/seqtk/barcode01_downsampled.fastq.gz").exists()
+            assert path("${params.outdir}/seqtk/barcode02_downsampled.fastq.gz").exists()
         }
     }
 }
