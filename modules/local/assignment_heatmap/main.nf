@@ -29,7 +29,8 @@ process ASSIGNMENT_HEATMAP {
     task.ext.when == null || task.ext.when
 
     script:
-    def args = task.ext.args ?: ''
+    // uncomment and remove _ if you want to use args
+    //def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
     export XDG_CACHE_HOME=".cache"
