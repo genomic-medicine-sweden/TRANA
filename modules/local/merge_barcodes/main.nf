@@ -31,7 +31,6 @@ process MERGE_BARCODES {
     "${task.process}":
         merge_barcodes.sh: \$(echo \$(merge_barcodes.sh version 2>&1))
     END_VERSIONS
-
     """
 
     stub:

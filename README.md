@@ -49,7 +49,7 @@ Heatmap generated from from likelihood data. Each read has a likelihood that it 
 Each row sums up to 1.
 
 ![sample-control bar plot comparison. Abundance](docs/images/medium_Mock_dil_1_2_BC1_counts_vs_controls.png)
-If your data has 1 or two controls e.g., a negative and a positive control or spike, then it is possible to generate bar plots for a quick comparison
+If your data has one or two controls e.g., a negative and a positive control or spike, then it is possible to generate bar plots for a quick comparison
 between each sample and each control. This is supported for absolute abundance and relative abundance (see image below)
 
 ![sample-control bar plot comparison. Relative abundance](docs/images/medium_Mock_dil_1_2_BC1_vs_controls.png)
