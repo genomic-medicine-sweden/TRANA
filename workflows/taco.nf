@@ -157,12 +157,12 @@ workflow TACO {
         ch_versions = ch_versions.mix(KRONA_KTIMPORTTAXONOMY.out.versions.first())
     }
 
-    //MODULE: run translate_taxids
+    // MODULE: run translate_taxids
     if (params.make_heatmap) {
         TRANSLATE_TAXIDS(EMU_ABUNDANCE.out.assignment_report)
         ch_versions = ch_versions.mix(TRANSLATE_TAXIDS.out.versions)
 
-        //Module: run assignment_heatmap
+        // Module: run assignment_heatmap
         ASSIGNMENT_HEATMAP(TRANSLATE_TAXIDS.out.assignment_translated_report)
         ch_versions = ch_versions.mix(ASSIGNMENT_HEATMAP.out.versions)
     }
