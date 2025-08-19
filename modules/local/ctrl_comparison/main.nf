@@ -8,8 +8,8 @@ process CTRL_COMPARISON {
     conda 'modules/local/assignment_heatmap/env.yaml'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/70/701063393e92e8ae9c7632857dd6f5c42c04f6d7f26f7ea299cb89c98eae9226/data':
-        'community.wave.seqera.io/library/r-base_r-dplyr_r-ggplot2_r-glue_pruned:c573c918fb79c025'}"
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/1a/1a94b01372cfbee2a5cf338385cf4532a8492dbc6ac3d7b927b8f5891c1b926d/data':
+        'community.wave.seqera.io/library/r-base_r-dplyr_r-getopt_r-ggplot2_pruned:32d9c471bea6cc1e'}"
 
     input:
     //  Where applicable all sample-specific information e.g. "id", "single_end", "read_group"
@@ -38,22 +38,20 @@ process CTRL_COMPARISON {
     {
     export XDG_CACHE_HOME=".cache"
     mkdir -p \${XDG_CACHE_HOME}/fontconfig
-
-    # ctrl_comparison_cli.R ctrl_comparison_cli_data.tsv my_neg.fastq my_pos.fastq
     ctrl_comparison_cli.R \\
-    $combined_report \\
+    --input_file $combined_report \\
     $args
 
     ctrl_comparison_cli.R \\
-    $combined_counts_report \\
+    --input_file $combined_counts_report \\
     $args \\
-    --counts_file
+    --counts
 
     } > ctrl_comparison_log.log 2>&1
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        ctrl_comparison_cli.R: \$(echo \$(ctrl_comparison_cli.R --version 2>&1)  | sed 's/ctrl_comparison_cli.R version //')
+        ctrl_comparison_cli.R: \$(echo \$(ctrl_comparison_cli.R --version 2>&1 | grep "ctrl_comparison_cli.R version"  | sed 's/ctrl_comparison_cli.R version'))
         r-ggplot2: \$(Rscript -e "library(ggplot2); cat(as.character(packageVersion('ggplot2')))")
         r-dplyr: \$(Rscript -e "library(dplyr); cat(as.character(packageVersion('dplyr')))")
         r-glue: \$(Rscript -e "library(glue); cat(as.character(packageVersion('glue')))")

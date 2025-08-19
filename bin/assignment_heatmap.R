@@ -20,7 +20,7 @@ opt <- getopt(spec)
 if (!is.null(opt$help)) {
   cat("
 Usage:
-    Rscript script.R [options] --input_file <likelihood tsv file from EMU> --output_file <file.png>
+    Rscript assignment_heatmap.R [options] --input_file <likelihood tsv file from EMU> --output_file <file.png>
 
 Options:
     -h, --help            Show this help message

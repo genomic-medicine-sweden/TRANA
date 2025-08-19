@@ -48,7 +48,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Logs for local modules
 - result directory for seqtk
 - Added a config that can be used for SGE
-
 ### Fixed
 
 - Readded `NANOPLOT2` as `NANOPLOT_PROCESSED_READS`
@@ -62,10 +61,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed broken e-mail sending, where a (corrupt) e-mail would be sent at the start of a pipeline rather than at the end.
 - Fixed a pipeline ordering error in the main workflow where Nanoplot outputs were accessed before executing the module.
 - Fixed various broken process calls in the main Taco workflow found when adding tests for parameter combinations.
-- updated schema
+- Updated schema
 - Fixed input channel for seqtk
 - Fixed names for containers
-
+- Fixed seqtk links
 ### Changed
 
 - `merge_barcodes_samplesheet.py` can now handle custom barcodes.
