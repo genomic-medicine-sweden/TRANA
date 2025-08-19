@@ -29,7 +29,6 @@ process GENERATE_INPUT {
     "${task.process}":
         generate_input: \$(echo \$(generate_input.sh version 2>&1))
     END_VERSIONS
-
     """
 
     stub:
@@ -37,7 +36,6 @@ process GENERATE_INPUT {
     touch samplesheet_merged.csv
     touch versions.yml
     touch generate_input_log.log
-
     """
 }
 
