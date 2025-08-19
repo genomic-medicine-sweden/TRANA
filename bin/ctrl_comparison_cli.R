@@ -77,16 +77,19 @@ dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 # ---- Read and reshape data ----
 raw <- read_tsv(data_file, col_types = cols(.default = col_character())) %>%
     mutate(across(where(is.character), ~na_if(., "")))  # Treat empty strings as NA
+
 # patterns to remove from the header
 # only filtlong read names
 remove_this1 <- "_filtered.fastq$"
+colnames(raw) <- gsub(remove_this1, "", colnames(raw))
 # downsampled reads
 remove_this2 <- "_downsampled.fastq$"
+colnames(raw) <- gsub(remove_this2, "", colnames(raw))
 # reads with only .fastq suffix
 remove_this3 <-  "\\.fastq$"
-colnames(raw) <- gsub(remove_this1, "", colnames(raw))
-colnames(raw) <- gsub(remove_this2, "", colnames(raw))
 colnames(raw) <- gsub(remove_this3, "", colnames(raw))
+
+
 ##
 # Find the last row index
 last_row <- nrow(raw)
@@ -107,11 +110,6 @@ long_df <- raw %>%
     pivot_longer(cols = all_of(numeric_cols), names_to = "sample_name", values_to = "abundance") %>%
     filter(!is.na(abundance) & abundance > 0)
 
-# Create a "species" identifier
-#long_df <- long_df %>%
-#  unite("species", c(family), sep = " | ", remove = FALSE)
-##
-long_df_original <- long_df
 
 # Create an identifier
 long_df <- long_df %>%
