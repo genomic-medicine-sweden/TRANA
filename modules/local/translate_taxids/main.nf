@@ -34,7 +34,6 @@ process TRANSLATE_TAXIDS {
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
     {
-    #python3 bin/translate_taxids.py small_test_data3.fastq_read-assignment-distributions.tsv taxonomy2.tsv out.tsv
     translate_taxids.py $assignment_report  "${params.db}/taxonomy.tsv" ${prefix}_read-assignment-distributions_translated.tsv
     } > translate_taxids_log.log 2>&1
     cat <<-END_VERSIONS > versions.yml
