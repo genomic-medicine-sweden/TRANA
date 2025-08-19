@@ -8,8 +8,8 @@ process ASSIGNMENT_HEATMAP {
     conda 'modules/local/assignment_heatmap/env.yaml'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/9a/9abfb11a46cc7dc1bbf2846d0c2d20e8decdbd1e74a782cd1f61fdba887e844b/data':
-        'community.wave.seqera.io/library/r-base_r-data.table_r-ggplot2:89f7b5fed11f380a'}"
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/35/358914ad2acb00157affa657136b76a5eb3a196d9d2236ca215c70919e917d03/data':
+        'community.wave.seqera.io/library/r-base_r-data.table_r-getopt_r-ggplot2:4290b80604e6066a'}"
 
     input:
     //  Where applicable all sample-specific information e.g. "id", "single_end", "read_group"
@@ -35,7 +35,7 @@ process ASSIGNMENT_HEATMAP {
     """
     export XDG_CACHE_HOME=".cache"
     mkdir -p \${XDG_CACHE_HOME}/fontconfig
-    assignment_heatmap.R  "$assignment_translated_report" "${prefix}_assignment_heatmap.png" > ${prefix}_assignment_heatmap_log.log 2>&1
+    assignment_heatmap.R  --input_file "$assignment_translated_report" --output_file "${prefix}_assignment_heatmap.png" > ${prefix}_assignment_heatmap_log.log 2>&1
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
