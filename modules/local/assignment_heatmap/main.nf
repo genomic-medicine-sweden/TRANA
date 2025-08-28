@@ -43,6 +43,7 @@ process ASSIGNMENT_HEATMAP {
         r-base: \$(echo \$(R --version 2>&1) | sed 's/^.*R version //; s/ .*\$//')
         r-ggplot2: \$(Rscript -e "library(ggplot2); cat(as.character(packageVersion('ggplot2')))")
         r-data.table: \$(Rscript -e "library(data.table); cat(as.character(packageVersion('data.table')))")
+        r-getopt: \$(Rscript -e "library(getopt); cat(as.character(packageVersion('getopt')))")
     END_VERSIONS
     """
 }
