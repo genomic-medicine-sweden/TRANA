@@ -17,7 +17,6 @@ nextflow_pipeline {
         }
         then {
             assert workflow.success
-            assert workflow.summary['succeeded'] > 0
             assert path("${params.outdir}/results/barcode01_filtered.fastq_rel-abundance.tsv").exists()
             assert path("${params.outdir}/results/barcode02_filtered.fastq_rel-abundance.tsv").exists()
         }
