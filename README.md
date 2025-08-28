@@ -172,7 +172,7 @@ There are two types of sample sheets that can be used:
    `--merge_fastq_pass`
    b) If you want your own sample names on the results, then use
    `--merge_fastq_pass` in combination with `--barcodes_samplesheet`. This
-   requires a barcode sample sheet which is tab separated. Se example file
+   requires a barcode sample sheet which is comma separated. See example file
    `sample_sheet_merge.csv` in `examples` for a demonstration.
 
 ## Useful env variables
