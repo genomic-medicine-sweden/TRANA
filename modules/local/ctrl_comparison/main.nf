@@ -59,6 +59,7 @@ process CTRL_COMPARISON {
         r-tidyr: \$(Rscript -e "library(tidyr); cat(as.character(packageVersion('tidyr')))")
         r-viridis: \$(Rscript -e "library(viridis); cat(as.character(packageVersion('viridis')))")
         r-viridisLite: \$(Rscript -e "library(viridisLite); cat(as.character(packageVersion('viridisLite')))")
+        r-getopt: \$(Rscript -e "library(getopt); cat(as.character(packageVersion('getopt')))")
     END_VERSIONS
     """
 }

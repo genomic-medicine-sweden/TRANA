@@ -136,7 +136,7 @@ cat(glue("✅ Loaded {length(sample_names)} samples; comparing to controls: {pas
 
 # ---- Loop over each sample ----
 for (samp in sample_names) {
-    sample_df <- filter(long_df, sample_name == samp)´
+    sample_df <- filter(long_df, sample_name == samp)
     # Get union of taxa from sample + controls
     relevant_taxa <- union(sample_df$Taxonomic_level, ctrl_df$Taxonomic_level)
     # Filter for these taxa only
