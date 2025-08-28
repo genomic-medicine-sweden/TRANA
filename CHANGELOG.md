@@ -89,6 +89,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   with call to `PIPELINE_COMPLETION` subworkflow
 - Updated images for github
 - Added versions for local scripts
+- Changed `PIPELINE_INITIALISATION` subworkflow to be modularised
+- Changed `bin/merge_barcodes_samplesheet.py` to take csv as input instead of tsv as stated in `README` (safer option)
 
 ## [v0.1.0]
 

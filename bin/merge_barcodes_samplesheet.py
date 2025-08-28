@@ -28,7 +28,7 @@ class SampleObject(BaseModel):
 @click.argument("sample-sheet", type=click.File())
 @click.argument("output-dir", type=click.Path(dir_okay=True, readable=True, path_type=Path))
 @click.argument("fastq-dir", type=click.Path(dir_okay=True, readable=True, path_type=Path))
-@click.version_option(version="0.1.0", prog_name="merge_barcodes_samplesheet.py")
+@click.version_option(version="0.2.0", prog_name="merge_barcodes_samplesheet.py")
 def cli(sample_sheet: TextIOWrapper, output_dir: Path, fastq_dir: Path) -> None:
     """Merge fastq files on barcodes in a sample sheet."""
     # Create output folder and make ensure its writeable
@@ -39,9 +39,9 @@ def cli(sample_sheet: TextIOWrapper, output_dir: Path, fastq_dir: Path) -> None:
 
     # Read the sample sheet file and validate the contents
     click.secho(f"Using sample sheet: {sample_sheet.name}")
-    tsv_file = DictReader(sample_sheet, delimiter="\t", fieldnames=["barcode", "sample_id"])
+    csv_file = DictReader(sample_sheet, delimiter=",", fieldnames=["barcode", "sample_id"])
     samples: list[SampleObject] = []
-    for row_no, row in enumerate(tsv_file, start=1):
+    for row_no, row in enumerate(csv_file, start=1):
         # skip suspected header
         if row["barcode"] == "barcode":
             continue
