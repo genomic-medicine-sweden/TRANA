@@ -1,4 +1,3 @@
-
 #!/usr/bin/env Rscript
 suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(data.table))
