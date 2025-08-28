@@ -31,12 +31,14 @@ include { UTILS_NEXTFLOW_PIPELINE    } from '../../nf-core/utils_nextflow_pipeli
 workflow PIPELINE_INITIALISATION {
 
     take:
-    version           // boolean: Display version and exit
-    validate_params   // boolean: Boolean whether to validate parameters against the schema at runtime
-    monochrome_logs   // boolean: Do not use coloured log outputs
-    nextflow_cli_args //   array: List of positional nextflow CLI args
-    outdir            //  string: The output directory where the results will be saved
-    samplesheet       //  string: Path to input samplesheet
+    version                 // boolean: Display version and exit
+    validate_params         // boolean: Boolean whether to validate parameters against the schema at runtime
+    monochrome_logs         // boolean: Do not use coloured log outputs
+    nextflow_cli_args       // array: List of positional nextflow CLI args
+    outdir                  // string: The output directory where the results will be saved
+    samplesheet             // string: Path to input samplesheet
+    barcodes_samplesheet    // string: Path to input barcodes samplesheet
+    merge_fastq_pass        // string: Path to directory ONT fastq_pass dir
 
     main:
 
@@ -69,7 +71,7 @@ workflow PIPELINE_INITIALISATION {
     )
 
     // Check input path parameters to see if they exist
-    def checkPathParamList = !params.merge_fastq_pass ? [params.input] : []
+    def checkPathParamList = !merge_fastq_pass ? [params.input] : []
     checkPathParamList += [params.multiqc_config, params.fasta]
     checkPathParamList.findAll { it }.each { path ->
         if (!file(path).exists()) {
@@ -80,18 +82,18 @@ workflow PIPELINE_INITIALISATION {
     //
     // MODULE: Concatenate input read files
     //
-    if ( params.merge_fastq_pass && !params.barcodes_samplesheet ) {
-        MERGE_BARCODES(params.merge_fastq_pass)
+    if ( merge_fastq_pass && !barcodes_samplesheet ) {
+        MERGE_BARCODES(merge_fastq_pass)
         ch_versions = ch_versions.mix(MERGE_BARCODES.out.versions)
         GENERATE_INPUT(MERGE_BARCODES.out.fastq_dir_merged).sample_sheet_merged.set{ ch_samplesheet_path }
         ch_versions = ch_versions.mix(GENERATE_INPUT.out.versions)
 
-    } else if ( params.merge_fastq_pass && params.barcodes_samplesheet ) {
-        MERGE_BARCODES_SAMPLESHEET(params.barcodes_samplesheet, params.merge_fastq_pass)
+    } else if ( merge_fastq_pass && barcodes_samplesheet ) {
+        MERGE_BARCODES_SAMPLESHEET(barcodes_samplesheet, merge_fastq_pass)
         ch_versions = ch_versions.mix(MERGE_BARCODES_SAMPLESHEET.out.versions)
         GENERATE_INPUT(MERGE_BARCODES_SAMPLESHEET.out.fastq_dir_merged).sample_sheet_merged.set{ ch_samplesheet_path }
         ch_versions = ch_versions.mix(GENERATE_INPUT.out.versions)
-    } else if ( !params.merge_fastq_pass && !params.barcodes_samplesheet && samplesheet ) {
+    } else if ( !merge_fastq_pass && !barcodes_samplesheet && samplesheet ) {
         ch_samplesheet_path = channel.value(samplesheet)
     } else {
         error "Invalid input. Please specify either '--input' or '--merge_fastq_pass' (and '--barcodes_samplesheet' if available)."
