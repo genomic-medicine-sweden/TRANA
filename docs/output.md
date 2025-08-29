@@ -1,4 +1,4 @@
-# genomic-medicine-sweden/taco: Output
+# genomic-medicine-sweden/trana: Output
 
 ## Introduction
 

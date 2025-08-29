@@ -1,4 +1,4 @@
-# TACO: Citations
+# TRANA: Citations
 
 This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/master/LICENSE).
 

@@ -1,6 +1,6 @@
-# genomic-medicine-sweden/taco: Documentation
+# genomic-medicine-sweden/trana: Documentation
 
-The genomic-medicine-sweden/taco documentation is split into the following pages:
+The genomic-medicine-sweden/trana documentation is split into the following pages:
 
 - [Usage](usage.md)
   - An overview of how the pipeline works, how to run it and a description of all of the different command-line flags.

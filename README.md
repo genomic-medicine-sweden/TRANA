@@ -1,4 +1,4 @@
-# TACO
+# TRANA
 
 [![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A522.10.1-23aa62.svg)](https://www.nextflow.io/)
 [![Run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
@@ -10,7 +10,7 @@
 <!-- TODO nf-core: Write a 1-2 sentence summary of what data the pipeline is
 for and what it does -->
 
-TACO bioinformatics analysis pipeline for the [EMU tool](https://github.com/treangenlab/emu).
+TRANA bioinformatics analysis pipeline for the [EMU tool](https://github.com/treangenlab/emu).
 
 This Nextflow pipeline utilizes FastQC, Nanoplot, MultiQC, Porechop_ABI,
 Longfilt, EMU, and Krona. EMU is the tool that does the taxonomic profiling of
@@ -76,8 +76,8 @@ Relative abundance comparison to controls
 ```bash
 nextflow run main.nf \
   --input sample_sheet.csv
-  --outdir [absolute path]/taco/results \
-  --db /[absolute path]/taco/assets/databases/emu_database \
+  --outdir [absolute path]/trana/results \
+  --db /[absolute path]/trana/assets/databases/emu_database \
   --seqtype map-ont \
    -profile singularity,test \
   --quality_filtering \
@@ -96,22 +96,22 @@ Run without barcode sample sheet:
 
 ```bash
 nextflow run main.nf \
-  --outdir [absolute path]/taco/results \
-  --db /[absolute path]/taco/assets/databases/emu_database \
+  --outdir [absolute path]/trana/results \
+  --db /[absolute path]/trana/assets/databases/emu_database \
   --seqtype map-ont \
    -profile singularity,test \
   --quality_filtering \
   --longread_qc_qualityfilter_minlength 1200 \
   --longread_qc_qualityfilter_maxlength 1800 \
-  --merge_fastq_pass /[absolute path]/taco/fastq_pass/
+  --merge_fastq_pass /[absolute path]/trana/fastq_pass/
 ```
 
 Run with barcode sample sheet:
 
 ```bash
 nextflow run main.nf \
-  --outdir /[absolute path to]/taco/results \
-  --db /[absolute path to database]/taco/assets/databases/emu_database \
+  --outdir /[absolute path to]/trana/results \
+  --db /[absolute path to database]/trana/assets/databases/emu_database \
   --seqtype map-ont \
    -profile singularity,test \
   --quality_filtering \
@@ -123,19 +123,19 @@ nextflow run main.nf \
 
 ## Runs with shortreads
 
-When running TACO with short reads, the primer sequences are trimmed using Cutadapt by default using the provided primer sequences.
+When running TRANA with short reads, the primer sequences are trimmed using Cutadapt by default using the provided primer sequences.
 The primer sequences can be provided in the sample-sheet or passed as arguments (FW_primer, RV_primer). Primer trimming with Cutadapt can be skipped with --skip_cutadapt.
 
 ```bash
 sample,fastq_1,fastq_2,FW_primer,RV_primer
-SAMPLE,/absolute_path/taco/Sample_R1_001.fastq.gz,/absolute_path/taco/Sample_R2_001.fastq.gz,GTGCCAGCMGCCGCGGTAA,GGACTACNVGGGTWTCTAAT
+SAMPLE,/absolute_path/trana/Sample_R1_001.fastq.gz,/absolute_path/trana/Sample_R2_001.fastq.gz,GTGCCAGCMGCCGCGGTAA,GGACTACNVGGGTWTCTAAT
 ```
 
 ```bash
 nextflow run main.nf \
   --input sample_sheet.csv
-  --outdir [absolute path]/taco/results \
-  --db /[absolute path]/taco/assets/databases/emu_database \
+  --outdir [absolute path]/trana/results \
+  --db /[absolute path]/trana/assets/databases/emu_database \
   --seqtype sr \
    -profile singularity
 ```
@@ -143,8 +143,8 @@ nextflow run main.nf \
 ```bash
 nextflow run main.nf \
   --input sample_sheet.csv
-  --outdir [absolute path]/taco/results \
-  --db /[absolute path]/taco/assets/databases/emu_database \
+  --outdir [absolute path]/trana/results \
+  --db /[absolute path]/trana/assets/databases/emu_database \
   --seqtype sr \
    -profile singularity \
   --FW_primer AGCTGNCCTG\
@@ -161,8 +161,8 @@ There are two types of sample sheets that can be used:
    header names). It looks like this (See also the `examples` directory):
    ```csv
    sample,fastq_1,fastq_2
-   SAMPLE_1,/absolute_path/taco/assets/test_assets/medium_Mock_dil_1_2_BC1.fastq.gz,
-   SAMPLE_2,/absolute_path/taco/assets/test_assets/medium_Mock_dil_1_2_BC3.fastq.gz,
+   SAMPLE_1,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC1.fastq.gz,
+   SAMPLE_2,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC3.fastq.gz,
    ```
 2. If the fastq files are separated in their respective barcode folder i.e., you
    have several fastq files for each sample and they are organized in barcode
@@ -209,7 +209,7 @@ then hit `TAB` twice.
 
 ## Credits
 
-TACO was originally written by [@fwa93](https://github.com/fwa93) and is further developed and
+TRANA was originally written by [@fwa93](https://github.com/fwa93) and is further developed and
 maintained by gms-mikro from Genomic Medicine Sweden:
 @samuell
 @ryanjameskennedy
