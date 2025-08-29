@@ -1,5 +1,5 @@
 name: Feature request
-description: Suggest an idea for the genomic-medicine-sweden/taco pipeline
+description: Suggest an idea for the genomic-medicine-sweden/trana pipeline
 labels: enhancement
 body:
   - type: textarea
