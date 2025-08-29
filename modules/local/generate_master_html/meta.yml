@@ -8,7 +8,7 @@ keywords:
 tools:
   - "generate_master_html.py":
       description: "Generates master.html file"
-      homepage: "https://github.com/SMD-Bioinformatics-Lund/taco/blob/main/bin/generate_master_html.py"
+      homepage: "https://github.com/SMD-Bioinformatics-Lund/trana/blob/main/bin/generate_master_html.py"
       documentation: "None"
       tool_dev_url: "None"
       doi: "None"

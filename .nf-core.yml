@@ -5,9 +5,9 @@ lint:
     - .github/.dockstore.yml
     - .github/ISSUE_TEMPLATE/config.yml
     - .github/workflows/template_version_comment.yml
-    - assets/nf-core-taco_logo_light.png
-    - docs/images/nf-core-taco_logo_light.png
-    - docs/images/nf-core-taco_logo_dark.png
+    - assets/nf-core-trana_logo_light.png
+    - docs/images/nf-core-trana_logo_light.png
+    - docs/images/nf-core-trana_logo_dark.png
     - lib/*.groovy
   files_unchanged:
     - .github/CONTRIBUTING.md
@@ -51,7 +51,7 @@ template:
     from treangenlab.
   force: true
   is_nfcore: false
-  name: taco
+  name: trana
   org: genomic-medicine-sweden
   outdir: .
   skip_features: null

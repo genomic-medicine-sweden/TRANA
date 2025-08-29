@@ -61,7 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed broken `--help` screen by adding missing nf-schema plugin and validation config.
 - Fixed broken e-mail sending, where a (corrupt) e-mail would be sent at the start of a pipeline rather than at the end.
 - Fixed a pipeline ordering error in the main workflow where Nanoplot outputs were accessed before executing the module.
-- Fixed various broken process calls in the main Taco workflow found when adding tests for parameter combinations.
+- Fixed various broken process calls in the main Trana workflow found when adding tests for parameter combinations.
 - Updated schema
 - Fixed input channel for seqtk
 - Fixed names for containers
@@ -76,7 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `master_template.html` for nanoplot prefix and output changes
 - Changed `merge_barcodes_samplesheet.py` container to nf-core (temporary)
 - Emit `master.html`
-- Changed project name to TACO (`genomic-medicine-sweden/taco`)
+- Changed project name to TRANA (`genomic-medicine-sweden/trana`)
 - Updated nf-core template to version 3.2.0
 - Updated the `ci.yml` config to run test via `nf-test` in addition to the normal test run via cli
 - Updated `README.md` with info about running `make install` to gunzip gzipped
