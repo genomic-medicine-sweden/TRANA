@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    taco
+    trana
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/genomic-medicine-sweden/taco
+    Github : https://github.com/genomic-medicine-sweden/trana
 
 ----------------------------------------------------------------------------------------
 */
@@ -25,14 +25,14 @@ params.fasta = getGenomeAttribute('fasta')
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_taco_pipeline/main.nf'
-include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_taco_pipeline/main.nf'
-include { TACO                    } from './workflows/taco.nf'
+include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_trana_pipeline/main.nf'
+include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_trana_pipeline/main.nf'
+include { TRANA                    } from './workflows/trana.nf'
 
 //
-// WORKFLOW: Run main TACO analysis pipeline
+// WORKFLOW: Run main TRANA analysis pipeline
 //
-workflow GMS_TACO {
+workflow GMS_TRANA {
     take:
     samplesheet // channel: samplesheet read in from --input
     reads
@@ -41,13 +41,13 @@ workflow GMS_TACO {
     //
     // WORKFLOW: Run pipeline
     //
-    TACO (samplesheet, reads)
+    TRANA (samplesheet, reads)
 
     emit:
-    nanostats_unprocessed   = TACO.out.nanostats_unprocessed  // channel: /path/to/nanostats.txt
-    nanostats_processed     = TACO.out.nanostats_processed    // channel: /path/to/nanostats.txt
-    versions                = TACO.out.versions               // channel: /path/to/versions.yaml
-    multiqc_report          = TACO.out.multiqc_report
+    nanostats_unprocessed   = TRANA.out.nanostats_unprocessed  // channel: /path/to/nanostats.txt
+    nanostats_processed     = TRANA.out.nanostats_processed    // channel: /path/to/nanostats.txt
+    versions                = TRANA.out.versions               // channel: /path/to/versions.yaml
+    multiqc_report          = TRANA.out.multiqc_report
 }
 
 /*
@@ -79,7 +79,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    GMS_TACO (
+    GMS_TRANA (
         PIPELINE_INITIALISATION.out.samplesheet,
         PIPELINE_INITIALISATION.out.reads
     )
@@ -91,7 +91,7 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        GMS_TACO.out.multiqc_report
+        GMS_TRANA.out.multiqc_report
     )
 }
 

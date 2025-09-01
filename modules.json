@@ -1,6 +1,6 @@
 {
-    "name": "TACO",
-    "homePage": "https://github.com/genomic-medicine-sweden/taco",
+    "name": "TRANA",
+    "homePage": "https://github.com/genomic-medicine-sweden/trana",
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {

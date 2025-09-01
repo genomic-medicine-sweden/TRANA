@@ -25,17 +25,17 @@ jobs:
       - name: Extract version from VERSION file
         run: |
           VERSION=$(<containers/VERSION tr -d '[:space:]')
-          echo "TACO_TAG=${VERSION}" >> $GITHUB_ENV
-          echo "TACO_TAG_LATEST=latest" >> $GITHUB_ENV
+          echo "TRANA_TAG=${VERSION}" >> $GITHUB_ENV
+          echo "TRANA_TAG_LATEST=latest" >> $GITHUB_ENV
 
       - name: Extract metadata for Docker
         id: meta
         uses: docker/metadata-action@v5.5.0
         with:
-          images: genomicmedicinesweden/taco-python
+          images: genomicmedicinesweden/trana-python
           tags: |
-            type=raw,value=${{ env.TACO_TAG }}
-            type=raw,value=${{ env.TACO_TAG_LATEST }}
+            type=raw,value=${{ env.TRANA_TAG }}
+            type=raw,value=${{ env.TRANA_TAG_LATEST }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5.1.0

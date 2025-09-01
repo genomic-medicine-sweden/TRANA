@@ -1,13 +1,13 @@
-id: "genomic-medicine-sweden-taco-methods-description"
+id: "genomic-medicine-sweden-trana-methods-description"
 description: "Suggested text and references to use when describing pipeline usage within the methods section of a publication."
-section_name: "TACO Methods Description"
-section_href: "https://github.com/genomic-medicine-sweden/taco"
+section_name: "TRANA Methods Description"
+section_href: "https://github.com/genomic-medicine-sweden/trana"
 plot_type: "html"
 ## TODO nf-core: Update the HTML below to your prefered methods description, e.g. add publication citation for this pipeline
 ## You inject any metadata in the Nextflow '${workflow}' object
 data: |
   <h4>Methods</h4>
-  <p>Data was processed using TACO v${workflow.manifest.version} ${doi_text}. TACO was built with the nf-core platform. Some modules were built and some were reused from nf-core. (<a href="https://doi.org/10.1038/s41587-020-0439-x">Ewels <em>et al.</em>, 2020</a>).</p>
+  <p>Data was processed using TRANA v${workflow.manifest.version} ${doi_text}. TRANA was built with the nf-core platform. Some modules were built and some were reused from nf-core. (<a href="https://doi.org/10.1038/s41587-020-0439-x">Ewels <em>et al.</em>, 2020</a>).</p>
   <p>The pipeline was executed with Nextflow v${workflow.nextflow.version} (<a href="https://doi.org/10.1038/nbt.3820">Di Tommaso <em>et al.</em>, 2017</a>) with the following command:</p>
   <pre><code>${workflow.commandLine}</code></pre>
   <h4>References</h4>

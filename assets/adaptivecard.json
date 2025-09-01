@@ -17,7 +17,7 @@
                         "size": "Large",
                         "weight": "Bolder",
                         "color": "<% if (success) { %>Good<% } else { %>Attention<%} %>",
-                        "text": "https://github.com/genomic-medicine-sweden/taco ${version} - ${runName}",
+                        "text": "https://github.com/genomic-medicine-sweden/trana ${version} - ${runName}",
                         "wrap": true
                     },
                     {
