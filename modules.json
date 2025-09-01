@@ -1,6 +1,6 @@
 {
     "name": "TRANA",
-    "homePage": "https://github.com/genomic-medicine-sweden/trana",
+    "homePage": "https://github.com/genomic-medicine-sweden/TRANA",
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {
