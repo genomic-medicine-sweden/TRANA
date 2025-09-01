@@ -5,6 +5,7 @@ lint:
     - .github/.dockstore.yml
     - .github/ISSUE_TEMPLATE/config.yml
     - .github/workflows/template_version_comment.yml
+    - .github/workflows/download_pipeline.yml
     - assets/nf-core-trana_logo_light.png
     - docs/images/nf-core-trana_logo_light.png
     - docs/images/nf-core-trana_logo_dark.png
