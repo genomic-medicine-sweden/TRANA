@@ -10,7 +10,7 @@
 <!-- TODO nf-core: Write a 1-2 sentence summary of what data the pipeline is
 for and what it does -->
 
-TRANA bioinformatics analysis pipeline for the [EMU tool](https://github.com/treangenlab/emu).
+TRANA (previously known as gms_16S)  bioinformatics analysis pipeline for the [EMU tool](https://github.com/treangenlab/emu).
 
 This Nextflow pipeline utilizes FastQC, Nanoplot, MultiQC, Porechop_ABI,
 Longfilt, EMU, and Krona. EMU is the tool that does the taxonomic profiling of
