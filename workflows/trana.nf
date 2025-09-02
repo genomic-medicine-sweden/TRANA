@@ -50,6 +50,8 @@ workflow TRANA {
     // MODULE: Run FastQC
     //
     FASTQC (ch_reads)
+    ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
+
     ch_versions = ch_versions.mix(FASTQC.out.versions)
     if (params.seqtype == "map-ont") {
 
