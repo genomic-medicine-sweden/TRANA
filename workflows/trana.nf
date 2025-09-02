@@ -94,7 +94,7 @@ workflow TRANA {
                 meta, reads -> [meta, [], reads]
             }).reads.set { ch_processed_reads }
 
-            // Split channels into read files with or without read content 
+            // Split channels into read files with or without read content
             ch_processed_reads
             .branch { it ->
                 passed: it[1].size() > 20
