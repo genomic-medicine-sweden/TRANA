@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed `filtlong` bug that crashes pipeline when all reads are filtered out with `.branch` operator
+- Fixed fastqc data missing in multiqc report
 
 ### Changed
 
