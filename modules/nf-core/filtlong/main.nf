@@ -22,13 +22,20 @@ process FILTLONG {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     def short_reads = !shortreads ? "" : meta.single_end ? "-1 $shortreads" : "-1 ${shortreads[0]} -2 ${shortreads[1]}"
-    if ("$longreads" == "${prefix}.fastq.gz") error "Longread FASTQ input and output names are the same, set prefix in module configuration to disambiguate!"
     """
+    if [[ "${longreads}" == "${prefix}.fastq.gz" ]]; then
+        echo "ERROR: Longread FASTQ input and output names are the same. Set prefix in module configuration to disambiguate!" >&2
+        exit 1
+    fi
+
+    export LC_ALL=C.UTF-8
+    export LANG=C.UTF-8
+
     filtlong \\
         $short_reads \\
         $args \\
         $longreads \\
-        2> >(tee ${prefix}.log >&2) \\
+        2>| >(tee ${prefix}.log >&2) \\
         | gzip -n > ${prefix}.fastq.gz
 
     cat <<-END_VERSIONS > versions.yml
