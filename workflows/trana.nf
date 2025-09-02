@@ -94,18 +94,27 @@ workflow TRANA {
                 meta, reads -> [meta, [], reads]
             }).reads.set { ch_processed_reads }
 
+            // Split channels into read files with or without read content 
+            ch_processed_reads
+            .branch { it ->
+                passed: it[1].size() > 20
+                failed: it[1].size() <= 20
+            }.set { ch_processed_filtered_reads }
+
+            ch_processed_filtered_reads.passed.set { ch_processed_passed_reads }
+
             ch_versions = ch_versions.mix(FILTLONG.out.versions.first())
             ch_multiqc_files = ch_multiqc_files.mix(
                 FILTLONG.out.log.collect{ it[1] }
             )
         } else {
-            ch_optionally_trimmed_reads.set{ ch_processed_reads }
+            ch_optionally_trimmed_reads.set{ ch_processed_passed_reads }
         }
 
         //
         // MODULE: run NANOPLOT_PROCESSED_READS
         //
-        NANOPLOT_PROCESSED_READS(ch_processed_reads)
+        NANOPLOT_PROCESSED_READS(ch_processed_passed_reads)
         ch_versions = ch_versions.mix(NANOPLOT_PROCESSED_READS.out.versions)
         ch_multiqc_files = ch_multiqc_files.mix(
             NANOPLOT_PROCESSED_READS.out.txt.collect{ it[1] }
@@ -118,13 +127,13 @@ workflow TRANA {
         //
         if (!params.skip_cutadapt) {
             CUTADAPT(ch_reads)
-            CUTADAPT.out.reads.set { ch_processed_reads }
+            CUTADAPT.out.reads.set { ch_processed_passed_reads }
             ch_versions = ch_versions.mix(CUTADAPT.out.versions.first())
             ch_multiqc_files = ch_multiqc_files.mix(
                 CUTADAPT.out.log.collect{ it[1] }
             )
         } else {
-            ch_reads.set { ch_processed_reads }
+            ch_reads.set { ch_processed_passed_reads }
         }
     } else {
         error "Invalid seqtype. Please specify either 'map-ont' or 'sr'."
@@ -134,11 +143,11 @@ workflow TRANA {
         //
         // MODULE: Downsample reads
         SEQTK_SAMPLE(
-            ch_processed_reads.map { meta, reads -> tuple(meta, reads, params.sample_size) }
+            ch_processed_passed_reads.map { meta, reads -> tuple(meta, reads, params.sample_size) }
             ).reads.set { ch_processed_optionally_sampled_reads }
         ch_versions = ch_versions.mix(SEQTK_SAMPLE.out.versions)
     } else {
-        ch_processed_reads.set{ ch_processed_optionally_sampled_reads }
+        ch_processed_passed_reads.set{ ch_processed_optionally_sampled_reads }
     }
 
     //
