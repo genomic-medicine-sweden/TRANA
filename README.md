@@ -178,7 +178,7 @@ There are two types of sample sheets that can be used:
 ## Useful env variables
 
 ```config
-NXF_WORK = working directory. # If the work is spread out on different nodes,
+NXF_WORK = working directory. # work directory,
                               # set this to a shared place.
                               # export NXF_WORK=/path/to/your/working/dir
 APPTAINER_TMPDIR
