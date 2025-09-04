@@ -295,6 +295,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "save merged ont reads"
+                },
+                "save_downsampled_reads": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "save downsampled reads"
                 }
             }
         },

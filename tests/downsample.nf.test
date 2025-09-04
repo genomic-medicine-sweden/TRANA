@@ -15,6 +15,7 @@ nextflow_pipeline {
 
                 // The parameters we are varying here
                 sample_size = 100
+                save_downsampled_reads = true
             }
         }
         then {
