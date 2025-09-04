@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/genomic-medicine-sweden/trana/nextflow_schema.json",
-    "title": "genomic-medicine-sweden/trana pipeline parameters",
+    "$id": "https://raw.githubusercontent.com/genomic-medicine-sweden/TRANA/nextflow_schema.json",
+    "title": "genomic-medicine-sweden/TRANA pipeline parameters",
     "description": "A nextflow pipeline for the EMU tool from treangenlab.",
     "type": "object",
     "$defs": {
