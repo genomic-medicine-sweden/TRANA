@@ -31,4 +31,4 @@ Pipeline Configuration:
 
 --
 trana
-https://github.com/genomic-medicine-sweden/trana
+https://github.com/genomic-medicine-sweden/TRANA

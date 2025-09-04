@@ -1,4 +1,4 @@
-# genomic-medicine-sweden/trana: Output
+# genomic-medicine-sweden/TRANA: Output
 
 ## Introduction
 
