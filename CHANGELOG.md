@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed typo in readme
+
 ### Changed
 
 - Changed `seqtk` out put publishing to be optional via `save_downsampled_reads` param

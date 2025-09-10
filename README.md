@@ -46,7 +46,7 @@ Krona plot
 
 ![Likelihood heatmap per sample](docs/images/medium_Mock_dil_1_2_BC1_assignment_heatmap.png)
 Heatmap generated from from likelihood data. Each read has a likelihood that it is derived from a certain taxon.
-Each row sums up to 1.
+The likelihoods for a read always sums up to one.
 
 ![sample-control bar plot comparison. Abundance](docs/images/medium_Mock_dil_1_2_BC1_counts_vs_controls.png)
 If your data has one or two controls e.g., a negative and a positive control or spike, then it is possible to generate bar plots for a quick comparison
