@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed typo in readme
 - Fixed bioconda channel for generate_master
+- Changed from "TACO" to "TRANA" in the metro map in the README.
 
 ### Changed
 
