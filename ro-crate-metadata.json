@@ -1,29 +1,12 @@
 {
-    "@context": [
-        "https://w3id.org/ro/crate/1.1/context",
-        {
-            "GithubService": "https://w3id.org/ro/terms/test#GithubService",
-            "JenkinsService": "https://w3id.org/ro/terms/test#JenkinsService",
-            "PlanemoEngine": "https://w3id.org/ro/terms/test#PlanemoEngine",
-            "TestDefinition": "https://w3id.org/ro/terms/test#TestDefinition",
-            "TestInstance": "https://w3id.org/ro/terms/test#TestInstance",
-            "TestService": "https://w3id.org/ro/terms/test#TestService",
-            "TestSuite": "https://w3id.org/ro/terms/test#TestSuite",
-            "TravisService": "https://w3id.org/ro/terms/test#TravisService",
-            "definition": "https://w3id.org/ro/terms/test#definition",
-            "engineVersion": "https://w3id.org/ro/terms/test#engineVersion",
-            "instance": "https://w3id.org/ro/terms/test#instance",
-            "resource": "https://w3id.org/ro/terms/test#resource",
-            "runsOn": "https://w3id.org/ro/terms/test#runsOn"
-        }
-    ],
+    "@context": "https://w3id.org/ro/crate/1.1/context",
     "@graph": [
         {
             "@id": "./",
             "@type": "Dataset",
             "creativeWorkStatus": "Stable",
-            "datePublished": "2025-01-24T12:29:13+00:00",
-            "description": "# genomic-medicine-sweden/TRANA\n\n## Introduction\n\n**genomic-medicine-sweden/TRANA** is a bioinformatics pipeline that ...\n\n<!-- TODO nf-core:\n   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the\n   major pipeline sections and the types of output it produces. You're giving an overview to someone new\n   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction\n-->\n\n<!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core\n     workflows use the \"tube map\" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->\n<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))\n\n## Usage\n\n> [!NOTE]\n> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.\n\n<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.\n     Explain what rows and columns represent. For instance (please edit as appropriate):\n\nFirst, prepare a samplesheet with your input data that looks as follows:\n\n`samplesheet.csv`:\n\n```csv\nsample,fastq_1,fastq_2\nCONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz\n```\n\nEach row represents a fastq file (single-end) or a pair of fastq files (paired end).\n\n-->\n\nNow, you can run the pipeline using:\n\n<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->\n\n```bash\nnextflow run genomic-medicine-sweden/TRANA \\\n   -profile <docker/singularity/.../institute> \\\n   --input samplesheet.csv \\\n   --outdir <OUTDIR>\n```\n\n> [!WARNING]\n> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).\n\n## Credits\n\ngenomic-medicine-sweden/TRANA was originally written by Fwa.\n\nWe thank the following people for their extensive assistance in the development of this pipeline:\n\n<!-- TODO nf-core: If applicable, make list of people who have also contributed -->\n\n## Contributions and Support\n\nIf you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).\n\n## Citations\n\n<!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->\n<!-- If you use genomic-medicine-sweden/TRANA for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->\n\n<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->\n\nAn extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.\n\nThis pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/main/LICENSE).\n\n> **The nf-core framework for community-curated bioinformatics pipelines.**\n>\n> Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso & Sven Nahnsen.\n>\n> _Nat Biotechnol._ 2020 Feb 13. doi: [10.1038/s41587-020-0439-x](https://dx.doi.org/10.1038/s41587-020-0439-x).\n",
+            "datePublished": "2025-10-15T13:16:53+00:00",
+            "description": "# TRANA\n\n[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A522.10.1-23aa62.svg)](https://www.nextflow.io/)\n[![Run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)\n[![Run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)\n[![Run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)\n\n## Introduction\n\n<!-- TODO nf-core: Write a 1-2 sentence summary of what data the pipeline is\nfor and what it does -->\n\nTRANA (previously known as gms_16S) bioinformatics analysis pipeline for the [EMU tool](https://github.com/treangenlab/emu).\n\nThis Nextflow pipeline utilizes FastQC, Nanoplot, MultiQC, Porechop_ABI,\nFiltlong, EMU, and Krona. EMU is the tool that does the taxonomic profiling of\n16S rRNA reads. The results are displayed with Krona. Built with Nextflow, it\nensures portability and reproducibility across different computational\ninfrastructures. It has been tested on Linux and on mac M1 (not recommended,\nquite slow). FastQC and Nanoplot performs quality control, Porechop_ABI trims\nadapters (optional), Filtlong filters the fastq-files such that only reads\nthat are close to 1500 bp are used (optional), EMU assigns taxonomic\nclassifications, and Krona visualises the result table from EMU. The pipeline\nenables microbial community analysis, offering insights into the diversity in\nsamples.\n\nThe pipeline is built using [Nextflow](https://www.nextflow.io), a workflow\ntool to run tasks across multiple compute infrastructures in a very portable\nmanner. It uses Docker/Singularity containers making installation trivial and\nresults highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this\npipeline uses one container per process which makes it much easier to maintain\nand update software dependencies.\n\n## Pipeline summary\n\n![Pipeline overview image](docs/images/emu_workflow_20250808_300dpi.png)\n\nThe Nanopore and shortread workflow is available.\nMinor testing has been done for PacBio and it seems to work.\nMultiQC collects only info from FastQC and some information about software versions and\npipeline info.\n\n![Krona plot](docs/images/krona_example_data_.svg)\n\nKrona plot\n\n![Likelihood heatmap per sample](docs/images/medium_Mock_dil_1_2_BC1_assignment_heatmap.png)\nHeatmap generated from from likelihood data. Each read has a likelihood that it is derived from a certain taxon.\nThe likelihoods for a read always sums up to one.\n\n![sample-control bar plot comparison. Abundance](docs/images/medium_Mock_dil_1_2_BC1_counts_vs_controls.png)\nIf your data has one or two controls e.g., a negative and a positive control or spike, then it is possible to generate bar plots for a quick comparison\nbetween each sample and each control. This is supported for absolute abundance and relative abundance (see image below)\n\n![sample-control bar plot comparison. Relative abundance](docs/images/medium_Mock_dil_1_2_BC1_vs_controls.png)\nRelative abundance comparison to controls\n\n## Quick Start\n\n1. Install [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=22.10.1`)\n2. Install any of [Docker](https://docs.docker.com/engine/installation/),\n   [Singularity](https://www.sylabs.io/guides/3.0/user-guide/) (you can follow\n   [this tutorial](https://singularity-tutorial.github.io/01-installation/)),\n   [Podman](https://podman.io/), [Shifter](https://nersc.gitlab.io/development/shifter/how-to-use/)\n   or [Charliecloud](https://hpc.github.io/charliecloud/) for full pipeline\n   reproducibility (you can use [Conda](https://conda.io/miniconda.html) both\n   to install Nextflow itself and also to manage software within pipelines.\n   Please only use it within pipelines as a last resort. See\n   [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles)).\n3. Add you samples to an input file e.g., `sample_sheet.csv`. See examples.\n4. Run `make install` which will gunzip all gzipped files in the database\n   directory (`assets/databases/emu_database`) and the krona/taxonomy directory\n   (`assets/databases/krona/taxonomy`)\n5. Run your command:\n\n```bash\nnextflow run main.nf \\\n  --input sample_sheet.csv\n  --outdir [absolute path]/trana/results \\\n  --db /[absolute path]/trana/assets/databases/emu_database \\\n  --seqtype map-ont \\\n   -profile singularity,test \\\n  --quality_filtering \\\n  --longread_qc_qualityfilter_minlength 1200 \\\n  --longread_qc_qualityfilter_maxlength 1800\n```\n\n## Runs with Nanopore barcode directories\n\nYou can run with or without a sample sheet. If no sample_sheet is used, the\nresults will be named according to the barcode. If a sample sheet is used the\nresults will be named after whats in the second column of the sample sheet. Note\nthat the `--input` flag is not needed when `--merge_fastq_pass` is defined.\n\nRun without barcode sample sheet:\n\n```bash\nnextflow run main.nf \\\n  --outdir [absolute path]/trana/results \\\n  --db /[absolute path]/trana/assets/databases/emu_database \\\n  --seqtype map-ont \\\n   -profile singularity,test \\\n  --quality_filtering \\\n  --longread_qc_qualityfilter_minlength 1200 \\\n  --longread_qc_qualityfilter_maxlength 1800 \\\n  --merge_fastq_pass /[absolute path]/trana/fastq_pass/\n```\n\nRun with barcode sample sheet:\n\n```bash\nnextflow run main.nf \\\n  --outdir /[absolute path to]/trana/results \\\n  --db /[absolute path to database]/trana/assets/databases/emu_database \\\n  --seqtype map-ont \\\n   -profile singularity,test \\\n  --quality_filtering \\\n  --longread_qc_qualityfilter_minlength 1200 \\\n  --longread_qc_qualityfilter_maxlength 1800 \\\n  --merge_fastq_pass /[absolute path to fastq_pass]/fastq_pass/ \\\n  --barcodes_samplesheet /[absolute path to barcode sample sheet]/sample_sheet_merge.csv\n```\n\n## Runs with shortreads\n\nWhen running TRANA with short reads, the primer sequences are trimmed using Cutadapt by default using the provided primer sequences.\nThe primer sequences can be provided in the sample-sheet or passed as arguments (FW_primer, RV_primer). Primer trimming with Cutadapt can be skipped with --skip_cutadapt.\n\n```bash\nsample,fastq_1,fastq_2,FW_primer,RV_primer\nSAMPLE,/absolute_path/trana/Sample_R1_001.fastq.gz,/absolute_path/trana/Sample_R2_001.fastq.gz,GTGCCAGCMGCCGCGGTAA,GGACTACNVGGGTWTCTAAT\n```\n\n```bash\nnextflow run main.nf \\\n  --input sample_sheet.csv\n  --outdir [absolute path]/trana/results \\\n  --db /[absolute path]/trana/assets/databases/emu_database \\\n  --seqtype sr \\\n   -profile singularity\n```\n\n```bash\nnextflow run main.nf \\\n  --input sample_sheet.csv\n  --outdir [absolute path]/trana/results \\\n  --db /[absolute path]/trana/assets/databases/emu_database \\\n  --seqtype sr \\\n   -profile singularity \\\n  --FW_primer AGCTGNCCTG\\\n  --RV_primer TGCATNCTGA\n```\n\n## Sample sheets\n\nThere are two types of sample sheets that can be used:\n\n1. If the fastq files are already concatenated/merged i.e., the fastq-files in\n   Nanopore barcode directories have been concatenated already, the `--input` can\n   be used. `--input` expects a `.csv` sample sheet with 3 columns (note the\n   header names). It looks like this (See also the `examples` directory):\n   ```csv\n   sample,fastq_1,fastq_2\n   SAMPLE_1,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC1.fastq.gz,\n   SAMPLE_2,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC3.fastq.gz,\n   ```\n2. If the fastq files are separated in their respective barcode folder i.e., you\n   have several fastq files for each sample and they are organized in barcode\n   directories in a fastq_pass directory.\n   a) If you do not want to create a sample sheet for the barcodes, then the\n   results will be named according to the barcode folders. flag\n   `--merge_fastq_pass`\n   b) If you want your own sample names on the results, then use\n   `--merge_fastq_pass` in combination with `--barcodes_samplesheet`. This\n   requires a barcode sample sheet which is comma separated. See example file\n   `sample_sheet_merge.csv` in `examples` for a demonstration.\n\n## Useful env variables\n\n```config\nNXF_WORK = working directory. # work directory,\n                              # set this to a shared place.\n                              # export NXF_WORK=/path/to/your/working/dir\nAPPTAINER_TMPDIR\nNXF_SINGULARITY_CACHEDIR\nAPPTAINER_CACHEDIR\n```\n\n## Multiqc report\n\nFastqc results will be shown only for unprocessed reads. For runs using the 'map-ont' flag, qc-results from nanoplot will be\nshown for unprocessed and processed reads.\n\n## Useful commands for developers\n\nNote that there is a `Makefile` available with a few useful commands to use\nwhen developing:\n\n- `make check` to run most checks that are also run on CI:\n  `pre-commit`/`prettier`, `nf-core` lint, and `nf-test test`).\n  - **Note:** It is a good idea to run this command before pushing your changes\n    to a new pull request!\n- `make precommit` to only run pre-commit/prettier.\n- `lint` to run the nf-core lint checks.\n- `test` to run the nf-test tests.\n\n**Tip:** To see which make commands are available, you can always type `make ` and\nthen hit `TAB` twice.\n\n## Credits\n\nTRANA was originally written by [@fwa93](https://github.com/fwa93) and is further developed and\nmaintained by gms-mikro from Genomic Medicine Sweden:\n@samuell\n@ryanjameskennedy\n@sofstam\n@AnderssonOlivia\n@kdannenberg\n@ikarls\n@bokelund\n\nThis pipeline is not a formal nf-core pipeline but it partly uses code and\ninfrastructure developed and maintained by the [nf-core](https://nf-co.re)\ncommunity, reused here under the [MIT license](https://github.com/nf-core/tools/blob/master/LICENSE).\n\n> The nf-core framework for community-curated bioinformatics pipelines.\n>\n> Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes\n> Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso & Sven\n> Nahnsen.\n>\n> Nat Biotechnol. 2020 Feb 13. doi: 10.1038/s41587-020-0439-x.\n> In addition, references of tools and data used in this pipeline are as follows:\n\n### [Nextflow](https://pubmed.ncbi.nlm.nih.gov/28398311/)\n\n> Di Tommaso P, Chatzou M, Floden EW, Barja PP, Palumbo E, Notredame C.\n> Nextflow enables reproducible computational workflows. Nat Biotechnol. 2017\n> Apr 11;35(4):316-319. doi: 10.1038/nbt.3820. PubMed PMID: 2839>\n\n### Pipeline tools\n\n- [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)\n\n- [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)\n  > Ewels P, Magnusson M, Lundin S, K\u00e4ller M. MultiQC: summarize analysis\n  > results for multiple tools and samples in a single report. Bioinformatics.\n  > 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354.>\n\n### Software packaging/containerisation tools\n\n- [Anaconda](https://anaconda.com)\n\n  > Anaconda Software Distribution. Computer software. Vers. 2-2.4.0. Anaconda,\n  > Nov. 2016. Web.\n\n- [Bioconda](https://pubmed.ncbi.nlm.nih.gov/29967506/)\n\n  > Gr\u00fcning B, Dale R, Sj\u00f6din A, Chapman BA, Rowe J, Tomkins-Tinch CH, Valieris\n  > R, K\u00f6ster J; Bioconda Team. Bioconda: sustainable and comprehensive\n  > software distribution for the life sciences. Nat Methods. 2018>\n\n- [BioContainers](https://pubmed.ncbi.nlm.nih.gov/28379341/)\n\n  > da Veiga Leprevost F, Gr\u00fcning B, Aflitos SA, R\u00f6st HL, Uszkoreit J, Barsnes\n  > H, Vaudel M, Moreno P, Gatto L, Weber J, Bai M, Jimenez RC, Sachsenberg T,\n  > Pfeuffer J, Alvarez RV, Griss J, Nesvizhskii AI, Perez-R>\n\n- [Docker](https://dl.acm.org/doi/10.5555/2600239.2600241)\n\n- [Singularity](https://pubmed.ncbi.nlm.nih.gov/28494014/)\n\n  > Kurtzer GM, Sochat V, Bauer MW. Singularity: Scientific containers for\n  > mobility of compute. PLoS One. 2017 May 11;12(5):e0177459. doi:\n  > 10.1371/journal.pone.0177459. eCollection 2017. PubMed PMID: 28494014; >\n\n- [EMU](https://github.com/treangenlab/emu)\n  > Kristen D. Curry et al., \u201cEmu: Species-Level Microbial Community Profiling\n  > of Full-Length 16S RRNA Oxford Nanopore Sequencing Data,\u201d Nature Methods,\n  > June 30, 2022, 1\u20139, https://doi.org/10.1038/s41592-022-015>\n\n## Citations\n\n<!-- TODO nf-core: Add citation for pipeline after first release. Uncomment\nlines below and update Zenodo doi and badge at the top of this file. -->\n\n<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->\n\nAn extensive list of references for the tools used by the pipeline can be found\nin the [`CITATIONS.md`](CITATIONS.md) file.\n",
             "hasPart": [
                 {
                     "@id": "main.nf"
@@ -32,13 +15,22 @@
                     "@id": "assets/"
                 },
                 {
+                    "@id": "bin/"
+                },
+                {
                     "@id": "conf/"
                 },
                 {
                     "@id": "docs/"
                 },
                 {
+                    "@id": "docs/images/"
+                },
+                {
                     "@id": "modules/"
+                },
+                {
+                    "@id": "modules/local/"
                 },
                 {
                     "@id": "modules/nf-core/"
@@ -87,15 +79,10 @@
                 }
             ],
             "isBasedOn": "https://github.com/genomic-medicine-sweden/TRANA",
-            "license": "MIT",
+            "license": "GNU GPL",
             "mainEntity": {
                 "@id": "main.nf"
             },
-            "mentions": [
-                {
-                    "@id": "#9b185f84-fe9c-4d3a-9fb1-0cb2cf173cbd"
-                }
-            ],
             "name": "genomic-medicine-sweden/TRANA"
         },
         {
@@ -116,11 +103,21 @@
         {
             "@id": "main.nf",
             "@type": ["File", "SoftwareSourceCode", "ComputationalWorkflow"],
+            "creator": [
+                {
+                    "@id": "GMS"
+                }
+            ],
             "dateCreated": "",
-            "dateModified": "2025-01-24T13:29:13Z",
+            "dateModified": "2025-10-15T15:17:36Z",
             "dct:conformsTo": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE/",
             "keywords": ["nf-core", "nextflow"],
-            "license": ["MIT"],
+            "license": ["GNU GPL"],
+            "maintainer": [
+                {
+                    "@id": "GMS"
+                }
+            ],
             "name": ["genomic-medicine-sweden/TRANA"],
             "programmingLanguage": {
                 "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow"
@@ -130,9 +127,9 @@
             },
             "url": [
                 "https://github.com/genomic-medicine-sweden/TRANA",
-                "https://nf-co.re/genomic-medicine-sweden/TRANA/0.1.0/"
+                "https://nf-co.re/genomic-medicine-sweden/TRANA/0.5.1/"
             ],
-            "version": ["0.1.0"]
+            "version": ["0.5.1"]
         },
         {
             "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow",
@@ -144,43 +141,17 @@
             "url": {
                 "@id": "https://www.nextflow.io/"
             },
-            "version": "!>=24.04.2"
-        },
-        {
-            "@id": "#9b185f84-fe9c-4d3a-9fb1-0cb2cf173cbd",
-            "@type": "TestSuite",
-            "instance": [
-                {
-                    "@id": "#758ff4a6-4859-4d13-9438-23e159e8844d"
-                }
-            ],
-            "mainEntity": {
-                "@id": "main.nf"
-            },
-            "name": "Test suite for genomic-medicine-sweden/TRANA"
-        },
-        {
-            "@id": "#758ff4a6-4859-4d13-9438-23e159e8844d",
-            "@type": "TestInstance",
-            "name": "GitHub Actions workflow for testing genomic-medicine-sweden/TRANA",
-            "resource": "repos/genomic-medicine-sweden/TRANA/actions/workflows/ci.yml",
-            "runsOn": {
-                "@id": "https://w3id.org/ro/terms/test#GithubService"
-            },
-            "url": "https://api.github.com"
-        },
-        {
-            "@id": "https://w3id.org/ro/terms/test#GithubService",
-            "@type": "TestService",
-            "name": "Github Actions",
-            "url": {
-                "@id": "https://github.com"
-            }
+            "version": "!>=22.10.1"
         },
         {
             "@id": "assets/",
             "@type": "Dataset",
             "description": "Additional files"
+        },
+        {
+            "@id": "bin/",
+            "@type": "Dataset",
+            "description": "Scripts that must be callable from a pipeline process"
         },
         {
             "@id": "conf/",
@@ -193,9 +164,19 @@
             "description": "Markdown files for documenting the pipeline"
         },
         {
+            "@id": "docs/images/",
+            "@type": "Dataset",
+            "description": "Images for the documentation files"
+        },
+        {
             "@id": "modules/",
             "@type": "Dataset",
             "description": "Modules used by the pipeline"
+        },
+        {
+            "@id": "modules/local/",
+            "@type": "Dataset",
+            "description": "Pipeline-specific modules"
         },
         {
             "@id": "modules/nf-core/",
@@ -277,6 +258,18 @@
             "@type": "Organization",
             "name": "nf-core",
             "url": "https://nf-co.re/"
+        },
+        {
+            "@id": "https://orcid.org/0000-0001-6740-9212",
+            "@type": "Person",
+            "email": "samuel.lampa@scilifelab.se",
+            "name": "Samuel Lampa"
+        },
+        {
+            "@id": "#frans.wallin@rjl.se",
+            "@type": "Person",
+            "email": "frans.wallin@rjl.se",
+            "name": "Frans Wallin"
         }
     ]
 }
