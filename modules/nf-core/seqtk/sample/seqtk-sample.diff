@@ -1,0 +1,36 @@
+Changes in component 'nf-core/seqtk/sample'
+'modules/nf-core/seqtk/sample/environment.yml' is unchanged
+Changes in 'seqtk/sample/main.nf':
+--- modules/nf-core/seqtk/sample/main.nf
++++ modules/nf-core/seqtk/sample/main.nf
+@@ -5,13 +5,13 @@
+     conda "${moduleDir}/environment.yml"
+     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+         'https://depot.galaxyproject.org/singularity/seqtk:1.4--he4a0461_1' :
+-        'biocontainers/seqtk:1.4--he4a0461_1' }"
++        'quay.io/biocontainers/seqtk:1.4--he4a0461_1' }"
+ 
+     input:
+     tuple val(meta), path(reads), val(sample_size)
+ 
+     output:
+-    tuple val(meta), path("*.fastq.gz"), emit: reads
++    tuple val(meta), path("*downsampled*.fastq.gz"), emit: reads
+     path "versions.yml"                , emit: versions
+ 
+     when:
+@@ -34,7 +34,7 @@
+             $args \\
+             \$f \\
+             $sample_size \\
+-            | gzip --no-name > ${prefix}_\$(basename \$f)
++            | gzip --no-name > ${prefix}.fastq.gz
+     done
+ 
+     cat <<-END_VERSIONS > versions.yml
+
+'modules/nf-core/seqtk/sample/meta.yml' is unchanged
+'modules/nf-core/seqtk/sample/tests/standard.config' is unchanged
+'modules/nf-core/seqtk/sample/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/seqtk/sample/tests/main.nf.test' is unchanged
+************************************************************
