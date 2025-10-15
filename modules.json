@@ -42,8 +42,9 @@
                     },
                     "nanoplot": {
                         "branch": "master",
-                        "git_sha": "457e8b54d1d2d3ec9208c55b66cdd573c976372f",
-                        "installed_by": ["modules"]
+                        "git_sha": "9322f997f94451510f974e417ec5277869030b44",
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/nanoplot/nanoplot.diff"
                     },
                     "porechop/abi": {
                         "branch": "master",

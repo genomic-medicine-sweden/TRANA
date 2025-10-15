@@ -1,0 +1,34 @@
+Changes in component 'nf-core/nanoplot'
+'modules/nf-core/nanoplot/environment.yml' is unchanged
+Changes in 'nanoplot/main.nf':
+--- modules/nf-core/nanoplot/main.nf
++++ modules/nf-core/nanoplot/main.nf
+@@ -12,7 +12,7 @@
+ 
+     output:
+     tuple val(meta), path("*.html")                , emit: html
+-    tuple val(meta), path("*.png") , optional: true, emit: png
++    //tuple val(meta), path("*.png") , optional: true, emit: png
+     tuple val(meta), path("*.txt")                 , emit: txt
+     path  "versions.yml"                           , emit: versions
+ 
+@@ -23,10 +23,13 @@
+     def args = task.ext.args ?: ''
+     def input_file = ("$ontfile".endsWith(".fastq.gz") || "$ontfile".endsWith(".fq.gz")) ? "--fastq ${ontfile}" :
+         ("$ontfile".endsWith(".txt")) ? "--summary ${ontfile}" : ''
++    def prefix = task.ext.prefix ?: "${meta.id}"
+     """
+     NanoPlot \\
+         $args \\
+         -t $task.cpus \\
++        --no_static \\
++        -p $prefix \\
+         $input_file
+ 
+     cat <<-END_VERSIONS > versions.yml
+
+'modules/nf-core/nanoplot/meta.yml' is unchanged
+'modules/nf-core/nanoplot/tests/tags.yaml' is unchanged
+'modules/nf-core/nanoplot/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/nanoplot/tests/main.nf.test' is unchanged
+************************************************************
