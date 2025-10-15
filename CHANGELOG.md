@@ -20,10 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed typo in readme
+- Fixed bioconda channel for generate_master
 
 ### Changed
 
 - Changed `seqtk` out put publishing to be optional via `save_downsampled_reads` param
+- Updated nanoplot to 1.46.1 module from nf-core and modified this to ouput with prefix
 
 ## [v0.5.0]
 
