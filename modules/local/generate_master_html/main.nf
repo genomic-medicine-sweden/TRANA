@@ -1,7 +1,7 @@
 process GENERATE_MASTER_HTML {
     //               Software MUST be pinned to channel (i.e. "bioconda"), version (i.e. "1.10").
     //               For Conda, the build (i.e. "pyhdfd78af_1") must be EXCLUDED to support installation on different operating systems.
-    conda "bioconda::nf-core=3.0.2"
+    conda 'modules/local/generate_master_html/env.yaml'
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/nf-core:3.0.2--pyhdfd78af_1':
         'quay.io/biocontainers/nf-core:3.0.2--pyhdfd78af_1' }"
