@@ -13,12 +13,12 @@ for and what it does -->
 TRANA (previously known as gms_16S) bioinformatics analysis pipeline for the [EMU tool](https://github.com/treangenlab/emu).
 
 This Nextflow pipeline utilizes FastQC, Nanoplot, MultiQC, Porechop_ABI,
-Longfilt, EMU, and Krona. EMU is the tool that does the taxonomic profiling of
+Filtlong, EMU, and Krona. EMU is the tool that does the taxonomic profiling of
 16S rRNA reads. The results are displayed with Krona. Built with Nextflow, it
 ensures portability and reproducibility across different computational
 infrastructures. It has been tested on Linux and on mac M1 (not recommended,
 quite slow). FastQC and Nanoplot performs quality control, Porechop_ABI trims
-adapters (optional), Longfilt filters the fastq-files such that only reads
+adapters (optional), Filtlong filters the fastq-files such that only reads
 that are close to 1500 bp are used (optional), EMU assigns taxonomic
 classifications, and Krona visualises the result table from EMU. The pipeline
 enables microbial community analysis, offering insights into the diversity in
