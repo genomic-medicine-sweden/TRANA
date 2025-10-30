@@ -79,7 +79,7 @@
                 }
             ],
             "isBasedOn": "https://github.com/genomic-medicine-sweden/TRANA",
-            "license": "MIT",
+            "license": "GNU GPL v.3",
             "mainEntity": {
                 "@id": "main.nf"
             },
@@ -112,7 +112,7 @@
             "dateModified": "2025-10-15T15:17:36Z",
             "dct:conformsTo": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE/",
             "keywords": ["nf-core", "nextflow"],
-            "license": ["MIT"],
+            "license": ["GNU GPL v.3"],
             "maintainer": [
                 {
                     "@id": "GMS"
