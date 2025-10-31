@@ -1,0 +1,19 @@
+Changes in component 'nf-core/falco'
+'modules/nf-core/falco/environment.yml' is unchanged
+Changes in 'falco/main.nf':
+--- modules/nf-core/falco/main.nf
++++ modules/nf-core/falco/main.nf
+@@ -6,7 +6,7 @@
+     conda "${moduleDir}/environment.yml"
+     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+         'https://depot.galaxyproject.org/singularity/falco:1.2.1--h867801b_3':
+-        'biocontainers/falco:1.2.1--h867801b_3' }"
++        'quay.io/biocontainers/falco:1.2.1--h867801b_3' }"
+ 
+     input:
+     tuple val(meta), path(reads)
+
+'modules/nf-core/falco/meta.yml' is unchanged
+'modules/nf-core/falco/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/falco/tests/main.nf.test' is unchanged
+************************************************************

@@ -4,17 +4,16 @@ process NANOPLOT {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/96/9633ba7d2adf5e17e7d219d60efebb1d1e76cbea6e3f7440320f11cc99da37ac/data' :
-        'community.wave.seqera.io/library/nanoplot:1.44.1--e754907b17cfacc2' }"
+        'https://depot.galaxyproject.org/singularity/nanoplot:1.46.1--pyhdfd78af_0' :
+        'biocontainers/nanoplot:1.46.1--pyhdfd78af_0' }"
 
     input:
     tuple val(meta), path(ontfile)
 
     output:
     tuple val(meta), path("*.html")                , emit: html
-    tuple val(meta), path("*.png") , optional: true, emit: png
+    //tuple val(meta), path("*.png") , optional: true, emit: png
     tuple val(meta), path("*.txt")                 , emit: txt
-    tuple val(meta), path("*.log")                 , emit: log
     path  "versions.yml"                           , emit: versions
 
     when:
@@ -29,9 +28,10 @@ process NANOPLOT {
     NanoPlot \\
         $args \\
         -t $task.cpus \\
-        $input_file \\
-        -p $prefix
-    
+        --no_static \\
+        -p $prefix \\
+        $input_file
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         nanoplot: \$(echo \$(NanoPlot --version 2>&1) | sed 's/^.*NanoPlot //; s/ .*\$//')
@@ -43,7 +43,6 @@ process NANOPLOT {
     touch LengthvsQualityScatterPlot_dot.html
     touch LengthvsQualityScatterPlot_kde.html
     touch NanoPlot-report.html
-    touch NanoPlot_20240301_1130.log
     touch NanoStats.txt
     touch Non_weightedHistogramReadlength.html
     touch Non_weightedLogTransformed_HistogramReadlength.html

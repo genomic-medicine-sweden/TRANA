@@ -1,0 +1,48 @@
+Changes in component 'nf-core/custom/dumpsoftwareversions'
+'modules/nf-core/custom/dumpsoftwareversions/environment.yml' is unchanged
+Changes in 'custom/dumpsoftwareversions/main.nf':
+--- modules/nf-core/custom/dumpsoftwareversions/main.nf
++++ modules/nf-core/custom/dumpsoftwareversions/main.nf
+@@ -1,11 +1,3 @@
+-def deprecation_message = """
+-WARNING: This module has been deprecated.
+-
+-Reason:
+-This module is no longer recommended for use, as it is replaced by the function softwareVersionsToYAML
+-in the utils_nfcore_pipeline subworkflow that is included in the nf-core template.
+-
+-"""
+ process CUSTOM_DUMPSOFTWAREVERSIONS {
+     label 'process_single'
+ 
+@@ -13,7 +5,7 @@
+     conda "${moduleDir}/environment.yml"
+     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+         'https://depot.galaxyproject.org/singularity/multiqc:1.27--pyhdfd78af_0' :
+-        'biocontainers/multiqc:1.27--pyhdfd78af_0' }"
++        'quay.io/biocontainers/multiqc:1.27--pyhdfd78af_0' }"
+ 
+     input:
+     path versions
+@@ -27,7 +19,13 @@
+     task.ext.when == null || task.ext.when
+ 
+     script:
+-    assert true: deprecation_message
+-    def args = task.ext.args ?: ''
++    assert true: """
++    WARNING: This module has been deprecated.
++
++    Reason:
++    This module is no longer recommended for use, as it is replaced by the function softwareVersionsToYAML
++    in the utils_nfcore_pipeline subworkflow that is included in the nf-core template.
++    """
++    def _args = task.ext.args ?: ''
+     template 'dumpsoftwareversions.py'
+ }
+
+'modules/nf-core/custom/dumpsoftwareversions/meta.yml' is unchanged
+'modules/nf-core/custom/dumpsoftwareversions/templates/dumpsoftwareversions.py' is unchanged
+'modules/nf-core/custom/dumpsoftwareversions/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/custom/dumpsoftwareversions/tests/main.nf.test' is unchanged
+************************************************************
