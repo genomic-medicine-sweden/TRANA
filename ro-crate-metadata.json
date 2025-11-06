@@ -251,11 +251,10 @@
             "description": "Ignore file for prettier"
         },
         {
-            "@id": "https://nf-co.re/",
+            "@id": "https://github.com/genomic-medicine-sweden",
             "@type": "Organization",
-            "name": "nf-core",
-            "url": "https://nf-co.re/",
-            "description": "TRANA uses the nf-core template but is not a formal nf-core pipeline"
+            "name": "GMS",
+            "url": "https://github.com/genomic-medicine-sweden"
         },
         {
             "@id": "https://orcid.org/0000-0001-6740-9212",
