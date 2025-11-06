@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed `seqtk` out put publishing to be optional via `save_downsampled_reads` param
 - Updated nanoplot to 1.46.1 module from nf-core and modified this to ouput with prefix
 - Updated cond env files
+- Updated contributors in nextflow.config and in ro-crate-metadata.json
 
 ## [v0.5.0]
 
