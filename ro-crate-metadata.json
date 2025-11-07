@@ -303,6 +303,12 @@
             "@type": "Person",
             "email": "ida.karlsson@scilifelab.uu.se",
             "name": "Ida Karlsson"
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-3887-9519",
+            "@type": "Person",
+            "email": "marten.lindqvist@oru.se",
+            "name": "Carl Mårten Lindqvist"
         }
     ]
 }
