@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated nanoplot to 1.46.1 module from nf-core and modified this to ouput with prefix
 - Updated cond env files
 - Updated contributors in nextflow.config and in ro-crate-metadata.json
+- Updated Emu to 3.5.4 to fix [this float diffing issue](https://github.com/treangenlab/emu/issues/90) causing some datasets to crash.
 
 ## [v0.5.0]
 

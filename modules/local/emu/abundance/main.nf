@@ -19,8 +19,8 @@ process EMU_ABUNDANCE {
     //               For Conda, the build (i.e. "h9402c20_2") must be EXCLUDED to support installation on different operating systems.
     conda 'modules/local/emu/abundance/env.yaml'
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/emu:3.5.1--hdfd78af_0':
-        'quay.io/biocontainers/emu:3.5.1--hdfd78af_0' }"
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/89/89f51e5b1961b27efc33dbafe25ae7f85c1ccfc2e2df5341849237a6db2023a1/data':
+        'community.wave.seqera.io/library/emu:3.5.4--c9ac9572d0d77ae9' }"
 
     input:
     //  Where applicable all sample-specific information e.g. "id", "single_end", "read_group"
