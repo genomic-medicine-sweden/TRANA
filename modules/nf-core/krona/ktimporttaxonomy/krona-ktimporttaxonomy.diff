@@ -1,0 +1,19 @@
+Changes in component 'nf-core/krona/ktimporttaxonomy'
+'modules/nf-core/krona/ktimporttaxonomy/environment.yml' is unchanged
+Changes in 'krona/ktimporttaxonomy/main.nf':
+--- modules/nf-core/krona/ktimporttaxonomy/main.nf
++++ modules/nf-core/krona/ktimporttaxonomy/main.nf
+@@ -6,7 +6,7 @@
+     conda "${moduleDir}/environment.yml"
+     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+         'https://depot.galaxyproject.org/singularity/krona:2.8.1--pl5321hdfd78af_1':
+-        'biocontainers/krona:2.8.1--pl5321hdfd78af_1' }"
++        'quay.io/biocontainers/krona:2.8.1--pl5321hdfd78af_1' }"
+ 
+     input:
+     tuple val(meta), path(report)
+
+'modules/nf-core/krona/ktimporttaxonomy/meta.yml' is unchanged
+'modules/nf-core/krona/ktimporttaxonomy/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/krona/ktimporttaxonomy/tests/main.nf.test' is unchanged
+************************************************************

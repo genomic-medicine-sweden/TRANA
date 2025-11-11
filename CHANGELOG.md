@@ -5,7 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v0.4.2]
+## [v0.6.0]
+
+### Added
+
+- Added diff between local and remote modules
+
+### Fixed
+
+- Fixed typo in readme
+- Fixed bioconda channel for generate_master
+- Changed from "TACO" to "TRANA" in the metro map in the README.
+
+### Changed
+
+- Changed `seqtk` out put publishing to be optional via `save_downsampled_reads` param
+- Updated nanoplot to 1.46.1 module from nf-core and modified this to ouput with prefix
+- Updated cond env files
+- Updated contributors in nextflow.config and in ro-crate-metadata.json
+- Updated Emu to 3.5.4 to fix [this float diffing issue](https://github.com/treangenlab/emu/issues/90) causing some datasets to crash.
+
+## [v0.5.0]
 
 ### Added
 
