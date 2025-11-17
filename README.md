@@ -10,6 +10,7 @@
 <!-- TODO nf-core: Write a 1-2 sentence summary of what data the pipeline is
 for and what it does -->
 
+this is a change in my test branch
 TRANA (previously known as gms_16S) bioinformatics analysis pipeline for the [EMU tool](https://github.com/treangenlab/emu).
 
 This Nextflow pipeline utilizes FastQC, Nanoplot, MultiQC, Porechop_ABI,
