@@ -113,15 +113,6 @@ workflow TRANA {
             ch_optionally_trimmed_reads.set{ ch_processed_passed_reads }
         }
 
-        //
-        // MODULE: run NANOPLOT_PROCESSED_READS
-        //
-        NANOPLOT_PROCESSED_READS(ch_processed_passed_reads)
-        ch_versions = ch_versions.mix(NANOPLOT_PROCESSED_READS.out.versions)
-        ch_multiqc_files = ch_multiqc_files.mix(
-            NANOPLOT_PROCESSED_READS.out.txt.collect{ it[1] }
-        )
-
     } else if (params.seqtype == "sr") {
 
         //
@@ -150,6 +141,16 @@ workflow TRANA {
         ch_versions = ch_versions.mix(SEQTK_SAMPLE.out.versions)
     } else {
         ch_processed_passed_reads.set{ ch_processed_optionally_sampled_reads }
+    }
+    if ( params.seqtype == "map-ont" && (params.quality_filtering || params.sample_size)) {
+        //
+        // MODULE: run NANOPLOT_PROCESSED_READS
+        //
+        NANOPLOT_PROCESSED_READS(ch_processed_optionally_sampled_reads)
+        ch_versions = ch_versions.mix(NANOPLOT_PROCESSED_READS.out.versions)
+        ch_multiqc_files = ch_multiqc_files.mix(
+        NANOPLOT_PROCESSED_READS.out.txt.collect{ it[1] }
+        )
     }
 
     //
@@ -270,7 +271,7 @@ workflow TRANA {
     master_html             = GENERATE_MASTER_HTML.out.html      // channel: [ path(master.html) ]
     versions                = ch_versions                        // channel: [ path(versions.yml) ]
     nanostats_unprocessed   = (params.seqtype == "map-ont") ? NANOPLOT_UNPROCESSED_READS.out.txt : channel.empty()  // channel: [ path(master.html) ]
-    nanostats_processed     = (params.seqtype == "map-ont") ? NANOPLOT_PROCESSED_READS.out.txt   : channel.empty()  // channel: [ path(master.html) ]
+    nanostats_processed     = (params.seqtype == "map-ont" && (params.quality_filtering || params.sample_size)) ? NANOPLOT_PROCESSED_READS.out.txt   : channel.empty()  // channel: [ path(master.html) ]
     multiqc_report          = multiqc_report
 }
 
