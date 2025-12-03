@@ -12,25 +12,23 @@ Changes in 'porechop/abi/main.nf':
  
      input:
      tuple val(meta), path(reads)
-@@ -20,7 +20,8 @@
+@@ -20,14 +20,13 @@
      task.ext.when == null || task.ext.when
  
      script:
--    def args = task.ext.args ?: ''
 +    // remove _ if args will be used
-+    def _args = task.ext.args ?: ''
+     def args = task.ext.args ?: ''
      def prefix = task.ext.prefix ?: "${meta.id}.porechop_abi"
-     def adapters_list = custom_adapters ? "--custom_adapters ${custom_adapters}" : ""
+-    def adapters_list = custom_adapters ? "--custom_adapters ${custom_adapters}" : ""
      if ("$reads" == "${prefix}.fastq.gz") error "Input and output names are the same, use \"task.ext.prefix\" to disambiguate!"
-@@ -29,7 +30,6 @@
+     """
+     porechop_abi \\
          --input $reads \\
-         $adapters_list \\
+-        $adapters_list \\
          --threads $task.cpus \\
--        $args \\
+         $args \\
          --output ${prefix}.fastq.gz \\
-         | tee ${prefix}.log
-     cat <<-END_VERSIONS > versions.yml
-@@ -39,7 +39,7 @@
+@@ -39,7 +38,7 @@
      """
  
      stub:

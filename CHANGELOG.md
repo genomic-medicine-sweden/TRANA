@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-
+- Several options forporechop_abi-  ab-initio, custom-adapters, discard_database, adapter_threshold
 ### Fixed
 
 - Fixed broken container image URL for NanoPlot

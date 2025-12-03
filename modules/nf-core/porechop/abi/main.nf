@@ -21,15 +21,14 @@ process PORECHOP_ABI {
 
     script:
     // remove _ if args will be used
-    def _args = task.ext.args ?: ''
+    def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}.porechop_abi"
-    def adapters_list = custom_adapters ? "--custom_adapters ${custom_adapters}" : ""
     if ("$reads" == "${prefix}.fastq.gz") error "Input and output names are the same, use \"task.ext.prefix\" to disambiguate!"
     """
     porechop_abi \\
         --input $reads \\
-        $adapters_list \\
         --threads $task.cpus \\
+        $args \\
         --output ${prefix}.fastq.gz \\
         | tee ${prefix}.log
     cat <<-END_VERSIONS > versions.yml
