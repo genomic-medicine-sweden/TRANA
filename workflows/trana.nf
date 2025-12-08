@@ -239,16 +239,15 @@ workflow TRANA {
             meta, reads -> meta
         }
         .first()
-        .set {ch_meta}
+        .set { ch_meta }
     GENERATE_MASTER_HTML(ch_meta, ch_samplesheet)
     ch_versions = ch_versions.mix(GENERATE_MASTER_HTML.out.versions)
 
-    ch_reads
-        .join(ASSIGNMENT_HEATMAP.out.assignment_heatmap) // Join last process so that GENERATE_YAML runs after everything is finished running
-        .map{ 
-            meta, reads -> [ meta, outdir ]
+    ASSIGNMENT_HEATMAP.out.assignment_heatmap // Use last process so that GENERATE_YAML runs after everything is finished running
+        .map {
+            meta, assignment_heatmap -> [ meta, outdir ]
         }
-        .set{ generate_yaml_input }
+        .set { generate_yaml_input }
     GENERATE_YAML(generate_yaml_input)
 
     emit:

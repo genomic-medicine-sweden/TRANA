@@ -8,7 +8,6 @@ process GENERATE_YAML {
 
     input:
     tuple val(meta), val(input_dir)
-    
 
     output:
     path output         , emit: yaml
