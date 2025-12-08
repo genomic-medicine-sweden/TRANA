@@ -27,7 +27,7 @@ params.fasta = getGenomeAttribute('fasta')
 
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_trana_pipeline/main.nf'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_trana_pipeline/main.nf'
-include { TRANA                    } from './workflows/trana.nf'
+include { TRANA                   } from './workflows/trana.nf'
 
 //
 // WORKFLOW: Run main TRANA analysis pipeline
@@ -36,12 +36,13 @@ workflow GMS_TRANA {
     take:
     samplesheet // channel: samplesheet read in from --input
     reads
+    outdir
 
     main:
     //
     // WORKFLOW: Run pipeline
     //
-    TRANA (samplesheet, reads)
+    TRANA (samplesheet, reads, outdir)
 
     emit:
     nanostats_unprocessed   = TRANA.out.nanostats_unprocessed  // channel: /path/to/nanostats.txt
@@ -81,7 +82,8 @@ workflow {
     //
     GMS_TRANA (
         PIPELINE_INITIALISATION.out.samplesheet,
-        PIPELINE_INITIALISATION.out.reads
+        PIPELINE_INITIALISATION.out.reads,
+        params.outdir
     )
 
     PIPELINE_COMPLETION (
