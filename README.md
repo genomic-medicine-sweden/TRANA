@@ -175,6 +175,24 @@ There are two types of sample sheets that can be used:
    requires a barcode sample sheet which is comma separated. See example file
    `sample_sheet_merge.csv` in `examples` for a demonstration.
 
+## Porechop abi custom samplesheet
+
+The samplesheet is expected to follow this format when applying --custom_adapters:
+
+```
+name_of_custom_adapter01
+ATGTGTCGTATGCATGCATGCA
+ATGTGACACAGTGTCACAGTTG
+name_of_custom_adapter02
+GGGTTTTGTG
+GGGTTAGTGG
+
+```
+
+If no custom adapter samplesheet is used i.e., just running with --adapter_trimming,
+then the default porechop adapter database will be used.
+--ab_initio can be used to infer the adapters from sequences.
+
 ## Useful env variables
 
 ```config
