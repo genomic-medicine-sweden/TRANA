@@ -8,6 +8,7 @@ include { paramsSummaryMap                       } from 'plugin/nf-schema'
 include { softwareVersionsToYAML                 } from '../subworkflows/nf-core/utils_nfcore_pipeline/main.nf'
 include { paramsSummaryMultiqc                   } from '../subworkflows/nf-core/utils_nfcore_pipeline/main.nf'
 include { methodsDescriptionText                 } from '../subworkflows/local/utils_nfcore_trana_pipeline/main.nf'
+include { GENERATE_YAML                          } from '../modules/local/generate_yaml/main.nf'
 include { GENERATE_MASTER_HTML                   } from '../modules/local/generate_master_html/main.nf'
 include { EMU_ABUNDANCE                          } from '../modules/local/emu/abundance/main.nf'
 include { KRONA_KTIMPORTTAXONOMY                 } from '../modules/nf-core/krona/ktimporttaxonomy/main.nf'
@@ -38,6 +39,7 @@ workflow TRANA {
     take:
     ch_samplesheet  // channel: samplesheet read in from --input
     ch_reads        // channel: reads from PIPELINE_INITIALISATION
+    outdir
 
     main:
 
@@ -173,7 +175,7 @@ workflow TRANA {
         ch_versions = ch_versions.mix(CTRL_COMPARISON.out.versions)
     }
     // MODULE: Generate PHYLOSEQ object
-    if (params.phyloseq)  {
+    if (params.phyloseq) {
         ch_tax_file = channel.fromPath("$projectDir/assets/databases/emu_database/taxonomy.tsv", checkIfExists: true)
         report_ch = EMU_ABUNDANCE.out.report
         all_reports_ch = report_ch
@@ -240,6 +242,14 @@ workflow TRANA {
         .set {ch_meta}
     GENERATE_MASTER_HTML(ch_meta, ch_samplesheet)
     ch_versions = ch_versions.mix(GENERATE_MASTER_HTML.out.versions)
+
+    ch_reads
+        .join(ASSIGNMENT_HEATMAP.out.assignment_heatmap) // Join last process so that GENERATE_YAML runs after everything is finished running
+        .map{ 
+            meta, reads -> [ meta, outdir ]
+        }
+        .set{ generate_yaml_input }
+    GENERATE_YAML(generate_yaml_input)
 
     emit:
     master_html             = GENERATE_MASTER_HTML.out.html      // channel: [ path(master.html) ]
