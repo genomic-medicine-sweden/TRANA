@@ -303,6 +303,35 @@
                 }
             }
         },
+        "porechop_abi_options": {
+            "title": "porechop_abi options",
+            "type": "object",
+            "description": "Adapter trimming for long read data. I neither of custom adapters or ab_initio is chose, porechop_abi will run using the default porechop adapter database. It",
+            "default": "",
+            "properties": {
+                "adapter_trimming": {
+                    "type": "boolean",
+                    "description": "Adapter trimming for long read data. Will run with the default barcode database if  ab_initio or custom_barcodes are not chosen."
+                },
+                "custom_adapters": {
+                    "type": "string",
+                    "description": "Path to a custom adapter text file. Format is \"name of adapter\\nfwd sequence\\nrev sequence.\""
+                },
+                "ab_initio": {
+                    "type": "boolean",
+                    "description": "Try to infer the adapters from the read set instead of just using the static database."
+                },
+                "adapter_cutoff": {
+                    "type": "number",
+                    "description": "An adapter set has to have at least this percent identity to be labelled as present and trimmed off (0 to 100) (default: 90.0)",
+                    "default": 90
+                },
+                "only_custom": {
+                    "type": "boolean",
+                    "description": "Ignore adapters from the Porechop database. This option require either ab_initio or custom_adapters to be set."
+                }
+            }
+        },
         "krona_options": {
             "title": "krona options",
             "type": "object",
@@ -318,18 +347,6 @@
                     "type": "string",
                     "default": "assets/databases/krona/taxonomy/taxonomy.tab",
                     "description": "Path to the taxonomy.tab used by Krona"
-                }
-            }
-        },
-        "porechop_abi_options": {
-            "title": "porechop_abi options",
-            "type": "object",
-            "description": "Adapter trimming for long read data",
-            "default": "",
-            "properties": {
-                "adapter_trimming": {
-                    "type": "boolean",
-                    "description": "Adapter trimming for long read data. Requires a list with adapters to trim"
                 }
             }
         },
@@ -478,10 +495,10 @@
             "$ref": "#/$defs/preprocessing_long_reads"
         },
         {
-            "$ref": "#/$defs/krona_options"
+            "$ref": "#/$defs/porechop_abi_options"
         },
         {
-            "$ref": "#/$defs/porechop_abi_options"
+            "$ref": "#/$defs/krona_options"
         },
         {
             "$ref": "#/$defs/phyloseq_options"
