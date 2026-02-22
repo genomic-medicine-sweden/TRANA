@@ -33,12 +33,13 @@ workflow PIPELINE_INITIALISATION {
     take:
     version                 // boolean: Display version and exit
     validate_params         // boolean: Boolean whether to validate parameters against the schema at runtime
+    parameters_schema       // string:  Path to the parameters JSON schema.
     monochrome_logs         // boolean: Do not use coloured log outputs
-    nextflow_cli_args       // array: List of positional nextflow CLI args
-    outdir                  // string: The output directory where the results will be saved
-    samplesheet             // string: Path to input samplesheet
-    barcodes_samplesheet    // string: Path to input barcodes samplesheet
-    merge_fastq_pass        // string: Path to directory ONT fastq_pass dir
+    nextflow_cli_args       // array:   List of positional nextflow CLI args
+    outdir                  // string:  The output directory where the results will be saved
+    samplesheet             // string:  Path to input samplesheet
+    barcodes_samplesheet    // string:  Path to input barcodes samplesheet
+    merge_fastq_pass        // string:  Path to directory ONT fastq_pass dir
 
     main:
 
@@ -60,7 +61,7 @@ workflow PIPELINE_INITIALISATION {
     UTILS_NFSCHEMA_PLUGIN (
         workflow,
         validate_params,
-        null
+        parameters_schema
     )
 
     //
@@ -142,7 +143,7 @@ workflow PIPELINE_COMPLETION {
     multiqc_report  //  string: Path to MultiQC report
 
     main:
-    summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
+    summary_params = paramsSummaryMap(workflow, parameters_schema: params.nextflow_schema)
 
     workflow.onComplete {
         //
