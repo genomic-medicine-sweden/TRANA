@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Downsampled reads are now included in the second round of Nanoplot
 - Fixed broken container image URL for NanoPlot
+- Make parameters_schema configurable for nf wrappers
+- Replace `sample_size` with `downsample_n_reads` to avoid ambiguity
 
 ### Changed
 
