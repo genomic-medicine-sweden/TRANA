@@ -2,7 +2,7 @@ nextflow_pipeline {
     name "Test Main Pipeline"
     script "main.nf"
 
-    test("Should run pipeline WITH the --sample_size parameter set") {
+    test("Should run pipeline WITH the downsample_n_reads parameter set") {
         when {
             params {
                 db = "$projectDir/assets/databases/emu_database"
@@ -14,7 +14,7 @@ nextflow_pipeline {
                 outdir = outputDir
 
                 // The parameters we are varying here
-                sample_size = 100
+                downsample_n_reads = 100
                 save_downsampled_reads = true
             }
         }

@@ -11,7 +11,7 @@ Changes in 'seqtk/sample/main.nf':
 +        'quay.io/biocontainers/seqtk:1.4--he4a0461_1' }"
  
      input:
-     tuple val(meta), path(reads), val(sample_size)
+     tuple val(meta), path(reads), val(downsample_n_reads)
  
      output:
 -    tuple val(meta), path("*.fastq.gz"), emit: reads
@@ -22,7 +22,7 @@ Changes in 'seqtk/sample/main.nf':
 @@ -34,7 +34,7 @@
              $args \\
              \$f \\
-             $sample_size \\
+             $downsample_n_reads \\
 -            | gzip --no-name > ${prefix}_\$(basename \$f)
 +            | gzip --no-name > ${prefix}.fastq.gz
      done
