@@ -51,6 +51,13 @@
                     "fa_icon": "fas fa-check-square",
                     "hidden": true
                 },
+                "parameters_schema": {
+                    "type": "string",
+                    "default": "$projectDir/nextflow_schema.json",
+                    "description": "JSON schema file used for parameter validation.",
+                    "fa_icon": "fas fa-cog",
+                    "hidden": true
+                },
                 "publish_dir_mode": {
                     "type": "string",
                     "default": "copy",
