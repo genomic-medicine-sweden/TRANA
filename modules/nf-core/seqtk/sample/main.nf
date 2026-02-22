@@ -8,7 +8,7 @@ process SEQTK_SAMPLE {
         'quay.io/biocontainers/seqtk:1.4--he4a0461_1' }"
 
     input:
-    tuple val(meta), path(reads), val(sample_size)
+    tuple val(meta), path(reads), val(downsample_n_reads)
 
     output:
     tuple val(meta), path("*downsampled*.fastq.gz"), emit: reads
@@ -23,8 +23,8 @@ process SEQTK_SAMPLE {
     if (!(args ==~ /.*\ -s\ ?[0-9]+.*/)) {
         args += " -s100"
     }
-    if ( !sample_size ) {
-        error "SEQTK/SAMPLE must have a sample_size value included"
+    if ( !downsample_n_reads ) {
+        error "SEQTK/SAMPLE must have a downsample_n_reads value included"
     }
     """
     printf "%s\\n" $reads | while read f;
@@ -33,7 +33,7 @@ process SEQTK_SAMPLE {
             sample \\
             $args \\
             \$f \\
-            $sample_size \\
+            $downsample_n_reads \\
             | gzip --no-name > ${prefix}.fastq.gz
     done
 

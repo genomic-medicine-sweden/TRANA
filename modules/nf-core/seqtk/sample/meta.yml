@@ -23,7 +23,7 @@ input:
         type: file
         description: List of input FastQ files
         pattern: "*.{fastq.gz}"
-    - sample_size:
+    - downsample_n_reads:
         type: integer
         description: Number of reads to sample.
 output:

@@ -120,16 +120,16 @@ workflow TRANA {
         error "Invalid seqtype. Please specify either 'map-ont' or 'sr'."
     }
 
-    if ( params.sample_size ) {
+    if ( params.downsample_n_reads ) {
         // MODULE: Downsample reads
         SEQTK_SAMPLE(
-            ch_processed_passed_reads.map { meta, reads -> tuple(meta, reads, params.sample_size) }
+            ch_processed_passed_reads.map { meta, reads -> tuple(meta, reads, params.downsample_n_reads) }
             ).reads.set { ch_processed_optionally_sampled_reads }
         ch_versions = ch_versions.mix(SEQTK_SAMPLE.out.versions)
     } else {
         ch_processed_passed_reads.set{ ch_processed_optionally_sampled_reads }
     }
-    if ( params.seqtype == "map-ont" && (params.quality_filtering || params.sample_size)) {
+    if ( params.seqtype == "map-ont" && (params.quality_filtering || params.downsample_n_reads)) {
         // MODULE: run NANOPLOT_PROCESSED_READS
         NANOPLOT_PROCESSED_READS(ch_processed_optionally_sampled_reads)
         ch_versions = ch_versions.mix(NANOPLOT_PROCESSED_READS.out.versions)
@@ -254,7 +254,7 @@ workflow TRANA {
     master_html             = GENERATE_MASTER_HTML.out.html      // channel: [ path(master.html) ]
     versions                = ch_versions                        // channel: [ path(versions.yml) ]
     nanostats_unprocessed   = (params.seqtype == "map-ont") ? NANOPLOT_UNPROCESSED_READS.out.txt : channel.empty()  // channel: [ path(master.html) ]
-    nanostats_processed     = (params.seqtype == "map-ont" && (params.quality_filtering || params.sample_size)) ? NANOPLOT_PROCESSED_READS.out.txt   : channel.empty()  // channel: [ path(master.html) ]
+    nanostats_processed     = (params.seqtype == "map-ont" && (params.quality_filtering || params.downsample_n_reads)) ? NANOPLOT_PROCESSED_READS.out.txt   : channel.empty()  // channel: [ path(master.html) ]
     multiqc_report          = multiqc_report
 }
 
