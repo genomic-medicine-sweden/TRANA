@@ -186,7 +186,6 @@ ATGTGACACAGTGTCACAGTTG
 name_of_custom_adapter02
 GGGTTTTGTG
 GGGTTAGTGG
-
 ```
 
 If no custom adapter samplesheet is used i.e., just running with --adapter_trimming,
