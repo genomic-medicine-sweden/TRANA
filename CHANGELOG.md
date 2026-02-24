@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Several options forporechop_abi- ab-initio, custom-adapters, discard_database, adapter_threshold and a ci-test for this
+- Several options forporechop_abi: ab-initio, custom-adapters, discard_database, adapter_threshold and a ci-test for this
 
 ### Fixed
 
