@@ -143,7 +143,7 @@ workflow PIPELINE_COMPLETION {
     multiqc_report  //  string: Path to MultiQC report
 
     main:
-    summary_params = paramsSummaryMap(workflow, parameters_schema: params.nextflow_schema)
+    summary_params = paramsSummaryMap(workflow, parameters_schema: params.parameters_schema)
 
     workflow.onComplete {
         //

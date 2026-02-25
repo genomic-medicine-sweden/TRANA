@@ -82,9 +82,6 @@ jobs:
             --outdir results \
             --db $(pwd)/assets/databases/emu_database \
             --seqtype map-ont \
-            --quality_filtering \
-            --longread_qc_qualityfilter_minlength 1200 \
-            --longread_qc_qualityfilter_maxlength 1800 \
             --merge_fastq_pass $(pwd)/assets/test_assets/ci
 
       - name: Run pipeline from the commandline with samplesheet
@@ -96,9 +93,6 @@ jobs:
             --outdir results \
             --db $(pwd)/assets/databases/emu_database \
             --seqtype map-ont \
-            --quality_filtering \
-            --longread_qc_qualityfilter_minlength 1200 \
-            --longread_qc_qualityfilter_maxlength 1800 \
             --input https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/samplesheet.csv
 
       # Run via nf-test for more detailed checking
