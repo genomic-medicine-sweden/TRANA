@@ -53,7 +53,7 @@
                 },
                 "parameters_schema": {
                     "type": "string",
-                    "default": "$projectDir/nextflow_schema.json",
+                    "default": "nextflow_schema.json",
                     "description": "JSON schema file used for parameter validation.",
                     "fa_icon": "fas fa-cog",
                     "hidden": true
