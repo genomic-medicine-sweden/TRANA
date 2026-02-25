@@ -245,7 +245,7 @@ workflow TRANA {
 
     ASSIGNMENT_HEATMAP.out.assignment_heatmap // Use last process so that GENERATE_YAML runs after everything is finished running
         .map {
-            meta, assignment_heatmap -> [ meta, outdir ]
+            meta, assignment_heatmap -> [ meta, file(outdir).toAbsolutePath().toString() ]
         }
         .set { generate_yaml_input }
     GENERATE_YAML(generate_yaml_input)
