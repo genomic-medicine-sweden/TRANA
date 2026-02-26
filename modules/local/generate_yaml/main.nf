@@ -1,6 +1,6 @@
 process GENERATE_YAML {
-    //               Software MUST be pinned to channel (i.e. "bioconda"), version (i.e. "1.10").
-    //               For Conda, the build (i.e. "pyhdfd78af_1") must be EXCLUDED to support installation on different operating systems.
+    // Software MUST be pinned to channel (i.e. "bioconda"), version (i.e. "1.10").
+    // For Conda, the build (i.e. "pyhdfd78af_1") must be EXCLUDED to support installation on different operating systems.
     conda 'modules/local/generate_yaml/env.yaml'
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'docker://clinicalgenomicslund/eyrie-popup:1.0.0':

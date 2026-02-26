@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added `generate_yaml` process to trana workflow
+- Added outdir to workflows for `generate_yaml`
 
 ### Fixed
 
