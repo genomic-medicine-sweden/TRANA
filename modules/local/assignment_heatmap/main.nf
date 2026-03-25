@@ -21,9 +21,9 @@ process ASSIGNMENT_HEATMAP {
     tuple val(meta), path(assignment_translated_report)
 
     output:
-    path "*assignment_heatmap.png"       , emit: assignment_heatmap
-    path "versions.yml"                  , emit: versions
-    path "*assignment_heatmap_log.log"   , emit: assignment_heatmap_log
+    tuple val(meta), path("*assignment_heatmap.png")    , emit: assignment_heatmap
+    tuple val(meta), path("*assignment_heatmap_log.log"), emit: assignment_heatmap_log
+    path "versions.yml"                                 , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

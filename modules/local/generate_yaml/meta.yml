@@ -1,0 +1,44 @@
+name: "generate_yaml"
+description: A python script that utilises eyrie-popup to generate a configuration yaml file for uploading samples to Eyrie.
+keywords:
+  - Upload
+  - yaml
+
+tools:
+  - "eyrie-popup":
+      description: "Generates upload yaml file"
+      homepage: "https://github.com/SMD-Bioinformatics-Lund/eyrie"
+      documentation: "https://github.com/SMD-Bioinformatics-Lund/eyrie/blob/master/tools/eyrie-popup/README.md"
+      tool_dev_url: "https://github.com/SMD-Bioinformatics-Lund/eyrie/blob/master/tools/eyrie-popup"
+      doi: "None"
+      licence: "MIT"
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - str:
+      type: directory
+      description: |
+        Trana `params.outdir` path containing TRANA's output directories such as `fastqc/`, `filtlong/`, `krona/`, `multiqc/`, `nanoplot_processed/`, `nanoplot_unprocessed/`, `pipeline_info/`, `results/`.
+        e.g. "/path/to/outdir/"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+  - yam:
+      type: file
+      description: yaml file containing paths to to sample outputs
+      pattern: "*{.yaml}"
+
+authors:
+  - "@ryanjameskennedy"

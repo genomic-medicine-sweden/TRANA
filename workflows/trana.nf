@@ -8,6 +8,7 @@ include { paramsSummaryMap                       } from 'plugin/nf-schema'
 include { softwareVersionsToYAML                 } from '../subworkflows/nf-core/utils_nfcore_pipeline/main.nf'
 include { paramsSummaryMultiqc                   } from '../subworkflows/nf-core/utils_nfcore_pipeline/main.nf'
 include { methodsDescriptionText                 } from '../subworkflows/local/utils_nfcore_trana_pipeline/main.nf'
+include { GENERATE_YAML                          } from '../modules/local/generate_yaml/main.nf'
 include { GENERATE_MASTER_HTML                   } from '../modules/local/generate_master_html/main.nf'
 include { EMU_ABUNDANCE                          } from '../modules/local/emu/abundance/main.nf'
 include { KRONA_KTIMPORTTAXONOMY                 } from '../modules/nf-core/krona/ktimporttaxonomy/main.nf'
@@ -38,6 +39,7 @@ workflow TRANA {
     take:
     ch_samplesheet  // channel: samplesheet read in from --input
     ch_reads        // channel: reads from PIPELINE_INITIALISATION
+    outdir
 
     main:
 
@@ -46,31 +48,23 @@ workflow TRANA {
 
     summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
 
-    //
     // MODULE: Run FastQC
-    //
     FASTQC (ch_reads)
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
 
     ch_versions = ch_versions.mix(FASTQC.out.versions)
     if (params.seqtype == "map-ont") {
 
-        //
         // MODULE: Run NANOPLOT_UNPROCESSED_READS
-        //
         NANOPLOT_UNPROCESSED_READS(ch_reads)
         ch_versions = ch_versions.mix(NANOPLOT_UNPROCESSED_READS.out.versions)
         ch_multiqc_files = ch_multiqc_files.mix(
             NANOPLOT_UNPROCESSED_READS.out.txt.collect{ it[1] }
         )
 
-        //
         // Optional adapter trimming
-        //
         if (params.adapter_trimming) {
-            //
             // MODULE: Run Porechop to trim ONT adapters
-            //
             PORECHOP_ABI(ch_reads, [])
 
             PORECHOP_ABI.out.reads.map {
@@ -85,13 +79,9 @@ workflow TRANA {
             ch_reads.set{ ch_optionally_trimmed_reads }
         }
 
-        //
         // Optional quality filtering
-        //
         if (params.quality_filtering) {
-            //
             // MODULE: Run filtlong to filter on read length
-            //
             FILTLONG(ch_optionally_trimmed_reads.map {
                 meta, reads -> [meta, [], reads]
             }).reads.set { ch_processed_reads }
@@ -113,20 +103,9 @@ workflow TRANA {
             ch_optionally_trimmed_reads.set{ ch_processed_passed_reads }
         }
 
-        //
-        // MODULE: run NANOPLOT_PROCESSED_READS
-        //
-        NANOPLOT_PROCESSED_READS(ch_processed_passed_reads)
-        ch_versions = ch_versions.mix(NANOPLOT_PROCESSED_READS.out.versions)
-        ch_multiqc_files = ch_multiqc_files.mix(
-            NANOPLOT_PROCESSED_READS.out.txt.collect{ it[1] }
-        )
-
     } else if (params.seqtype == "sr") {
 
-        //
         // MODULE: Run cutadapt to trim short-reads adapters
-        //
         if (!params.skip_cutadapt) {
             CUTADAPT(ch_reads)
             CUTADAPT.out.reads.set { ch_processed_passed_reads }
@@ -141,26 +120,29 @@ workflow TRANA {
         error "Invalid seqtype. Please specify either 'map-ont' or 'sr'."
     }
 
-    if ( params.sample_size ) {
-        //
+    if ( params.downsample_n_reads ) {
         // MODULE: Downsample reads
         SEQTK_SAMPLE(
-            ch_processed_passed_reads.map { meta, reads -> tuple(meta, reads, params.sample_size) }
+            ch_processed_passed_reads.map { meta, reads -> tuple(meta, reads, params.downsample_n_reads) }
             ).reads.set { ch_processed_optionally_sampled_reads }
         ch_versions = ch_versions.mix(SEQTK_SAMPLE.out.versions)
     } else {
         ch_processed_passed_reads.set{ ch_processed_optionally_sampled_reads }
     }
+    if ( params.seqtype == "map-ont" && (params.quality_filtering || params.downsample_n_reads)) {
+        // MODULE: run NANOPLOT_PROCESSED_READS
+        NANOPLOT_PROCESSED_READS(ch_processed_optionally_sampled_reads)
+        ch_versions = ch_versions.mix(NANOPLOT_PROCESSED_READS.out.versions)
+        ch_multiqc_files = ch_multiqc_files.mix(
+        NANOPLOT_PROCESSED_READS.out.txt.collect{ it[1] }
+        )
+    }
 
-    //
     // MODULE: run EMU abundance calculation
-    //
     EMU_ABUNDANCE(ch_processed_optionally_sampled_reads)
     ch_versions = ch_versions.mix(EMU_ABUNDANCE.out.versions)
     if (params.run_krona) {
-        //
         // MODULE: Run krona plot
-        //
         KRONA_KTIMPORTTAXONOMY(
             EMU_ABUNDANCE.out.report,
             file(params.krona_taxonomy_tab, checkExists: true)
@@ -192,9 +174,8 @@ workflow TRANA {
         CTRL_COMPARISON(EMU_COMBINE_OUTPUTS.out.combined_report,EMU_COMBINE_OUTPUTS.out.combined_counts_report)
         ch_versions = ch_versions.mix(CTRL_COMPARISON.out.versions)
     }
-    //
     // MODULE: Generate PHYLOSEQ object
-    if (params.phyloseq)  {
+    if (params.phyloseq) {
         ch_tax_file = channel.fromPath("$projectDir/assets/databases/emu_database/taxonomy.tsv", checkIfExists: true)
         report_ch = EMU_ABUNDANCE.out.report
         all_reports_ch = report_ch
@@ -227,9 +208,7 @@ workflow TRANA {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-    //
     // MODULE: MultiQC
-    //
 
     ch_multiqc_config           = channel.fromPath("$projectDir/assets/multiqc_config.yml", checkIfExists: true)
     ch_multiqc_custom_config    = params.multiqc_config ? channel.fromPath(params.multiqc_config, checkIfExists: true) : channel.empty()
@@ -253,24 +232,29 @@ workflow TRANA {
     )
     multiqc_report = MULTIQC.out.report.toList()
 
-    //
     // MODULE: Generate master.html from reports
-    //
 
     ch_reads
         .map {
             meta, reads -> meta
         }
         .first()
-        .set {ch_meta}
+        .set { ch_meta }
     GENERATE_MASTER_HTML(ch_meta, ch_samplesheet)
     ch_versions = ch_versions.mix(GENERATE_MASTER_HTML.out.versions)
+
+    ASSIGNMENT_HEATMAP.out.assignment_heatmap // Use last process so that GENERATE_YAML runs after everything is finished running
+        .map {
+            meta, assignment_heatmap -> [ meta, file(outdir).toAbsolutePath().toString() ]
+        }
+        .set { generate_yaml_input }
+    GENERATE_YAML(generate_yaml_input)
 
     emit:
     master_html             = GENERATE_MASTER_HTML.out.html      // channel: [ path(master.html) ]
     versions                = ch_versions                        // channel: [ path(versions.yml) ]
     nanostats_unprocessed   = (params.seqtype == "map-ont") ? NANOPLOT_UNPROCESSED_READS.out.txt : channel.empty()  // channel: [ path(master.html) ]
-    nanostats_processed     = (params.seqtype == "map-ont") ? NANOPLOT_PROCESSED_READS.out.txt   : channel.empty()  // channel: [ path(master.html) ]
+    nanostats_processed     = (params.seqtype == "map-ont" && (params.quality_filtering || params.downsample_n_reads)) ? NANOPLOT_PROCESSED_READS.out.txt   : channel.empty()  // channel: [ path(master.html) ]
     multiqc_report          = multiqc_report
 }
 

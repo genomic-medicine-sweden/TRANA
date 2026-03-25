@@ -9,13 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added `generate_yaml` process to trana workflow
+- Added outdir to workflows for `generate_yaml`
 - Several options forporechop_abi: ab-initio, custom-adapters, discard_database, adapter_threshold and a ci-test for this
 
 ### Fixed
 
-- Fixed broken container image URL for NanoPlot
+- Replaced `check_max()` with `process.resourceLimits`
 
 ### Changed
+
+- Downsampled reads are now included in the second round of Nanoplot
+- Fixed broken container image URL for NanoPlot
+- Make parameters_schema configurable for nf wrappers
+- Replace `sample_size` with `downsample_n_reads` to avoid ambiguity
 
 ## [v0.6.0]
 
