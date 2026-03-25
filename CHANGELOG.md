@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added `generate_yaml` process to trana workflow
 - Added outdir to workflows for `generate_yaml`
+- Several options forporechop_abi: ab-initio, custom-adapters, discard_database, adapter_threshold and a ci-test for this
 
 ### Fixed
 
