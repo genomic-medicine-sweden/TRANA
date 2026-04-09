@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Replaced `check_max()` with `process.resourceLimits`
+- Added stub blocks to `TRANSLATE_TAXIDS`, `ASSIGNMENT_HEATMAP`, and `EMU_COMBINE_OUTPUTS` for CI stub runs
 
 ### Changed
 

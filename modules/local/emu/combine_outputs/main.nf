@@ -72,5 +72,19 @@ process EMU_COMBINE_OUTPUTS {
         emu: \$(echo \$(emu --version 2>&1) | sed 's/^.*emu //; s/Using.*\$//' )
     END_VERSIONS
     """
+
+    stub:
+    """
+    mkdir -p collected_reports_dir
+    touch collected_reports_dir/emu-combined-stub.tsv
+    mkdir -p collected_reports_counts_dir
+    touch collected_reports_counts_dir/emu-combined-stub-counts.tsv
+    touch emu_combine_outputs.log
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        emu: \$(echo \$(emu --version 2>&1) | sed 's/^.*emu //; s/Using.*\$//' )
+    END_VERSIONS
+    """
 }
 

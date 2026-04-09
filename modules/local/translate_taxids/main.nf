@@ -41,6 +41,18 @@ process TRANSLATE_TAXIDS {
         translate_taxids: \$(translate_taxids.py --version | sed 's/translate_taxids.py version //')
     END_VERSIONS
     """
+
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.id}"
+    """
+    touch ${prefix}_read-assignment-distributions_translated.tsv
+    touch ${prefix}_translate_taxids_log.log
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        translate_taxids: \$(translate_taxids.py --version | sed 's/translate_taxids.py version //')
+    END_VERSIONS
+    """
 }
 
 
