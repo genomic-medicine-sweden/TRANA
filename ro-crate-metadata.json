@@ -126,7 +126,7 @@
                 "@id": "https://github.com/genomic-medicine-sweden"
             },
             "url": ["https://github.com/genomic-medicine-sweden/TRANA"],
-            "version": ["0.6.0"]
+            "version": ["1.0.0"]
         },
         {
             "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow",
