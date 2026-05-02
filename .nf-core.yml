@@ -31,6 +31,7 @@ lint:
         - params.krona_taxonomy_tab
         - params.master_template
         - params.trace_timestamp
+        - params.genomes
     - manifest.name
     - manifest.homePage
     - params.max_cpus
