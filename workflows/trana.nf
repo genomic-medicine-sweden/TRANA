@@ -13,6 +13,7 @@ include { GENERATE_MASTER_HTML                   } from '../modules/local/genera
 include { EMU_ABUNDANCE                          } from '../modules/local/emu/abundance/main.nf'
 include { KRONA_KTIMPORTTAXONOMY                 } from '../modules/nf-core/krona/ktimporttaxonomy/main.nf'
 include { KRONA_KTIMPORTTEXT                     } from '../modules/nf-core/krona/ktimporttext/main.nf'
+include { REORDER_FOR_KRONA                      } from '../modules/local/reorder_for_krona/main.nf'
 include { CUSTOM_DUMPSOFTWAREVERSIONS            } from '../modules/nf-core/custom/dumpsoftwareversions/main.nf'
 include { MULTIQC                                } from '../modules/nf-core/multiqc/main.nf'
 include { FASTQC                                 } from '../modules/nf-core/fastqc/main.nf'
