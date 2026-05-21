@@ -42,7 +42,7 @@
                     },
                     "krona/ktimporttext": {
                         "branch": "master",
-                        "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+                        "git_sha": "4789f43ab82b70a6719890d2ffe43685979960bd",
                         "installed_by": ["modules"]
                     },
                     "multiqc": {
