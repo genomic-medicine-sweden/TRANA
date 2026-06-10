@@ -53,7 +53,7 @@ workflow TRANA {
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
 
     ch_versions = ch_versions.mix(FASTQC.out.versions)
-    if (params.seqtype == "map-ont") {
+    if (params.seqtype in ["map-ont", "lr:hq"]) {
 
         // MODULE: Run NANOPLOT_UNPROCESSED_READS
         NANOPLOT_UNPROCESSED_READS(ch_reads)
@@ -117,7 +117,7 @@ workflow TRANA {
             ch_reads.set { ch_processed_passed_reads }
         }
     } else {
-        error "Invalid seqtype. Please specify either 'map-ont' or 'sr'."
+        error "Invalid seqtype. Please specify either 'map-ont', 'lr:hq' or 'sr'."
     }
 
     if ( params.downsample_n_reads ) {
@@ -129,7 +129,7 @@ workflow TRANA {
     } else {
         ch_processed_passed_reads.set{ ch_processed_optionally_sampled_reads }
     }
-    if ( params.seqtype == "map-ont" && (params.quality_filtering || params.downsample_n_reads)) {
+    if ( params.seqtype in ["map-ont", "lr:hq"] && (params.quality_filtering || params.downsample_n_reads)) {
         // MODULE: run NANOPLOT_PROCESSED_READS
         NANOPLOT_PROCESSED_READS(ch_processed_optionally_sampled_reads)
         ch_versions = ch_versions.mix(NANOPLOT_PROCESSED_READS.out.versions)
@@ -253,8 +253,8 @@ workflow TRANA {
     emit:
     master_html             = GENERATE_MASTER_HTML.out.html      // channel: [ path(master.html) ]
     versions                = ch_versions                        // channel: [ path(versions.yml) ]
-    nanostats_unprocessed   = (params.seqtype == "map-ont") ? NANOPLOT_UNPROCESSED_READS.out.txt : channel.empty()  // channel: [ path(master.html) ]
-    nanostats_processed     = (params.seqtype == "map-ont" && (params.quality_filtering || params.downsample_n_reads)) ? NANOPLOT_PROCESSED_READS.out.txt   : channel.empty()  // channel: [ path(master.html) ]
+    nanostats_unprocessed   = (params.seqtype in ["map-ont", "lr:hq"]) ? NANOPLOT_UNPROCESSED_READS.out.txt : channel.empty()  // channel: [ path(master.html) ]
+    nanostats_processed     = (params.seqtype in ["map-ont", "lr:hq"] && (params.quality_filtering || params.downsample_n_reads)) ? NANOPLOT_PROCESSED_READS.out.txt   : channel.empty()  // channel: [ path(master.html) ]
     multiqc_report          = multiqc_report
 }
 

@@ -188,8 +188,9 @@ APPTAINER_CACHEDIR
 
 ## Multiqc report
 
-Fastqc results will be shown only for unprocessed reads. For runs using the 'map-ont' flag, qc-results from nanoplot will be
-shown for unprocessed and processed reads.
+Fastqc results will be shown only for unprocessed reads. For runs using
+`map-ont` or `lr:hq` as parameter to `--seqtype`, qc-results from nanoplot will
+be shown for unprocessed and processed reads.
 
 ## Useful commands for developers
 
