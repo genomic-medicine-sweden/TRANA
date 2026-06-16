@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Made the `lr:hq` minimap2 profile a valid option to the `--seqtype` parameter
+
 ## [v1.0.0]
 
 ### Added
