@@ -1,24 +1,28 @@
+def seqtype_variants = ["map-ont", "lr:hq"]
+
 nextflow_pipeline {
     name "Test main pipeline with long-read data"
     script "main.nf"
 
-    test("Should run pipeline with test profile") {
-        when {
-            params {
-                db = "$projectDir/assets/databases/emu_database"
-                seqtype = "map-ont"
-                quality_filtering = true
-                longread_qc_qualityfilter_minlength = 1200
-                longread_qc_qualityfilter_maxlength = 1800
-                merge_fastq_pass = "$projectDir/assets/test_assets/ci"
-                pipelines_testdata_base_path = "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/"
-                outdir = outputDir
+    seqtype_variants.each { st ->
+        test("Should run pipeline with test profile (seqtype: ${st})") {
+            when {
+                params {
+                    db = "$projectDir/assets/databases/emu_database"
+                    seqtype = st
+                    quality_filtering = true
+                    longread_qc_qualityfilter_minlength = 1200
+                    longread_qc_qualityfilter_maxlength = 1800
+                    merge_fastq_pass = "$projectDir/assets/test_assets/ci"
+                    pipelines_testdata_base_path = "https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/refs/heads/16s/"
+                    outdir = outputDir
+                }
             }
-        }
-        then {
-            assert workflow.success
-            assert path("${params.outdir}/results/barcode01_filtered.fastq_rel-abundance.tsv").exists()
-            assert path("${params.outdir}/results/barcode02_filtered.fastq_rel-abundance.tsv").exists()
+            then {
+                assert workflow.success
+                assert path("${params.outdir}/results/barcode01_filtered.fastq_rel-abundance.tsv").exists()
+                assert path("${params.outdir}/results/barcode02_filtered.fastq_rel-abundance.tsv").exists()
+            }
         }
     }
 }
