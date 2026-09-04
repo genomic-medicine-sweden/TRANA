@@ -45,12 +45,15 @@ pipeline info.
 Krona plot
 
 ![Likelihood heatmap per sample](docs/images/medium_Mock_dil_1_2_BC1_assignment_heatmap.png)
-Heatmap generated from from likelihood data. Each read has a likelihood that it is derived from a certain taxon.
-The likelihoods for a read always sums up to one.
+Heatmap generated from from likelihood data. Each read has a likelihood that it
+is derived from a certain taxon. The likelihoods for a read always sums up to
+one.
 
 ![sample-control bar plot comparison. Abundance](docs/images/medium_Mock_dil_1_2_BC1_counts_vs_controls.png)
-If your data has one or two controls e.g., a negative and a positive control or spike, then it is possible to generate bar plots for a quick comparison
-between each sample and each control. This is supported for absolute abundance and relative abundance (see image below)
+If your data has one or two controls e.g., a negative and a positive control or
+spike, then it is possible to generate bar plots for a quick comparison between
+each sample and each control. This is supported for absolute abundance and
+relative abundance (see image below)
 
 ![sample-control bar plot comparison. Relative abundance](docs/images/medium_Mock_dil_1_2_BC1_vs_controls.png)
 Relative abundance comparison to controls
@@ -84,6 +87,12 @@ nextflow run main.nf \
   --longread_qc_qualityfilter_minlength 1200 \
   --longread_qc_qualityfilter_maxlength 1800
 ```
+
+(Note that `map-ont` can be replaced with `lr:hq` for high accuracy ONT
+reads with error levels at or below ~1%, resulting in faster execution of the
+minimap2 alignment. See [this blog post](https://mbhall88.github.io/post/minimap2-lrhq-preset-testing/)
+or and [these release notes](https://github.com/lh3/minimap2/releases/tag/v2.27)
+for some more info).
 
 ## Runs with Nanopore barcode directories
 
@@ -121,10 +130,18 @@ nextflow run main.nf \
   --barcodes_samplesheet /[absolute path to barcode sample sheet]/sample_sheet_merge.csv
 ```
 
+(Again, note that `map-ont` can be replaced with `lr:hq` for high accuracy ONT
+reads with error levels at or below ~1%, resulting in faster execution of the
+minimap2 alignment. See [this blog post](https://mbhall88.github.io/post/minimap2-lrhq-preset-testing/)
+or and [these release notes](https://github.com/lh3/minimap2/releases/tag/v2.27)
+for some more info).
+
 ## Runs with shortreads
 
-When running TRANA with short reads, the primer sequences are trimmed using Cutadapt by default using the provided primer sequences.
-The primer sequences can be provided in the sample-sheet or passed as arguments (FW_primer, RV_primer). Primer trimming with Cutadapt can be skipped with --skip_cutadapt.
+When running TRANA with short reads, the primer sequences are trimmed using
+Cutadapt by default using the provided primer sequences. The primer sequences
+can be provided in the sample-sheet or passed as arguments (`FW_primer`,
+RV_primer). Primer trimming with Cutadapt can be skipped with `--skip_cutadapt`.
 
 ```bash
 sample,fastq_1,fastq_2,FW_primer,RV_primer
@@ -188,9 +205,9 @@ APPTAINER_CACHEDIR
 
 ## Multiqc report
 
-Fastqc results will be shown only for unprocessed reads. For runs using
-`map-ont` or `lr:hq` as parameter to `--seqtype`, qc-results from nanoplot will
-be shown for unprocessed and processed reads.
+FastQC results will be shown only for unprocessed reads. For runs using the
+`map-ont` or `lr:hq` parameter to the `--seqtype` flag, qc-results from
+nanoplot will be shown for unprocessed and processed reads.
 
 ## Useful commands for developers
 
@@ -202,8 +219,8 @@ when developing:
   - **Note:** It is a good idea to run this command before pushing your changes
     to a new pull request!
 - `make precommit` to only run pre-commit/prettier.
-- `lint` to run the nf-core lint checks.
-- `test` to run the nf-test tests.
+- `make lint` to run the nf-core lint checks.
+- `make test` to run the nf-test tests.
 
 **Tip:** To see which make commands are available, you can always type `make ` and
 then hit `TAB` twice.
@@ -212,8 +229,8 @@ then hit `TAB` twice.
 
 TRANA was originally written by [@fwa93](https://github.com/fwa93) and is further developed and
 maintained by gms-mikro from Genomic Medicine Sweden:
-@samuell
 @ryanjameskennedy
+@samuell
 @sofstam
 @AnderssonOlivia
 @kdannenberg
