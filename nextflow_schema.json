@@ -174,7 +174,7 @@
                 "seqtype": {
                     "type": "string",
                     "default": "map-ont",
-                    "description": "short-read: sr, Pac-Bio:map-pb, ONT:map-ont"
+                    "description": "short-read: sr, Pac-Bio:map-pb, ONT:map-ont, High-Quality Long-Reads: lr:hq"
                 },
                 "min_abundance": {
                     "type": "number",

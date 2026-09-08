@@ -51,8 +51,18 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run main.nf --input assets/samplesheet_medium.csv     --outdir results_emu     --db /aux/db/workdir_fwa010/emu_pipe_project/trana/assets/databases/emu_database/     --seqtype map-ont     -profile singularity,test
+nextflow run main.nf --input assets/samplesheet_medium.csv \
+  --outdir results_emu \
+  --db /aux/db/workdir_fwa010/emu_pipe_project/trana/assets/databases/emu_database/ \
+  --seqtype map-ont \
+  -profile singularity,test
 ```
+
+(Note that `map-ont` can be replaced with `lr:hq` for high accuracy ONT
+reads with error levels at or below ~1%, resulting in faster execution of the
+minimap2 alignment. See [this blog post](https://mbhall88.github.io/post/minimap2-lrhq-preset-testing/)
+or and [these release notes](https://github.com/lh3/minimap2/releases/tag/v2.27)
+for some more info).
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
 
