@@ -1,6 +1,6 @@
 
 
-// Merge nanopore barcode fastq.gz files when you have have sample sheet for the barcode folders
+// Build a samplesheet from a set of already-merged, per-sample fastq.gz files
 process GENERATE_INPUT {
     debug false //print to stdout. debugging
 
@@ -12,7 +12,7 @@ process GENERATE_INPUT {
         'quay.io/biocontainers/python:3.9' }"
 
     input:
-    path(merged_files)
+    path(merged_files, stageAs: "fastq_pass_merged/*")
 
     output:
     // publishDir 'fastq_pass_merged', mode: 'move'
@@ -22,7 +22,7 @@ process GENERATE_INPUT {
     script:
     """
     {
-    generate_input.sh $merged_files
+    generate_input.sh fastq_pass_merged
     } > generate_input_log.log 2>&1
 
     cat <<-END_VERSIONS > versions.yml

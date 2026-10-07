@@ -37,7 +37,6 @@ include { TRANSLATE_TAXIDS                       } from '../modules/local/transl
 workflow TRANA {
 
     take:
-    ch_samplesheet  // channel: samplesheet read in from --input
     ch_reads        // channel: reads from PIPELINE_INITIALISATION
     outdir
 
@@ -240,7 +239,13 @@ workflow TRANA {
         }
         .first()
         .set { ch_meta }
-    GENERATE_MASTER_HTML(ch_meta, ch_samplesheet)
+    ch_reads
+        .map {
+            meta, reads -> meta.id
+        }
+        .collect()
+        .set { ch_sample_ids }
+    GENERATE_MASTER_HTML(ch_meta, ch_sample_ids)
     ch_versions = ch_versions.mix(GENERATE_MASTER_HTML.out.versions)
 
     ASSIGNMENT_HEATMAP.out.assignment_heatmap // Use last process so that GENERATE_YAML runs after everything is finished running

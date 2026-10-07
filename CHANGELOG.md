@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Made the `lr:hq` minimap2 profile a valid option to the `--seqtype` parameter
+- Replaced `MERGE_BARCODES` and `MERGE_BARCODES_SAMPLESHEET` with the nf-core `CAT_FASTQ` module to merge fastq files from barcode directories and/or multiple sequencing runs of the same sample
+- Replaced the `GENERATE_INPUT` module and `bin/generate_input.sh` script with a `collectFile` operator to build the merged samplesheet directly in Nextflow
+- `GENERATE_MASTER_HTML` now receives sample ids directly from `ch_reads` instead of a samplesheet csv; the run date is detected from `--merge_fastq_pass`/`--input` instead of the generated samplesheet path
+
+### Removed
+
+- Removed the `ch_samplesheet`/`ch_samplesheet_path` channel, since it was only used to feed `GENERATE_MASTER_HTML`
 
 ## [v1.0.0]
 
