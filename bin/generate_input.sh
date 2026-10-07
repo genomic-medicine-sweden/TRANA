@@ -30,7 +30,7 @@ while IFS= read -r line; do
     # Full path to forward read
     read1_n_path="${directory}/${read1_n}"
     # Entry name (everything in the filename before ".fastq.gz")
-    sample_n=$(echo "$read1_n" | sed  's/\.fastq\.gz//')
+    sample_n=$(echo "$read1_n" | sed 's/\.merged\.fastq\.gz//; s/\.fastq\.gz//')
     # Append to the sample_sheet.csv file
     echo  "${sample_n},${read1_n_path}," >> "samplesheet_merged.csv"
     echo

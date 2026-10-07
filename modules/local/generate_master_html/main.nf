@@ -8,7 +8,7 @@ process GENERATE_MASTER_HTML {
 
     input:
     val meta
-    path csv
+    val sample_ids
 
     output:
     path output         , emit: html
@@ -16,9 +16,10 @@ process GENERATE_MASTER_HTML {
 
     script:
     def prefix = meta.sequencing_run ?: "${params.trace_timestamp}"
+    def input_path = params.merge_fastq_pass ?: params.input
     output = "${prefix}_master.html"
     """
-    generate_master_html.py --csv ${csv} --html ${params.master_template} --timestamp ${params.trace_timestamp} --output ${output}
+    generate_master_html.py --sample-ids ${sample_ids.join(',')} --path ${input_path} --html ${params.master_template} --timestamp ${params.trace_timestamp} --output ${output}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
