@@ -6,7 +6,7 @@ This Nextflow pipeline utilizes Falco, Porechop_ABI, Longfilt, and EMU for taxon
 
 ## Samplesheet input
 
-You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row as shown in the examples below.
+You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with a header row. The first three columns are `sample`, `fastq_1`, and `fastq_2`; add the optional fourth column `neg_control` to associate samples with negative controls. Existing three-column samplesheets remain valid.
 
 ```bash
 --input '[path to samplesheet file]'
@@ -43,8 +43,25 @@ TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
 | `sample`  | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
 | `fastq_1` | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
 | `fastq_2` | Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
+| `neg_control` | Optional fourth column. Exact `sample` name of the associated negative control, without spaces. Leave empty for negative-control samples. |
+| `FW_primer` | Optional forward primer, mapped to `meta.fw_primer`. A nonempty value overrides `--FW_primer`; a blank or omitted column uses the parameter instead. |
+| `RV_primer` | Optional reverse primer, mapped to `meta.rv_primer`. A nonempty value overrides `--RV_primer`; a blank or omitted column uses the parameter instead. |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
+
+### Per-sample negative controls
+
+Place `neg_control` after `fastq_1` and `fastq_2`. Include each negative control as its own sample row with read files, but leave its `neg_control` cell empty. Each named control must exactly match a `sample` entry in the same run's samplesheet; the pipeline rejects missing controls before emitting reads to downstream processes. Controls can appear anywhere in the samplesheet, and several samples can share a control. For samples sequenced more than once, use the same control assignment on every row. The pipeline rejects different controls or a mix of assigned and blank controls for the same sample. Repeated rows with all assignments blank or missing remain valid.
+
+```csv
+sample,fastq_1,fastq_2,neg_control
+SAMPLE_01,/data/sample_01_R1.fastq.gz,/data/sample_01_R2.fastq.gz,NEG_01
+SAMPLE_02,/data/sample_02.fastq.gz,,NEG_01
+NEG_01,/data/neg_01.fastq.gz,,
+```
+
+ The control name identifies another sample, not a file path. Blank entries do not assign a control; samplesheets without the column are still accepted.
+
 
 ## Running the pipeline
 

@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Added optional `neg_control` samplesheet column after `fastq_1` and `fastq_2`, mapped to `meta.neg_control` for per-sample negative-control assignments. Blank entries are allowed for negative controls, and existing three-column samplesheets remain valid.
+- Documented negative-control sample rows, shared controls, and metadata mapping in the README and usage guide.
+- Added samplesheet validation requiring the same negative-control assignment across all rows of a sample, rejecting different controls and mixed assigned/blank entries while allowing all-blank or missing assignments.
+- Added samplesheet validation requiring every named negative control to be present as a sample in the same run, regardless of row order.
+
+### Fixed
+
+- Fixed samplesheet primers being ignored by CUTADAPT by mapping optional `FW_primer` and `RV_primer` columns to `meta.fw_primer` and `meta.rv_primer`.
+- Nonempty samplesheet primers take precedence independently over `--FW_primer` and `--RV_primer`. Blank or omitted columns fall back to the corresponding parameter; if neither value is set, that primer argument is omitted.
+
 ## [v1.1.0]
 
 ### Changed
