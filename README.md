@@ -143,9 +143,15 @@ Cutadapt by default using the provided primer sequences. The primer sequences
 can be provided in the sample-sheet or passed as arguments (`FW_primer`,
 RV_primer). Primer trimming with Cutadapt can be skipped with `--skip_cutadapt`.
 
+The optional samplesheet columns `FW_primer` and `RV_primer` map to
+`meta.fw_primer` and `meta.rv_primer`. For each primer independently, a nonempty
+samplesheet value takes precedence over the corresponding `--FW_primer` or
+`--RV_primer` parameter. A blank cell or omitted column falls back to that
+parameter; if neither is set, that primer argument is omitted.
+
 ```bash
-sample,fastq_1,fastq_2,FW_primer,RV_primer
-SAMPLE,/absolute_path/trana/Sample_R1_001.fastq.gz,/absolute_path/trana/Sample_R2_001.fastq.gz,GTGCCAGCMGCCGCGGTAA,GGACTACNVGGGTWTCTAAT
+sample,fastq_1,fastq_2,neg_control,FW_primer,RV_primer
+SAMPLE,/absolute_path/trana/Sample_R1_001.fastq.gz,/absolute_path/trana/Sample_R2_001.fastq.gz,,GTGCCAGCMGCCGCGGTAA,GGACTACNVGGGTWTCTAAT
 ```
 
 ```bash
@@ -174,13 +180,18 @@ There are two types of sample sheets that can be used:
 
 1. If the fastq files are already concatenated/merged i.e., the fastq-files in
    Nanopore barcode directories have been concatenated already, the `--input` can
-   be used. `--input` expects a `.csv` sample sheet with 3 columns (note the
-   header names). It looks like this (See also the `examples` directory):
+  be used. `--input` expects a `.csv` sample sheet starting with `sample`,
+  `fastq_1`, and `fastq_2`. An optional fourth column, `neg_control`, names
+  each sample's negative control. Leave this field empty for the controls
+  themselves, which must have their own sample rows and read files:
    ```csv
-   sample,fastq_1,fastq_2
-   SAMPLE_1,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC1.fastq.gz,
-   SAMPLE_2,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC3.fastq.gz,
+  sample,fastq_1,fastq_2,neg_control
+  SAMPLE_1,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC1.fastq.gz,,NEG_1
+  SAMPLE_2,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC3.fastq.gz,,NEG_1
+  NEG_1,/absolute_path/trana/negative_control.fastq.gz,,
    ```
+  Three-column sample sheets remain valid.
+
 2. If the fastq files are separated in their respective barcode folder i.e., you
    have several fastq files for each sample and they are organized in barcode
    directories in a fastq_pass directory.

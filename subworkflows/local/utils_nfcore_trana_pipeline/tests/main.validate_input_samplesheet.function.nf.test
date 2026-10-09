@@ -1,0 +1,213 @@
+nextflow_function {
+
+    name "Test samplesheet negative-control validation"
+    script "../main.nf"
+    function "validateInputSamplesheet"
+
+    test("Accept matching negative controls") {
+        when {
+            function {
+                """
+                input[0] = [
+                    'SAMPLE_01',
+                    [
+                        [id: 'SAMPLE_01', single_end: true, neg_control: 'NEG_01'],
+                        [id: 'SAMPLE_01', single_end: true, neg_control: 'NEG_01']
+                    ],
+                    [['run_1.fastq.gz'], ['run_2.fastq.gz']]
+                ]
+                """
+            }
+        }
+        then {
+            assert function.success
+            assert function.result[0].neg_control == 'NEG_01'
+        }
+    }
+
+    test("Reject different negative controls") {
+        when {
+            function {
+                """
+                input[0] = [
+                    'SAMPLE_01',
+                    [
+                        [id: 'SAMPLE_01', single_end: true, neg_control: 'NEG_01'],
+                        [id: 'SAMPLE_01', single_end: true, neg_control: 'NEG_02']
+                    ],
+                    [['run_1.fastq.gz'], ['run_2.fastq.gz']]
+                ]
+                """
+            }
+        }
+        then {
+            assert function.failed
+            assert function.stdout.join('\n').contains('Multiple runs of a sample must use the same negative control (including blank assignments): SAMPLE_01')
+        }
+    }
+
+    test("Reject mixed assigned and blank controls") {
+        when {
+            function {
+                """
+                input[0] = [
+                    'SAMPLE_01',
+                    [
+                        [id: 'SAMPLE_01', single_end: true, neg_control: ''],
+                        [id: 'SAMPLE_01', single_end: true, neg_control: 'NEG_01']
+                    ],
+                    [['run_1.fastq.gz'], ['run_2.fastq.gz']]
+                ]
+                """
+            }
+        }
+        then {
+            assert function.failed
+            assert function.stdout.join('\n').contains('Multiple runs of a sample must use the same negative control (including blank assignments): SAMPLE_01')
+        }
+    }
+
+    test("Accept blank control assignments") {
+        when {
+            function {
+                """
+                input[0] = [
+                    'NEG_01',
+                    [
+                        [id: 'NEG_01', single_end: true, neg_control: ''],
+                        [id: 'NEG_01', single_end: true, neg_control: '']
+                    ],
+                    [['run_1.fastq.gz'], ['run_2.fastq.gz']]
+                ]
+                """
+            }
+        }
+        then {
+            assert function.success
+            assert function.result[0].neg_control == ''
+        }
+    }
+
+    test("Accept missing control assignments in legacy samplesheets") {
+        when {
+            function {
+                """
+                input[0] = [
+                    'SAMPLE_01',
+                    [
+                        [id: 'SAMPLE_01', single_end: true],
+                        [id: 'SAMPLE_01', single_end: true]
+                    ],
+                    [['run_1.fastq.gz'], ['run_2.fastq.gz']]
+                ]
+                """
+            }
+        }
+        then {
+            assert function.success
+            assert function.result[0].neg_control == null
+        }
+    }
+
+    test("Treat missing and blank assignments as equivalent") {
+        when {
+            function {
+                """
+                input[0] = [
+                    'NEG_01',
+                    [
+                        [id: 'NEG_01', single_end: true],
+                        [id: 'NEG_01', single_end: true, neg_control: '']
+                    ],
+                    [['run_1.fastq.gz'], ['run_2.fastq.gz']]
+                ]
+                """
+            }
+        }
+        then {
+            assert function.success
+        }
+    }
+
+    test("Accept shared controls listed after their samples") {
+        function "validateNegativeControlSamples"
+
+        when {
+            function {
+                """
+                input[0] = [
+                    [[id: 'SAMPLE_01', neg_control: 'NEG_01'], 'sample_01.fastq.gz', ''],
+                    [[id: 'SAMPLE_02', neg_control: 'NEG_01'], 'sample_02.fastq.gz', ''],
+                    [[id: 'NEG_01', neg_control: ''], 'neg_01.fastq.gz', '']
+                ]
+                """
+            }
+        }
+        then {
+            assert function.success
+            assert function.result.size() == 3
+            assert function.result[0][0].id == 'SAMPLE_01'
+            assert function.result[0][1] == 'sample_01.fastq.gz'
+            assert function.result[2][0].id == 'NEG_01'
+        }
+    }
+
+    test("Reject a missing control even when another control is present") {
+        function "validateNegativeControlSamples"
+
+        when {
+            function {
+                """
+                input[0] = [
+                    [[id: 'SAMPLE_01', neg_control: 'NEG_01'], 'sample_01.fastq.gz', ''],
+                    [[id: 'SAMPLE_02', neg_control: 'NEG_02'], 'sample_02.fastq.gz', ''],
+                    [[id: 'NEG_01', neg_control: ''], 'neg_01.fastq.gz', '']
+                ]
+                """
+            }
+        }
+        then {
+            assert function.failed
+            assert function.stdout.join('\n').contains("Negative control 'NEG_02' for sample 'SAMPLE_02' must be present as a sample in the same run")
+        }
+    }
+
+    test("Require an exact match to the control sample name") {
+        function "validateNegativeControlSamples"
+
+        when {
+            function {
+                """
+                input[0] = [
+                    [[id: 'SAMPLE_01', neg_control: 'NEG_01'], 'sample_01.fastq.gz', ''],
+                    [[id: 'neg_01', neg_control: ''], 'neg_01.fastq.gz', '']
+                ]
+                """
+            }
+        }
+        then {
+            assert function.failed
+            assert function.stdout.join('\n').contains("Negative control 'NEG_01' for sample 'SAMPLE_01' must be present as a sample in the same run")
+        }
+    }
+
+    test("Accept rows with blank or missing control assignments") {
+        function "validateNegativeControlSamples"
+
+        when {
+            function {
+                """
+                input[0] = [
+                    [[id: 'SAMPLE_01', neg_control: ''], 'sample_01.fastq.gz', ''],
+                    [[id: 'SAMPLE_02'], 'sample_02.fastq.gz', '']
+                ]
+                """
+            }
+        }
+        then {
+            assert function.success
+            assert function.result.size() == 2
+        }
+    }
+
+}
