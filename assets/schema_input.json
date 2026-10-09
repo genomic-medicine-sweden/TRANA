@@ -32,6 +32,13 @@
                         "maxLength": 0
                     }
                 ]
+            },
+            "neg_control": {
+                "type": "string",
+                "pattern": "^\\S*$",
+                "description": "Sample name of the associated negative control; leave empty for negative-control samples",
+                "errorMessage": "Negative control must be a sample name without spaces, or empty for negative-control samples",
+                "meta": ["neg_control"]
             }
         },
         "required": ["sample", "fastq_1"]
