@@ -38,14 +38,14 @@ TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,
 TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
 ```
 
-| Column    | Description                                                                                                                                                                            |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`  | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
-| `fastq_1` | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
-| `fastq_2` | Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
-| `neg_control` | Optional fourth column. Exact `sample` name of the associated negative control, without spaces. Leave empty for negative-control samples. |
-| `FW_primer` | Optional forward primer, mapped to `meta.fw_primer`. A nonempty value overrides `--FW_primer`; a blank or omitted column uses the parameter instead. |
-| `RV_primer` | Optional reverse primer, mapped to `meta.rv_primer`. A nonempty value overrides `--RV_primer`; a blank or omitted column uses the parameter instead. |
+| Column        | Description                                                                                                                                                                            |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`      | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
+| `fastq_1`     | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
+| `fastq_2`     | Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
+| `neg_control` | Optional fourth column. Exact `sample` name of the associated negative control, without spaces. Leave empty for negative-control samples.                                              |
+| `FW_primer`   | Optional forward primer, mapped to `meta.fw_primer`. A nonempty value overrides `--FW_primer`; a blank or omitted column uses the parameter instead.                                   |
+| `RV_primer`   | Optional reverse primer, mapped to `meta.rv_primer`. A nonempty value overrides `--RV_primer`; a blank or omitted column uses the parameter instead.                                   |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
@@ -60,8 +60,7 @@ SAMPLE_02,/data/sample_02.fastq.gz,,NEG_01
 NEG_01,/data/neg_01.fastq.gz,,
 ```
 
- The control name identifies another sample, not a file path. Blank entries do not assign a control; samplesheets without the column are still accepted.
-
+The control name identifies another sample, not a file path. Blank entries do not assign a control; samplesheets without the column are still accepted.
 
 ## Running the pipeline
 
