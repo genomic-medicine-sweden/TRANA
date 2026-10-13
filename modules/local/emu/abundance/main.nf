@@ -30,6 +30,7 @@ process EMU_ABUNDANCE {
     //  Where applicable please provide/convert compressed files as input/output
     //               e.g. "*.fastq.gz" and NOT "*.fastq", "*.bam" and NOT "*.sam" etc.
     tuple val(meta), path(reads)
+    path db
 
     output:
     tuple val(meta), path("*abundance.tsv")                     , emit: report
@@ -53,6 +54,7 @@ process EMU_ABUNDANCE {
     emu \\
         abundance \\
         $args \\
+        --db "$db" \\
         --threads $task.cpus \\
         $reads
     } > "${prefix}_emu_log.log" 2>&1
@@ -79,4 +81,3 @@ process EMU_ABUNDANCE {
     END_VERSIONS
     """
 }
-

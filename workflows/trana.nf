@@ -138,7 +138,10 @@ workflow TRANA {
     }
 
     // MODULE: run EMU abundance calculation
-    EMU_ABUNDANCE(ch_processed_optionally_sampled_reads)
+    EMU_ABUNDANCE(
+        ch_processed_optionally_sampled_reads,
+        file(params.db, checkExists: true)
+    )
     ch_versions = ch_versions.mix(EMU_ABUNDANCE.out.versions)
     if (params.run_krona) {
         // MODULE: Run krona plot
