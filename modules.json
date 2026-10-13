@@ -21,12 +21,6 @@
                         "git_sha": "4c4eacf68c420ce477e945c04c16f4338ddaca36",
                         "installed_by": ["modules"]
                     },
-                    "falco": {
-                        "branch": "master",
-                        "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
-                        "installed_by": ["modules"],
-                        "patch": "modules/nf-core/falco/falco.diff"
-                    },
                     "fastqc": {
                         "branch": "master",
                         "git_sha": "b1966f36ec9de31927b2603d8f499960b2a4c294",
@@ -62,11 +56,6 @@
                         "git_sha": "956a7c2d20df53c1e6acc05ca9dd5059bb9cca99",
                         "installed_by": ["modules"],
                         "patch": "modules/nf-core/porechop/abi/porechop-abi.diff"
-                    },
-                    "porechop/porechop": {
-                        "branch": "master",
-                        "git_sha": "dbf496251becaa54933305bb494b880253a84ee6",
-                        "installed_by": ["modules"]
                     },
                     "seqtk/sample": {
                         "branch": "master",

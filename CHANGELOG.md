@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - Removed the `ch_samplesheet`/`ch_samplesheet_path` channel, since it was only used to feed `GENERATE_MASTER_HTML`
+- Removed the unused `MERGE_BARCODES`, `MERGE_BARCODES_SAMPLESHEET`, and `GENERATE_INPUT` modules and their helper scripts
+- Removed the unused nf-core `falco` and `porechop/porechop` modules
 
 ## [v1.0.0]
 
