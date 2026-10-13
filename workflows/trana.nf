@@ -154,7 +154,10 @@ workflow TRANA {
 
     // MODULE: run translate_taxids
     if (params.make_heatmap) {
-        TRANSLATE_TAXIDS(EMU_ABUNDANCE.out.assignment_report)
+        TRANSLATE_TAXIDS(
+            EMU_ABUNDANCE.out.assignment_report,
+            file(params.db, checkExists: true)
+        )
         ch_versions = ch_versions.mix(TRANSLATE_TAXIDS.out.versions)
 
         // Module: run assignment_heatmap
