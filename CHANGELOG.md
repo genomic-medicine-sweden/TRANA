@@ -5,11 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v1.1.0]
+## [Unreleased]
 
 ### Changed
 
-- Made the `lr:hq` minimap2 profile a valid option to the `--seqtype` parameter
 - Replaced `MERGE_BARCODES` and `MERGE_BARCODES_SAMPLESHEET` with the nf-core `CAT_FASTQ` module to merge fastq files from barcode directories and/or multiple sequencing runs of the same sample
 - Replaced the `GENERATE_INPUT` module and `bin/generate_input.sh` script with a `collectFile` operator to build the merged samplesheet directly in Nextflow
 - `GENERATE_MASTER_HTML` now receives sample ids directly from `ch_reads` instead of a samplesheet csv; the run date is detected from `--merge_fastq_pass`/`--input` instead of the generated samplesheet path
@@ -20,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed the `ch_samplesheet`/`ch_samplesheet_path` channel, since it was only used to feed `GENERATE_MASTER_HTML`
 - Removed the unused `MERGE_BARCODES`, `MERGE_BARCODES_SAMPLESHEET`, and `GENERATE_INPUT` modules and their helper scripts
 - Removed the unused nf-core `falco` and `porechop/porechop` modules
+
+## [v1.1.0]
+
+### Changed
+
+- Made the `lr:hq` minimap2 profile a valid option to the `--seqtype` parameter
 
 ## [v1.0.0]
 
