@@ -54,7 +54,7 @@ process EMU_ABUNDANCE {
     emu \\
         abundance \\
         $args \\
-        --db "$db" \\
+        --db $db \\
         --threads $task.cpus \\
         $reads
     } > "${prefix}_emu_log.log" 2>&1

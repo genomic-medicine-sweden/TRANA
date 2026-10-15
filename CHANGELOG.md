@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed the `ch_samplesheet`/`ch_samplesheet_path` channel, since it was only used to feed `GENERATE_MASTER_HTML`
 - Removed the unused `MERGE_BARCODES`, `MERGE_BARCODES_SAMPLESHEET`, and `GENERATE_INPUT` modules and their helper scripts
 - Removed the unused nf-core `falco` and `porechop/porechop` modules
+- Pass `params.db` explicitly as the `db` input to `EMU_ABUNDANCE` and `TRANSLATE_TAXIDS`
 
 ## [v1.1.0]
 
