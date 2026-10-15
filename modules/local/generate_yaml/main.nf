@@ -7,7 +7,7 @@ process GENERATE_YAML {
         'docker://clinicalgenomicslund/eyrie-popup:1.0.0' }"
 
     input:
-    tuple val(meta), val(input_dir)
+    tuple val(meta), path(input_dir)
 
     output:
     path output         , emit: yaml
