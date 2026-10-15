@@ -4,5 +4,9 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - bioconda::porechop=0.2.4
-  - conda-forge::pigz=2.8
+  - conda-forge::coreutils=9.5
+  - conda-forge::grep=3.11
+  - conda-forge::gzip=1.13
+  - conda-forge::lbzip2=2.5
+  - conda-forge::sed=4.8
+  - conda-forge::tar=1.34

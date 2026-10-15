@@ -268,7 +268,7 @@
             "properties": {
                 "merge_fastq_pass": {
                     "type": "string",
-                    "description": "Path to a directory containing barcode directories. For nanopore data. This option merges the fastq-files in the barcode directories for each barcode folder. Use the flag in combination with \"--barcodes_samplesheet\" to get correct sample ids for each result file. If  merge_barcodes_samplesheet is not defined, the result files will have the prefix according to respective barcode derectory."
+                    "description": "Path to a directory containing barcode directories. For nanopore data. This option merges the fastq-files in each barcode directory. Use this flag in combination with \"--barcodes_samplesheet\" to name result files after sample ids. If barcodes_samplesheet is not defined, result files are named after the respective barcode directories."
                 },
                 "barcodes_samplesheet": {
                     "type": "string",

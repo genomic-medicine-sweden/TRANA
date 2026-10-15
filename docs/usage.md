@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This Nextflow pipeline utilizes Falco, Porechop_ABI, Longfilt, and EMU for taxonomic profiling of 16S rRNA gene sequences. Built with Nextflow, it ensures portability and reproducibility across different computational infrastructures. Falco performs quality control, Porechop_ABI trims adapters and demultiplexes data, Longfilt filters the fastq-files such that only reads that are close to 1500 bp are used, and EMU assigns taxonomic classifications. The pipeline enables microbial community analysis, offering insights into the diversity in samples.
+This Nextflow pipeline utilizes FastQC, Porechop_ABI, Filtlong, and EMU for taxonomic profiling of 16S rRNA gene sequences. Built with Nextflow, it ensures portability and reproducibility across different computational infrastructures. FastQC performs quality control, Porechop_ABI trims adapters, Filtlong filters reads by length and quality, and EMU assigns taxonomic classifications. The pipeline enables microbial community analysis, offering insights into the diversity in samples.
 
 ## Samplesheet input
 
