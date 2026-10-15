@@ -95,6 +95,13 @@ workflow PIPELINE_INITIALISATION {
             .fromPath(barcodes_samplesheet)
             .splitCsv(header: ['barcode', 'sample_id'])
             .filter { row -> row.barcode != 'barcode' }
+            .filter { row ->
+                if ( !file("${merge_fastq_pass}/${row.barcode}").exists() ) {
+                    log.error "Barcode '${row.barcode}' not found in fastq directory '${file(merge_fastq_pass)}'"
+                    return false
+                }
+                return true
+            }
             .map { row -> [ [ id: row.sample_id, single_end: true ], file("${merge_fastq_pass}/${row.barcode}/*.fastq.gz") ] }
             .set { ch_cat_fastq_input }
 
@@ -284,4 +291,3 @@ def create_fastq_channel(LinkedHashMap row) {
     }
     return fastq_meta
 }
-
