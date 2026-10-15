@@ -16,9 +16,10 @@ process GENERATE_YAML {
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
     output = "${prefix}.yaml"
+    def input = ${input_dir}.toAbsolutePath().toString()
     """
     popup generate-config \\
-        --analysis-output-dirpath ${input_dir} \\
+        --analysis-output-dirpath ${input} \\
         --sample-id ${prefix} \\
         --output ${output}
 
