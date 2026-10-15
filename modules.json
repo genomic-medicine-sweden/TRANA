@@ -40,6 +40,11 @@
                         "installed_by": ["modules"],
                         "patch": "modules/nf-core/krona/ktimporttaxonomy/krona-ktimporttaxonomy.diff"
                     },
+                    "krona/ktimporttext": {
+                        "branch": "master",
+                        "git_sha": "4789f43ab82b70a6719890d2ffe43685979960bd",
+                        "installed_by": ["modules"]
+                    },
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "7b50cb7be890e4b28cffb82e438cc6a8d7805d3f",
