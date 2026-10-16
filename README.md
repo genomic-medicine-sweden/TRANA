@@ -185,23 +185,26 @@ There are two types of sample sheets that can be used:
    each sample's negative control. Leave this field empty for the controls
    themselves, which must have their own sample rows and read files:
    ```csv
+
+   ```
+
 sample,fastq_1,fastq_2,neg_control
 SAMPLE_1,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC1.fastq.gz,,NEG_1
 SAMPLE_2,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC3.fastq.gz,,NEG_1
 NEG_1,/absolute_path/trana/negative_control.fastq.gz,,
-     ```
+```
 Three-column sample sheets remain valid.
 
 2. If the fastq files are separated in their respective barcode folder i.e., you
-have several fastq files for each sample and they are organized in barcode
-directories in a fastq_pass directory.
-a) If you do not want to create a sample sheet for the barcodes, then the
-results will be named according to the barcode folders. flag
-`--merge_fastq_pass`
-b) If you want your own sample names on the results, then use
-`--merge_fastq_pass` in combination with `--barcodes_samplesheet`. This
-requires a barcode sample sheet which is comma separated. See example file
-`sample_sheet_merge.csv` in `examples` for a demonstration.
+   have several fastq files for each sample and they are organized in barcode
+   directories in a fastq_pass directory.
+   a) If you do not want to create a sample sheet for the barcodes, then the
+   results will be named according to the barcode folders. flag
+   `--merge_fastq_pass`
+   b) If you want your own sample names on the results, then use
+   `--merge_fastq_pass` in combination with `--barcodes_samplesheet`. This
+   requires a barcode sample sheet which is comma separated. See example file
+   `sample_sheet_merge.csv` in `examples` for a demonstration.
 
 ## Useful env variables
 
@@ -212,7 +215,7 @@ NXF_WORK = working directory. # work directory,
 APPTAINER_TMPDIR
 NXF_SINGULARITY_CACHEDIR
 APPTAINER_CACHEDIR
-````
+```
 
 ## Multiqc report
 

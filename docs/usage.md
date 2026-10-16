@@ -40,14 +40,14 @@ TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,
 TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
 ```
 
-| Column        | Description                                                                                                                                                                            |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`      | Custom sample name without spaces. Use the same name for multiple sequencing libraries/runs from the same sample.                                                                       |
-| `fastq_1`     | Path to single-end reads or the first file of paired-end reads. Must be gzipped with the extension `.fastq.gz` or `.fq.gz`.                                                               |
-| `fastq_2`     | Path to the second file of paired-end reads. Must be gzipped with the extension `.fastq.gz` or `.fq.gz`. Leave empty for single-end reads.                                                 |
-| `neg_control` | Optional fourth column. Exact `sample` name of the associated negative control, without spaces. Leave empty for negative-control samples.                                              |
-| `FW_primer`   | Optional forward primer, mapped to `meta.fw_primer`. A nonempty value overrides `--FW_primer`; a blank or omitted column uses the parameter instead.                                   |
-| `RV_primer`   | Optional reverse primer, mapped to `meta.rv_primer`. A nonempty value overrides `--RV_primer`; a blank or omitted column uses the parameter instead.                                   |
+| Column        | Description                                                                                                                                          |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`      | Custom sample name without spaces. Use the same name for multiple sequencing libraries/runs from the same sample.                                    |
+| `fastq_1`     | Path to single-end reads or the first file of paired-end reads. Must be gzipped with the extension `.fastq.gz` or `.fq.gz`.                          |
+| `fastq_2`     | Path to the second file of paired-end reads. Must be gzipped with the extension `.fastq.gz` or `.fq.gz`. Leave empty for single-end reads.           |
+| `neg_control` | Optional fourth column. Exact `sample` name of the associated negative control, without spaces. Leave empty for negative-control samples.            |
+| `FW_primer`   | Optional forward primer, mapped to `meta.fw_primer`. A nonempty value overrides `--FW_primer`; a blank or omitted column uses the parameter instead. |
+| `RV_primer`   | Optional reverse primer, mapped to `meta.rv_primer`. A nonempty value overrides `--RV_primer`; a blank or omitted column uses the parameter instead. |
 
 An [example samplesheet](../assets/examples/samplesheet_medium.csv) has been provided with the pipeline.
 
@@ -90,24 +90,24 @@ nextflow run main.nf -profile test,docker --outdir results_test
 
 ### Sequencing type
 
-| `--seqtype` | Input | Processing |
-| ---------- | ----- | ---------- |
-| `map-ont` | Nanopore reads (default) | Optional adapter trimming, Filtlong filtering, and EMU with the minimap2 `map-ont` preset. |
-| `lr:hq` | High-accuracy Nanopore reads | The same preprocessing as `map-ont`, with the minimap2 `lr:hq` preset. |
-| `sr` | Single- or paired-end short reads | Cutadapt primer trimming and EMU with the minimap2 `sr` preset. |
+| `--seqtype` | Input                             | Processing                                                                                 |
+| ----------- | --------------------------------- | ------------------------------------------------------------------------------------------ |
+| `map-ont`   | Nanopore reads (default)          | Optional adapter trimming, Filtlong filtering, and EMU with the minimap2 `map-ont` preset. |
+| `lr:hq`     | High-accuracy Nanopore reads      | The same preprocessing as `map-ont`, with the minimap2 `lr:hq` preset.                     |
+| `sr`        | Single- or paired-end short reads | Cutadapt primer trimming and EMU with the minimap2 `sr` preset.                            |
 
 Use `lr:hq` for high-accuracy ONT reads with error levels at or below approximately 1%. See [this preset comparison](https://mbhall88.github.io/post/minimap2-lrhq-preset-testing/) and the [minimap2 release notes](https://github.com/lh3/minimap2/releases/tag/v2.27). Other values, including `map-pb`, are not currently accepted by the workflow.
 
 ### Long-read preprocessing
 
-| Parameter | Default | Purpose |
-| --------- | ------- | ------- |
-| `--adapter_trimming` | `false` | Enable ONT adapter trimming with Porechop_ABI. |
-| `--quality_filtering` | `true` | Enable Filtlong length and quality filtering. Set to `false` to bypass filtering. |
-| `--longread_qc_qualityfilter_minlength` | `1200` | Minimum read length in bases. |
-| `--longread_qc_qualityfilter_maxlength` | `1800` | Maximum read length in bases. |
-| `--longread_qc_qualityfilter_min_mean_q` | `94` | Filtlong minimum mean quality threshold, expressed as percentage identity rather than a Phred score. |
-| `--save_preprocessed_reads` | `false` | Publish preprocessed reads. |
+| Parameter                                | Default | Purpose                                                                                              |
+| ---------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------- |
+| `--adapter_trimming`                     | `false` | Enable ONT adapter trimming with Porechop_ABI.                                                       |
+| `--quality_filtering`                    | `true`  | Enable Filtlong length and quality filtering. Set to `false` to bypass filtering.                    |
+| `--longread_qc_qualityfilter_minlength`  | `1200`  | Minimum read length in bases.                                                                        |
+| `--longread_qc_qualityfilter_maxlength`  | `1800`  | Maximum read length in bases.                                                                        |
+| `--longread_qc_qualityfilter_min_mean_q` | `94`    | Filtlong minimum mean quality threshold, expressed as percentage identity rather than a Phred score. |
+| `--save_preprocessed_reads`              | `false` | Publish preprocessed reads.                                                                          |
 
 Use `--downsample_n_reads N` to subsample after preprocessing for either long or short reads. Set `--save_downsampled_reads true` to publish the subsampled reads.
 
