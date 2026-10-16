@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed samplesheet primers being ignored by CUTADAPT by mapping optional `FW_primer` and `RV_primer` columns to `meta.fw_primer` and `meta.rv_primer`.
 - Nonempty samplesheet primers take precedence independently over `--FW_primer` and `--RV_primer`. Blank or omitted columns fall back to the corresponding parameter; if neither value is set, that primer argument is omitted.
 
+### Changed
+
+- Pass `params.db` explicitly as the `db` input to `EMU_ABUNDANCE` and `TRANSLATE_TAXIDS`
+
 ## [v1.1.0]
 
 ### Changed

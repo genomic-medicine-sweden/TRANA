@@ -19,6 +19,7 @@ process TRANSLATE_TAXIDS {
     //  Where applicable please provide/convert compressed files as input/output
     //               e.g. "*.fastq.gz" and NOT "*.fastq", "*.bam" and NOT "*.sam" etc.
     tuple val(meta), path(assignment_report)
+    path db
 
 
     output:
@@ -54,6 +55,3 @@ process TRANSLATE_TAXIDS {
     END_VERSIONS
     """
 }
-
-
-

@@ -139,7 +139,10 @@ workflow TRANA {
     }
 
     // MODULE: run EMU abundance calculation
-    EMU_ABUNDANCE(ch_processed_optionally_sampled_reads)
+    EMU_ABUNDANCE(
+        ch_processed_optionally_sampled_reads,
+        file(params.db, checkExists: true)
+    )
     ch_versions = ch_versions.mix(EMU_ABUNDANCE.out.versions)
     if (params.run_krona) {
         // MODULE: Run krona plot
@@ -152,7 +155,10 @@ workflow TRANA {
 
     // MODULE: run translate_taxids
     if (params.make_heatmap) {
-        TRANSLATE_TAXIDS(EMU_ABUNDANCE.out.assignment_report)
+        TRANSLATE_TAXIDS(
+            EMU_ABUNDANCE.out.assignment_report,
+            file(params.db, checkExists: true)
+        )
         ch_versions = ch_versions.mix(TRANSLATE_TAXIDS.out.versions)
 
         // Module: run assignment_heatmap
