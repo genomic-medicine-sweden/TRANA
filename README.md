@@ -185,16 +185,13 @@ There are two types of sample sheets that can be used:
    each sample's negative control. Leave this field empty for the controls
    themselves, which must have their own sample rows and read files:
 
-   ```csv
-
-   ```
-
+```csv
 sample,fastq_1,fastq_2,neg_control
 SAMPLE_1,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC1.fastq.gz,,NEG_1
 SAMPLE_2,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC3.fastq.gz,,NEG_1
 NEG_1,/absolute_path/trana/negative_control.fastq.gz,,
+```
 
-````
 Three-column sample sheets remain valid.
 
 2. If the fastq files are separated in their respective barcode folder i.e., you
@@ -217,7 +214,7 @@ NXF_WORK = working directory. # work directory,
 APPTAINER_TMPDIR
 NXF_SINGULARITY_CACHEDIR
 APPTAINER_CACHEDIR
-````
+```
 
 ## Multiqc report
 
