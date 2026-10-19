@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added `params.its` and processes `KRONA_KTIMPORTTEXT` and `REORDER_FOR_KRONA` for ITS compatibility.
+
 ### Changed
 
 - Pass `params.db` explicitly as the `db` input to `EMU_ABUNDANCE` and `TRANSLATE_TAXIDS`
