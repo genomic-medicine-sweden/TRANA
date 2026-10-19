@@ -14,22 +14,22 @@ TRANA (previously known as gms_16S) bioinformatics analysis pipeline for the [EM
 
 This Nextflow pipeline utilizes FastQC, Nanoplot, MultiQC, Porechop_ABI,
 Filtlong, EMU, and Krona. EMU is the tool that does the taxonomic profiling of
-16S rRNA reads. The results are displayed with Krona. Built with Nextflow, it
+16S and ITS rRNA reads. The results are displayed with Krona. Built with Nextflow, it
 ensures portability and reproducibility across different computational
 infrastructures. It has been tested on Linux and on mac M1 (not recommended,
 quite slow). FastQC and Nanoplot performs quality control, Porechop_ABI trims
-adapters (optional), Filtlong filters the fastq-files such that only reads
-that are close to 1500 bp are used (optional), EMU assigns taxonomic
-classifications, and Krona visualises the result table from EMU. The pipeline
-enables microbial community analysis, offering insights into the diversity in
-samples.
+adapters (optional), Filtlong filters the fastq-files such that only reads close to
+the target length are used (optional, which is 1500 bp for 16S and 500 bp for ITS,
+EMU assigns taxonomic classifications, and Krona visualises the result table from EMU.
+The pipeline enables microbial community analysis, offering insights into the
+diversity in samples.
 
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow
 tool to run tasks across multiple compute infrastructures in a very portable
 manner. It uses Docker/Singularity containers making installation trivial and
-results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this
-pipeline uses one container per process which makes it much easier to maintain
-and update software dependencies.
+results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html)
+implementation of this pipeline uses one container per process which makes it much
+easier to maintain and update software dependencies.
 
 ## Pipeline summary
 
@@ -71,8 +71,9 @@ Relative abundance comparison to controls
    Please only use it within pipelines as a last resort. See
    [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles)).
 3. Add you samples to an input file e.g., `sample_sheet.csv`. See examples.
-4. Run `make install` which will gunzip all gzipped files in the database
-   directory (`assets/databases/emu_database`) and the krona/taxonomy directory
+4. Run `make install` which will decompress all gzipped files in the database
+   directories (`assets/databases/emu_database`) and
+   (`assets/databases/unite_database`) and the krona/taxonomy directory
    (`assets/databases/krona/taxonomy`)
 5. Run your command:
 
@@ -192,6 +193,41 @@ There are two types of sample sheets that can be used:
    requires a barcode sample sheet which is comma separated. See example file
    `sample_sheet_merge.csv` in `examples` for a demonstration.
 
+## ITS
+
+The pipeline has been extended to support analysis of ITS rRNA reads.
+
+To analyse ITS, run with the param `--its` and preferably use minimum length 300
+and maximum length 900. Alternatively, use the ITS profile, with these settings
+predefined.
+
+Run without barcode sample sheet and without ITS profile:
+
+```bash
+nextflow run main.nf \
+  --outdir [absolute path]/trana/results \
+  --db /[absolute path]/trana/assets/databases/<its_database> \
+  --seqtype map-ont \
+   -profile singularity \
+  --quality_filtering \
+  --longread_qc_qualityfilter_minlength 300 \
+  --longread_qc_qualityfilter_maxlength 900 \
+  --merge_fastq_pass /[absolute path]/trana/fastq_pass/ \
+  --its
+```
+
+Run with barcode sample sheet and ITS profile:
+
+```bash
+nextflow run main.nf \
+  --outdir /[absolute path to]/trana/results \
+  --db /[absolute path to database]/trana/assets/databases/<its_database> \
+  --seqtype map-ont \
+   -profile singularity,its \
+  --merge_fastq_pass /[absolute path to fastq_pass]/fastq_pass/ \
+  --barcodes_samplesheet /[absolute path to barcode sample sheet]/sample_sheet_merge.csv \
+```
+
 ## Useful env variables
 
 ```config
@@ -225,6 +261,12 @@ when developing:
 **Tip:** To see which make commands are available, you can always type `make ` and
 then hit `TAB` twice.
 
+## Databases
+
+The bundled EMU database at `assets/databases/emu_database` is intended for analysis of 16S. It is prebuilt by EMU.
+
+The bundled UNITE database at `assets/databases/unite_database` is intended for analysis of ITS. It is prepared for EMU compatibility using [`prep_Unite_for_Emu.py`](https://osf.io/56uf7/files/rgu9p) with [`sh_general_release_dynamic_19.02.2025_dev`](https://doi.plutof.ut.ee/doi/10.15156/BIO/3301229) from UNITE, and built using `emu build-database`. Please note that this release from UNITE contains misannotations, and should be used with caution. 
+
 ## Credits
 
 TRANA was originally written by [@fwa93](https://github.com/fwa93) and is further developed and
@@ -236,6 +278,7 @@ maintained by gms-mikro from Genomic Medicine Sweden:
 @kdannenberg
 @ikarls
 @bokelund
+@AnnaNoren
 
 This pipeline is not a formal nf-core pipeline but it partly uses code and
 infrastructure developed and maintained by the [nf-core](https://nf-co.re)
