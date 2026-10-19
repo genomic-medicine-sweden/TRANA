@@ -14,22 +14,22 @@ TRANA (previously known as gms_16S) bioinformatics analysis pipeline for the [EM
 
 This Nextflow pipeline utilizes FastQC, Nanoplot, MultiQC, Porechop_ABI,
 Filtlong, EMU, and Krona. EMU is the tool that does the taxonomic profiling of
-16S rRNA reads. The results are displayed with Krona. Built with Nextflow, it
+16S and ITS rRNA reads. The results are displayed with Krona. Built with Nextflow, it
 ensures portability and reproducibility across different computational
 infrastructures. It has been tested on Linux and on mac M1 (not recommended,
 quite slow). FastQC and Nanoplot performs quality control, Porechop_ABI trims
-adapters (optional), Filtlong filters the fastq-files such that only reads
-that are close to 1500 bp are used (optional), EMU assigns taxonomic
-classifications, and Krona visualises the result table from EMU. The pipeline
-enables microbial community analysis, offering insights into the diversity in
-samples.
+adapters (optional), Filtlong filters the fastq-files such that only reads close to
+the target length are used (optional, which is 1500 bp for 16S and 500 bp for ITS,
+EMU assigns taxonomic classifications, and Krona visualises the result table from EMU.
+The pipeline enables microbial community analysis, offering insights into the
+diversity in samples.
 
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow
 tool to run tasks across multiple compute infrastructures in a very portable
 manner. It uses Docker/Singularity containers making installation trivial and
-results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this
-pipeline uses one container per process which makes it much easier to maintain
-and update software dependencies.
+results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html)
+implementation of this pipeline uses one container per process which makes it much
+easier to maintain and update software dependencies.
 
 ## Pipeline summary
 
@@ -191,6 +191,44 @@ There are two types of sample sheets that can be used:
    `--merge_fastq_pass` in combination with `--barcodes_samplesheet`. This
    requires a barcode sample sheet which is comma separated. See example file
    `sample_sheet_merge.csv` in `examples` for a demonstration.
+
+## ITS
+
+The pipeline has been extended to support analysis of ITS rRNA reads.
+
+To analyse ITS, run with the param `--its` and preferably use minimum length 300
+and maximum length 900.
+
+Run without barcode sample sheet:
+
+```bash
+nextflow run main.nf \
+  --outdir [absolute path]/trana/results \
+  --db /[absolute path]/trana/assets/databases/<its_database> \
+  --seqtype map-ont \
+   -profile singularity,test \
+  --quality_filtering \
+  --longread_qc_qualityfilter_minlength 300 \
+  --longread_qc_qualityfilter_maxlength 900 \
+  --merge_fastq_pass /[absolute path]/trana/fastq_pass/ \
+  --its
+```
+
+Run with barcode sample sheet:
+
+```bash
+nextflow run main.nf \
+  --outdir /[absolute path to]/trana/results \
+  --db /[absolute path to database]/trana/assets/databases/<its_database> \
+  --seqtype map-ont \
+   -profile singularity,test \
+  --quality_filtering \
+  --longread_qc_qualityfilter_minlength 300 \
+  --longread_qc_qualityfilter_maxlength 900 \
+  --merge_fastq_pass /[absolute path to fastq_pass]/fastq_pass/ \
+  --barcodes_samplesheet /[absolute path to barcode sample sheet]/sample_sheet_merge.csv \
+  --its
+```
 
 ## Useful env variables
 
