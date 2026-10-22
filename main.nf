@@ -34,7 +34,6 @@ include { TRANA                   } from './workflows/trana.nf'
 //
 workflow GMS_TRANA {
     take:
-    samplesheet // channel: samplesheet read in from --input
     reads
     outdir
 
@@ -42,7 +41,7 @@ workflow GMS_TRANA {
     //
     // WORKFLOW: Run pipeline
     //
-    TRANA (samplesheet, reads, outdir)
+    TRANA (reads, outdir)
 
     emit:
     nanostats_unprocessed   = TRANA.out.nanostats_unprocessed  // channel: /path/to/nanostats.txt
@@ -82,7 +81,6 @@ workflow {
     // WORKFLOW: Run main workflow
     //
     GMS_TRANA (
-        PIPELINE_INITIALISATION.out.samplesheet,
         PIPELINE_INITIALISATION.out.reads,
         params.outdir
     )
