@@ -32,6 +32,27 @@
                         "maxLength": 0
                     }
                 ]
+            },
+            "neg_control": {
+                "type": "string",
+                "pattern": "^\\S*$",
+                "description": "Sample name of the associated negative control; leave empty for negative-control samples",
+                "errorMessage": "Negative control must be a sample name without spaces, or empty for negative-control samples",
+                "meta": ["neg_control"]
+            },
+            "FW_primer": {
+                "type": "string",
+                "pattern": "^\\S*$",
+                "description": "Optional forward primer; leave empty to use the pipeline FW_primer parameter",
+                "errorMessage": "Forward primer cannot contain whitespace",
+                "meta": ["fw_primer"]
+            },
+            "RV_primer": {
+                "type": "string",
+                "pattern": "^\\S*$",
+                "description": "Optional reverse primer; leave empty to use the pipeline RV_primer parameter",
+                "errorMessage": "Reverse primer cannot contain whitespace",
+                "meta": ["rv_primer"]
             }
         },
         "required": ["sample", "fastq_1"]

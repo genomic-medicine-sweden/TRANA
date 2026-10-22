@@ -79,8 +79,8 @@ Relative abundance comparison to controls
 ```bash
 nextflow run main.nf \
   --input sample_sheet.csv
-  --outdir [absolute path]/trana/results \
-  --db /[absolute path]/trana/assets/databases/emu_database \
+  --outdir /absolute/path/trana/results \
+  --db /absolute/path/trana/assets/databases/emu_database \
   --seqtype map-ont \
    -profile singularity,test \
   --quality_filtering \
@@ -105,29 +105,29 @@ Run without barcode sample sheet:
 
 ```bash
 nextflow run main.nf \
-  --outdir [absolute path]/trana/results \
-  --db /[absolute path]/trana/assets/databases/emu_database \
+  --outdir /absolute/path/trana/results \
+  --db /absolute/path/trana/assets/databases/emu_database \
   --seqtype map-ont \
    -profile singularity,test \
   --quality_filtering \
   --longread_qc_qualityfilter_minlength 1200 \
   --longread_qc_qualityfilter_maxlength 1800 \
-  --merge_fastq_pass /[absolute path]/trana/fastq_pass/
+  --merge_fastq_pass /absolute/path/trana/fastq_pass/
 ```
 
 Run with barcode sample sheet:
 
 ```bash
 nextflow run main.nf \
-  --outdir /[absolute path to]/trana/results \
-  --db /[absolute path to database]/trana/assets/databases/emu_database \
+  --outdir /absolute/path/trana/results \
+  --db /absolute/path/to/database/trana/assets/databases/emu_database \
   --seqtype map-ont \
    -profile singularity,test \
   --quality_filtering \
   --longread_qc_qualityfilter_minlength 1200 \
   --longread_qc_qualityfilter_maxlength 1800 \
-  --merge_fastq_pass /[absolute path to fastq_pass]/fastq_pass/ \
-  --barcodes_samplesheet /[absolute path to barcode sample sheet]/sample_sheet_merge.csv
+  --merge_fastq_pass /absolute/path/to/fastq_pass/ \
+  --barcodes_samplesheet /absolute/path/barcode/samplesheet/sample_sheet_merge.csv
 ```
 
 (Again, note that `map-ont` can be replaced with `lr:hq` for high accuracy ONT
@@ -143,16 +143,22 @@ Cutadapt by default using the provided primer sequences. The primer sequences
 can be provided in the sample-sheet or passed as arguments (`FW_primer`,
 RV_primer). Primer trimming with Cutadapt can be skipped with `--skip_cutadapt`.
 
+The optional samplesheet columns `FW_primer` and `RV_primer` map to
+`meta.fw_primer` and `meta.rv_primer`. For each primer independently, a nonempty
+samplesheet value takes precedence over the corresponding `--FW_primer` or
+`--RV_primer` parameter. A blank cell or omitted column falls back to that
+parameter; if neither is set, that primer argument is omitted.
+
 ```bash
-sample,fastq_1,fastq_2,FW_primer,RV_primer
-SAMPLE,/absolute_path/trana/Sample_R1_001.fastq.gz,/absolute_path/trana/Sample_R2_001.fastq.gz,GTGCCAGCMGCCGCGGTAA,GGACTACNVGGGTWTCTAAT
+sample,fastq_1,fastq_2,neg_control,FW_primer,RV_primer
+SAMPLE,/absolute_path/trana/Sample_R1_001.fastq.gz,/absolute_path/trana/Sample_R2_001.fastq.gz,,GTGCCAGCMGCCGCGGTAA,GGACTACNVGGGTWTCTAAT
 ```
 
 ```bash
 nextflow run main.nf \
   --input sample_sheet.csv
-  --outdir [absolute path]/trana/results \
-  --db /[absolute path]/trana/assets/databases/emu_database \
+  --outdir /absolute/path/trana/results \
+  --db /absolute/path/trana/assets/databases/emu_database \
   --seqtype sr \
    -profile singularity
 ```
@@ -160,8 +166,8 @@ nextflow run main.nf \
 ```bash
 nextflow run main.nf \
   --input sample_sheet.csv
-  --outdir [absolute path]/trana/results \
-  --db /[absolute path]/trana/assets/databases/emu_database \
+  --outdir /absolute/path/trana/results \
+  --db /absolute/path/trana/assets/databases/emu_database \
   --seqtype sr \
    -profile singularity \
   --FW_primer AGCTGNCCTG\
@@ -174,13 +180,20 @@ There are two types of sample sheets that can be used:
 
 1. If the fastq files are already concatenated/merged i.e., the fastq-files in
    Nanopore barcode directories have been concatenated already, the `--input` can
-   be used. `--input` expects a `.csv` sample sheet with 3 columns (note the
-   header names). It looks like this (See also the `examples` directory):
-   ```csv
-   sample,fastq_1,fastq_2
-   SAMPLE_1,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC1.fastq.gz,
-   SAMPLE_2,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC3.fastq.gz,
-   ```
+   be used. `--input` expects a `.csv` sample sheet starting with `sample`,
+   `fastq_1`, and `fastq_2`. An optional fourth column, `neg_control`, names
+   each sample's negative control. Leave this field empty for the controls
+   themselves, which must have their own sample rows and read files:
+
+```csv
+sample,fastq_1,fastq_2,neg_control
+SAMPLE_1,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC1.fastq.gz,,NEG_1
+SAMPLE_2,/absolute_path/trana/assets/test_assets/medium_Mock_dil_1_2_BC3.fastq.gz,,NEG_1
+NEG_1,/absolute_path/trana/negative_control.fastq.gz,,
+```
+
+Three-column sample sheets remain valid.
+
 2. If the fastq files are separated in their respective barcode folder i.e., you
    have several fastq files for each sample and they are organized in barcode
    directories in a fastq_pass directory.
@@ -196,8 +209,8 @@ There are two types of sample sheets that can be used:
 
 ```config
 NXF_WORK = working directory. # work directory,
-                              # set this to a shared place.
-                              # export NXF_WORK=/path/to/your/working/dir
+                           # set this to a shared place.
+                           # export NXF_WORK=/path/to/your/working/dir
 APPTAINER_TMPDIR
 NXF_SINGULARITY_CACHEDIR
 APPTAINER_CACHEDIR
