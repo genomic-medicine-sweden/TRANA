@@ -109,6 +109,7 @@ workflow PIPELINE_INITIALISATION {
         channel.value(samplesheet)
             .flatMap { samplesheet_path ->
                 samplesheetToList(samplesheet_path, "${projectDir}/assets/schema_input.json")
+                validateNegativeControlSamples(samples)
             }
             .map {
                 meta, fastq_1, fastq_2 ->
@@ -128,22 +129,6 @@ workflow PIPELINE_INITIALISATION {
     //
     // MODULE: Concatenate input read files (per barcode/sample, or across runs of the same sample)
     //
-    ch_samplesheet_path
-        .flatMap { samplesheet_path ->
-            def samples = samplesheetToList(samplesheet_path, "${projectDir}/assets/schema_input.json")
-            validateNegativeControlSamples(samples)
-        }
-        .map {
-            meta, fastq_1, fastq_2 ->
-                if (!fastq_2) {
-                    return [ meta.id, meta + [ single_end:true ], [ fastq_1 ] ]
-                } else {
-                    return [ meta.id, meta + [ single_end:false ], [ fastq_1, fastq_2 ] ]
-                }
-        }
-        .groupTuple()
-        .map { validateInputSamplesheet( it ) }
-        .set { ch_reads }
     CAT_FASTQ(ch_cat_fastq_input)
     ch_versions = ch_versions.mix(CAT_FASTQ.out.versions_cat)
     CAT_FASTQ.out.reads.set { ch_reads }
