@@ -109,6 +109,7 @@ workflow PIPELINE_INITIALISATION {
         channel.value(samplesheet)
             .flatMap { samplesheet_path ->
                 samplesheetToList(samplesheet_path, "${projectDir}/assets/schema_input.json")
+                validateNegativeControlSamples(samples)
             }
             .map {
                 meta, fastq_1, fastq_2 ->
@@ -187,6 +188,17 @@ workflow PIPELINE_COMPLETION {
 //
 // Validate channels from input samplesheet
 //
+def validateNegativeControlSamples(samples) {
+    def sample_ids = samples.collect{ sample -> sample[0].id }.toSet()
+    samples.each { sample ->
+        def meta = sample[0]
+        if (meta.neg_control && !sample_ids.contains(meta.neg_control)) {
+            error("Please check input samplesheet -> Negative control '${meta.neg_control}' for sample '${meta.id}' must be present as a sample in the same run")
+        }
+    }
+    return samples
+}
+
 def validateInputSamplesheet(input) {
     def (metas, fastqs) = input[1..2]
 
@@ -194,6 +206,11 @@ def validateInputSamplesheet(input) {
     def endedness_ok = metas.collect{ meta -> meta.single_end }.unique().size == 1
     if (!endedness_ok) {
         error("Please check input samplesheet -> Multiple runs of a sample must be of the same datatype i.e. single-end or paired-end: ${metas[0].id}")
+    }
+
+    def negative_controls = metas.collect{ meta -> meta.neg_control ?: '' }.unique()
+    if (negative_controls.size() != 1) {
+        error("Please check input samplesheet -> Multiple runs of a sample must use the same negative control (including blank assignments): ${metas[0].id}")
     }
 
     // Flatten fastqs from all runs so CAT_FASTQ can merge them per sample
