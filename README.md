@@ -340,6 +340,14 @@ community, reused here under the [MIT license](https://github.com/nf-core/tools/
   > of Full-Length 16S RRNA Oxford Nanopore Sequencing Data,” Nature Methods,
   > June 30, 2022, 1–9, https://doi.org/10.1038/s41592-022-015>
 
+### Databases
+
+- [UNITE](https://unite.ut.ee/)
+  > Abarenkov, Kessy; Zirk, Allan; Piirmann, Timo; Pöhönen, Raivo; Ivanov,
+  > Filipp; Nilsson, R. Henrik; Kõljalg, Urmas (2025): UNITE general FASTA
+  > release for Fungi. Version 19.02.2025. UNITE Community.
+  > https://doi.org/10.15156/BIO/3301229
+
 ## Citations
 
 <!-- TODO nf-core: Add citation for pipeline after first release. Uncomment

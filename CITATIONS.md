@@ -47,3 +47,8 @@ This pipeline uses code and infrastructure developed and maintained by the [nf-c
 
 - [EMU](https://gitlab.com/treangenlab/emu)
   > Kristen D. Curry et al., “Emu: Species-Level Microbial Community Profiling of Full-Length 16S RRNA Oxford Nanopore Sequencing Data,” Nature Methods, June 30, 2022, 1–9, https://doi.org/10.1038/s41592-022-01520-4
+
+## Databases
+
+- [UNITE](https://unite.ut.ee/)
+  > Abarenkov, Kessy; Zirk, Allan; Piirmann, Timo; Pöhönen, Raivo; Ivanov, Filipp; Nilsson, R. Henrik; Kõljalg, Urmas (2025): UNITE general FASTA release for Fungi. Version 19.02.2025. UNITE Community. https://doi.org/10.15156/BIO/3301229
