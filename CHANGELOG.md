@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added `params.its` and processes `KRONA_KTIMPORTTEXT` and `REORDER_FOR_KRONA` for ITS compatibility.
+
 ### Changed
 
 - Replaced `MERGE_BARCODES` and `MERGE_BARCODES_SAMPLESHEET` with the nf-core `CAT_FASTQ` module to merge fastq files from barcode directories and/or multiple sequencing runs of the same sample

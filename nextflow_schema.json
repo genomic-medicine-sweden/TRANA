@@ -325,6 +325,11 @@
                     "type": "string",
                     "default": "assets/databases/krona/taxonomy/taxonomy.tab",
                     "description": "Path to the taxonomy.tab used by Krona"
+                },
+                "its": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true, Krona will be generated using ktimporttext instead of ktimporttaxonomy."
                 }
             }
         },
